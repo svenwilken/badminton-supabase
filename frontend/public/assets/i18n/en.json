@@ -1,0 +1,87 @@
+{
+  "APP": {
+    "TITLE": "Badminton Tournament"
+  },
+  "COMMON": {
+    "CANCEL": "Cancel",
+    "CREATE": "Create",
+    "ADD": "Add",
+    "DELETE": "Delete",
+    "VIEW": "View",
+    "EDIT": "Edit",
+    "SAVE": "Save",
+    "CLOSE": "Close",
+    "RETRY": "Retry",
+    "BACK": "Back",
+    "LOADING": "Loading...",
+    "ERROR": "Error"
+  },
+  "TOURNAMENTS": {
+    "TITLE": "Tournaments",
+    "LIST": {
+      "TITLE": "Tournaments",
+      "VIEW_PLAYERS": "View All Players",
+      "CREATE_TOURNAMENT": "Create Tournament",
+      "LOADING": "Loading tournaments...",
+      "EMPTY_TITLE": "No tournaments yet",
+      "EMPTY_MESSAGE": "Create your first tournament to get started!",
+      "CREATED": "Created: {{date}}",
+      "DESCRIPTION": "Manage disciplines, players, and matches for this tournament."
+    },
+    "CREATE": {
+      "TITLE": "Create New Tournament",
+      "NAME_LABEL": "Tournament Name",
+      "NAME_PLACEHOLDER": "Enter tournament name",
+      "NAME_REQUIRED": "Tournament name is required",
+      "SUCCESS": "Tournament created successfully",
+      "ERROR": "Failed to create tournament"
+    },
+    "DELETE": {
+      "CONFIRM": "Are you sure you want to delete \"{{name}}\"?",
+      "SUCCESS": "Tournament deleted successfully",
+      "ERROR": "Failed to delete tournament"
+    },
+    "ERROR_LOADING": "Failed to load tournaments"
+  },
+  "PLAYERS": {
+    "TITLE": "All Players",
+    "LIST": {
+      "ADD_PLAYER": "Add Player",
+      "LOADING": "Loading players...",
+      "EMPTY_TITLE": "No players yet",
+      "EMPTY_MESSAGE": "Add your first player to get started!",
+      "REGISTERED": "Registered: {{date}}"
+    },
+    "TABLE": {
+      "NAME": "Name",
+      "GENDER": "Gender",
+      "CLUB": "Club",
+      "REGISTERED": "Registered",
+      "ACTIONS": "Actions"
+    },
+    "CREATE": {
+      "TITLE": "Add New Player",
+      "NAME_LABEL": "Player Name",
+      "NAME_PLACEHOLDER": "Enter player name",
+      "NAME_REQUIRED": "Player name is required",
+      "CLUB_LABEL": "Club",
+      "CLUB_PLACEHOLDER": "Enter or select club",
+      "GENDER_LABEL": "Gender:",
+      "GENDER_MALE": "Male",
+      "GENDER_FEMALE": "Female",
+      "SUCCESS": "Player added successfully",
+      "ERROR": "Failed to add player"
+    },
+    "EDIT": {
+      "SUCCESS": "Player updated successfully",
+      "ERROR": "Failed to update player"
+    },
+    "DELETE": {
+      "CONFIRM": "Are you sure you want to delete \"{{name}}\"?",
+      "SUCCESS": "Player deleted successfully",
+      "ERROR": "Failed to delete player"
+    },
+    "ERROR_LOADING": "Failed to load players"
+  }
+}
+

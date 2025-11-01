@@ -1,0 +1,36 @@
+.error-message {
+  color: var(--mat-warn-color);
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+}
+
+mat-dialog-content {
+  padding-top: 1rem;
+  min-width: 400px;
+}
+
+.gender-selection {
+  margin-bottom: 1rem;
+}
+
+.gender-selection label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.gender-selection mat-radio-group {
+  display: flex;
+  gap: 1rem;
+}
+
+mat-progress-spinner {
+  display: inline-block;
+}
+
+.content {
+  width: 100%;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+}
+

@@ -1,0 +1,87 @@
+{
+  "APP": {
+    "TITLE": "Badminton Turnier"
+  },
+  "COMMON": {
+    "CANCEL": "Abbrechen",
+    "CREATE": "Erstellen",
+    "ADD": "Hinzufügen",
+    "DELETE": "Löschen",
+    "VIEW": "Ansehen",
+    "EDIT": "Bearbeiten",
+    "SAVE": "Speichern",
+    "CLOSE": "Schließen",
+    "RETRY": "Wiederholen",
+    "BACK": "Zurück",
+    "LOADING": "Lädt...",
+    "ERROR": "Fehler"
+  },
+  "TOURNAMENTS": {
+    "TITLE": "Turniere",
+    "LIST": {
+      "TITLE": "Turniere",
+      "VIEW_PLAYERS": "Alle Spieler anzeigen",
+      "CREATE_TOURNAMENT": "Turnier erstellen",
+      "LOADING": "Turniere werden geladen...",
+      "EMPTY_TITLE": "Noch keine Turniere",
+      "EMPTY_MESSAGE": "Erstellen Sie Ihr erstes Turnier, um loszulegen!",
+      "CREATED": "Erstellt: {{date}}",
+      "DESCRIPTION": "Verwalten Sie Disziplinen, Spieler und Spiele für dieses Turnier."
+    },
+    "CREATE": {
+      "TITLE": "Neues Turnier erstellen",
+      "NAME_LABEL": "Turniername",
+      "NAME_PLACEHOLDER": "Turniername eingeben",
+      "NAME_REQUIRED": "Turniername ist erforderlich",
+      "SUCCESS": "Turnier erfolgreich erstellt",
+      "ERROR": "Turnier konnte nicht erstellt werden"
+    },
+    "DELETE": {
+      "CONFIRM": "Möchten Sie \"{{name}}\" wirklich löschen?",
+      "SUCCESS": "Turnier erfolgreich gelöscht",
+      "ERROR": "Turnier konnte nicht gelöscht werden"
+    },
+    "ERROR_LOADING": "Turniere konnten nicht geladen werden"
+  },
+  "PLAYERS": {
+    "TITLE": "Alle Spieler",
+    "LIST": {
+      "ADD_PLAYER": "Spieler hinzufügen",
+      "LOADING": "Spieler werden geladen...",
+      "EMPTY_TITLE": "Noch keine Spieler",
+      "EMPTY_MESSAGE": "Fügen Sie Ihren ersten Spieler hinzu, um loszulegen!",
+      "REGISTERED": "Registriert: {{date}}"
+    },
+    "TABLE": {
+      "NAME": "Name",
+      "GENDER": "Geschlecht",
+      "CLUB": "Verein",
+      "REGISTERED": "Registriert",
+      "ACTIONS": "Aktionen"
+    },
+    "CREATE": {
+      "TITLE": "Neuen Spieler hinzufügen",
+      "NAME_LABEL": "Spielername",
+      "NAME_PLACEHOLDER": "Spielername eingeben",
+      "NAME_REQUIRED": "Spielername ist erforderlich",
+      "CLUB_LABEL": "Verein",
+      "CLUB_PLACEHOLDER": "Verein eingeben oder auswählen",
+      "GENDER_LABEL": "Geschlecht:",
+      "GENDER_MALE": "Männlich",
+      "GENDER_FEMALE": "Weiblich",
+      "SUCCESS": "Spieler erfolgreich hinzugefügt",
+      "ERROR": "Spieler konnte nicht hinzugefügt werden"
+    },
+    "EDIT": {
+      "SUCCESS": "Spieler erfolgreich aktualisiert",
+      "ERROR": "Spieler konnte nicht aktualisiert werden"
+    },
+    "DELETE": {
+      "CONFIRM": "Möchten Sie \"{{name}}\" wirklich löschen?",
+      "SUCCESS": "Spieler erfolgreich gelöscht",
+      "ERROR": "Spieler konnte nicht gelöscht werden"
+    },
+    "ERROR_LOADING": "Spieler konnten nicht geladen werden"
+  }
+}
+

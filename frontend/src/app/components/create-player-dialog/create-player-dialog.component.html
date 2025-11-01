@@ -1,0 +1,63 @@
+<h2 mat-dialog-title>{{ 'PLAYERS.CREATE.TITLE' | translate }}</h2>
+
+<mat-dialog-content>
+  <mat-form-field appearance="outline" class="content" >
+    <mat-label>{{ 'PLAYERS.CREATE.NAME_LABEL' | translate }}</mat-label>
+    <input
+      matInput
+      [(ngModel)]="playerName"
+      [placeholder]="'PLAYERS.CREATE.NAME_PLACEHOLDER' | translate"
+      [disabled]="loading()"
+      (keyup.enter)="createPlayer()"
+    />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="content">
+    <mat-label>{{ 'PLAYERS.CREATE.CLUB_LABEL' | translate }}</mat-label>
+    <input
+      matInput
+      [(ngModel)]="playerClub"
+      [matAutocomplete]="auto"
+      (input)="filterClubs(playerClub)"
+      [placeholder]="'PLAYERS.CREATE.CLUB_PLACEHOLDER' | translate"
+      [disabled]="loading()"
+      (keyup.enter)="createPlayer()"
+    />
+    <mat-autocomplete #auto="matAutocomplete">
+      @for (club of filteredClubs; track club) {
+        <mat-option [value]="club">{{ club }}</mat-option>
+      }
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <div class="gender-selection">
+    <label>{{ 'PLAYERS.CREATE.GENDER_LABEL' | translate }}</label>
+    <mat-radio-group [(ngModel)]="playerGender" [disabled]="loading()">
+      <mat-radio-button [value]="Gender.Male">{{ 'PLAYERS.CREATE.GENDER_MALE' | translate }}</mat-radio-button>
+      <mat-radio-button [value]="Gender.Female">{{ 'PLAYERS.CREATE.GENDER_FEMALE' | translate }}</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  @if (error()) {
+    <div class="error-message">
+      {{ error() }}
+    </div>
+  }
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cancel()" [disabled]="loading()">{{ 'COMMON.CANCEL' | translate }}</button>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="createPlayer()"
+    [disabled]="loading() || !playerName.trim()"
+  >
+    @if (loading()) {
+      <mat-progress-spinner diameter="20" mode="indeterminate"></mat-progress-spinner>
+    } @else {
+      {{ 'COMMON.ADD' | translate }}
+    }
+  </button>
+</mat-dialog-actions>
+

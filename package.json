@@ -1,0 +1,29 @@
+{
+  "name": "badminton-tournament-supabase",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "workspaces": [
+    "frontend"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "supabase:start": "supabase start",
+    "supabase:stop": "supabase stop",
+    "supabase:types": "supabase gen types typescript --local > supabase/types.ts && cp supabase/types.ts frontend/src/app/models/database.types.ts",
+    "supabase:migration:new": "supabase migration new",
+    "supabase:migration:diff": "supabase db diff --local",
+    "supabase:reset": "supabase db reset",
+    "frontend:start": "npm start --workspace=frontend",
+    "frontend:build": "npm run build --workspace=frontend",
+    "frontend:test": "npm test --workspace=frontend"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@angular/cli": "^20.3.8",
+    "supabase": "^2.54.11"
+  }
+}

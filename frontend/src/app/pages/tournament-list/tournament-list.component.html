@@ -1,0 +1,70 @@
+<div class="tournament-list-container">
+  <div class="header">
+    <h1>{{ 'TOURNAMENTS.LIST.TITLE' | translate }}</h1>
+    <div class="header-actions">
+      <button mat-raised-button color="accent" (click)="navigateToPlayers()">
+        <mat-icon>people</mat-icon>
+        {{ 'TOURNAMENTS.LIST.VIEW_PLAYERS' | translate }}
+      </button>
+      <button mat-raised-button color="primary" (click)="openCreateTournamentDialog()">
+        <mat-icon>add</mat-icon>
+        {{ 'TOURNAMENTS.LIST.CREATE_TOURNAMENT' | translate }}
+      </button>
+    </div>
+  </div>
+
+  @if (loading()) {
+    <div class="loading-container">
+      <mat-progress-spinner mode="indeterminate" diameter="50"></mat-progress-spinner>
+      <p>{{ 'TOURNAMENTS.LIST.LOADING' | translate }}</p>
+    </div>
+  }
+
+  @if (error()) {
+    <div class="error-container">
+      <mat-icon color="warn">error</mat-icon>
+      <p>{{ error() }}</p>
+      <button mat-raised-button (click)="loadTournaments()">{{ 'COMMON.RETRY' | translate }}</button>
+    </div>
+  }
+
+  @if (!loading() && !error() && tournaments().length === 0) {
+    <div class="empty-state">
+      <mat-icon>sports_tennis</mat-icon>
+      <h2>{{ 'TOURNAMENTS.LIST.EMPTY_TITLE' | translate }}</h2>
+      <p>{{ 'TOURNAMENTS.LIST.EMPTY_MESSAGE' | translate }}</p>
+      <button mat-raised-button color="primary" (click)="openCreateTournamentDialog()">
+        <mat-icon>add</mat-icon>
+        {{ 'TOURNAMENTS.LIST.CREATE_TOURNAMENT' | translate }}
+      </button>
+    </div>
+  }
+
+  @if (!loading() && !error() && tournaments().length > 0) {
+    <div class="tournaments-grid">
+      @for (tournament of tournaments(); track tournament.id) {
+        <mat-card class="tournament-card">
+          <mat-card-header>
+            <mat-icon mat-card-avatar>emoji_events</mat-icon>
+            <mat-card-title>{{ tournament.name }}</mat-card-title>
+            <mat-card-subtitle>{{ 'TOURNAMENTS.LIST.CREATED' | translate:{date: (tournament.created_at | date:'short')} }}</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <p>{{ 'TOURNAMENTS.LIST.DESCRIPTION' | translate }}</p>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-button color="primary" (click)="viewTournament(tournament)">
+              <mat-icon>visibility</mat-icon>
+              {{ 'COMMON.VIEW' | translate }}
+            </button>
+            <button mat-button color="warn" (click)="deleteTournament(tournament)">
+              <mat-icon>delete</mat-icon>
+              {{ 'COMMON.DELETE' | translate }}
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      }
+    </div>
+  }
+</div>
+

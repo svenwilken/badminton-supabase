@@ -1,0 +1,37 @@
+<h2 mat-dialog-title>{{ 'TOURNAMENTS.CREATE.TITLE' | translate }}</h2>
+
+<mat-dialog-content>
+  <mat-form-field appearance="outline" style="width: 100%;">
+    <mat-label>{{ 'TOURNAMENTS.CREATE.NAME_LABEL' | translate }}</mat-label>
+    <input
+      matInput
+      [(ngModel)]="tournamentName"
+      [placeholder]="'TOURNAMENTS.CREATE.NAME_PLACEHOLDER' | translate"
+      [disabled]="loading()"
+      (keyup.enter)="createTournament()"
+    />
+  </mat-form-field>
+
+  @if (error()) {
+    <div class="error-message">
+      {{ error() }}
+    </div>
+  }
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cancel()" [disabled]="loading()">{{ 'COMMON.CANCEL' | translate }}</button>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="createTournament()"
+    [disabled]="loading() || !tournamentName.trim()"
+  >
+    @if (loading()) {
+      <mat-progress-spinner diameter="20" mode="indeterminate"></mat-progress-spinner>
+    } @else {
+      {{ 'COMMON.CREATE' | translate }}
+    }
+  </button>
+</mat-dialog-actions>
+
