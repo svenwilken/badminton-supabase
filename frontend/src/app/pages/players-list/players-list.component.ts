@@ -13,10 +13,10 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { SupabaseService, Player } from '../../services/supabase.service';
 import { CreatePlayerDialogComponent } from '../../components/create-player-dialog/create-player-dialog.component';
+import { ClubAutocompleteComponent } from '../../components/club-autocomplete/club-autocomplete.component';
 import { Gender } from '../../models/types';
 
 @Component({
@@ -35,8 +35,8 @@ import { Gender } from '../../models/types';
     MatInputModule,
     MatFormFieldModule,
     MatSelectModule,
-    MatAutocompleteModule,
-    TranslateModule
+    TranslateModule,
+    ClubAutocompleteComponent
   ],
   templateUrl: './players-list.component.html',
   styleUrl: './players-list.component.css'
@@ -55,10 +55,6 @@ export class PlayersListComponent implements OnInit, AfterViewInit {
   editedClub: string = '';
   editedGender: Gender = Gender.Male;
   
-  // Club autocomplete
-  allClubs: string[] = [];
-  filteredClubs: string[] = [];
-  
   // Expose Gender enum to template
   readonly Gender = Gender;
 
@@ -72,7 +68,6 @@ export class PlayersListComponent implements OnInit, AfterViewInit {
 
   async ngOnInit() {
     await this.loadPlayers();
-    await this.loadClubs();
   }
 
   ngAfterViewInit() {
@@ -108,22 +103,6 @@ export class PlayersListComponent implements OnInit, AfterViewInit {
     } finally {
       this.loading.set(false);
     }
-  }
-
-  async loadClubs() {
-    try {
-      this.allClubs = await this.supabaseService.getDistinctClubs();
-      this.filteredClubs = this.allClubs;
-    } catch (err) {
-      console.error('Error loading clubs:', err);
-    }
-  }
-
-  filterClubs(value: string) {
-    const filterValue = value.toLowerCase();
-    this.filteredClubs = this.allClubs.filter(club => 
-      club.toLowerCase().includes(filterValue)
-    );
   }
 
   openCreatePlayerDialog() {
@@ -167,7 +146,6 @@ export class PlayersListComponent implements OnInit, AfterViewInit {
       this.snackBar.open(this.translate.instant('PLAYERS.EDIT.SUCCESS'), this.translate.instant('COMMON.CLOSE'), { duration: 3000 });
       this.cancelEdit();
       await this.loadPlayers();
-      await this.loadClubs(); // Refresh clubs list in case a new club was added
     } catch (err: any) {
       console.error('Error updating player:', err);
       this.snackBar.open(this.translate.instant('PLAYERS.EDIT.ERROR'), this.translate.instant('COMMON.CLOSE'), { duration: 3000 });

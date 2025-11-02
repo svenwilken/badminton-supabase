@@ -43,6 +43,10 @@
     },
     "ERROR_LOADING": "Failed to load tournaments"
   },
+  "CLUB": {
+    "LABEL": "Club",
+    "PLACEHOLDER": "Enter or select club"
+  },
   "PLAYERS": {
     "TITLE": "All Players",
     "LIST": {

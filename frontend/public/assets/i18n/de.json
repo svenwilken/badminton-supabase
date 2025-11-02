@@ -43,6 +43,10 @@
     },
     "ERROR_LOADING": "Turniere konnten nicht geladen werden"
   },
+  "CLUB": {
+    "LABEL": "Verein",
+    "PLACEHOLDER": "Verein eingeben oder auswählen"
+  },
   "PLAYERS": {
     "TITLE": "Alle Spieler",
     "LIST": {

@@ -1,4 +1,4 @@
-import { Component, signal, OnInit } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
@@ -7,10 +7,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatRadioModule } from '@angular/material/radio';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { SupabaseService } from '../../services/supabase.service';
 import { Gender } from '../../models/types';
+import { ClubAutocompleteComponent } from '../club-autocomplete/club-autocomplete.component';
 
 @Component({
   selector: 'app-create-player-dialog',
@@ -23,13 +23,13 @@ import { Gender } from '../../models/types';
     MatButtonModule,
     MatProgressSpinnerModule,
     MatRadioModule,
-    MatAutocompleteModule,
-    TranslateModule
+    TranslateModule,
+    ClubAutocompleteComponent
   ],
   templateUrl: './create-player-dialog.component.html',
   styleUrl: './create-player-dialog.component.css'
 })
-export class CreatePlayerDialogComponent implements OnInit {
+export class CreatePlayerDialogComponent {
   // Expose Gender enum to template
   readonly Gender = Gender;
   
@@ -38,37 +38,12 @@ export class CreatePlayerDialogComponent implements OnInit {
   playerClub = '';
   loading = signal(false);
   error = signal<string | null>(null);
-  
-  // Club autocomplete
-  allClubs: string[] = [];
-  filteredClubs: string[] = [];
-  
 
   constructor(
     private dialogRef: MatDialogRef<CreatePlayerDialogComponent>,
     private supabaseService: SupabaseService,
     private translate: TranslateService
   ) {}
-
-  async ngOnInit() {
-    await this.loadClubs();
-  }
-
-  async loadClubs() {
-    try {
-      this.allClubs = await this.supabaseService.getDistinctClubs();
-      this.filteredClubs = this.allClubs;
-    } catch (err) {
-      console.error('Error loading clubs:', err);
-    }
-  }
-
-  filterClubs(value: string) {
-    const filterValue = value.toLowerCase();
-    this.filteredClubs = this.allClubs.filter(club => 
-      club.toLowerCase().includes(filterValue)
-    );
-  }
 
   async createPlayer() {
     if (!this.playerName.trim()) {

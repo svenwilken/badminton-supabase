@@ -69,18 +69,10 @@
           </th>
           <td mat-cell *matCellDef="let player">
             @if (isEditing(player.id)) {
-              <mat-form-field appearance="outline" class="edit-field">
-                <input matInput 
-                       [(ngModel)]="editedClub" 
-                       [matAutocomplete]="autoEdit"
-                       (input)="filterClubs(editedClub)"
-                       [placeholder]="'PLAYERS.CREATE.CLUB_PLACEHOLDER' | translate">
-                <mat-autocomplete #autoEdit="matAutocomplete">
-                  @for (club of filteredClubs; track club) {
-                    <mat-option [value]="club">{{ club }}</mat-option>
-                  }
-                </mat-autocomplete>
-              </mat-form-field>
+              <app-club-autocomplete
+                [(ngModel)]="editedClub"
+                cssClass="edit-field"
+              ></app-club-autocomplete>
             } @else {
               <span>{{ player.club || '-' }}</span>
             }

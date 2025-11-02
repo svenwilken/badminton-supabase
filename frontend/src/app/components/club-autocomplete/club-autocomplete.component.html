@@ -1,0 +1,17 @@
+<mat-form-field [appearance]="appearance" [class]="cssClass">
+  <mat-label>{{ label | translate }}</mat-label>
+  <input
+    matInput
+    [(ngModel)]="value"
+    [matAutocomplete]="auto"
+    (input)="onInput($any($event.target).value)"
+    [placeholder]="placeholder | translate"
+    [disabled]="disabled"
+  />
+  <mat-autocomplete #auto="matAutocomplete">
+    @for (club of filteredClubs; track club) {
+      <mat-option [value]="club">{{ club }}</mat-option>
+    }
+  </mat-autocomplete>
+</mat-form-field>
+
