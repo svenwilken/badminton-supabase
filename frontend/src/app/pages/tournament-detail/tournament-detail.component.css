@@ -32,7 +32,33 @@
 
 .sidenav {
   width: 250px;
-  border-right: 1px solid rgba(0, 0, 0, 0.12);
+  border-right: 1px solid rgba(255, 255, 255, 0.12);
+  background-color: #242424;
+}
+
+.sidenav ::ng-deep .mat-mdc-nav-list {
+  padding: 0 !important;
+}
+
+.sidenav ::ng-deep .mat-mdc-list-item {
+  border-radius: 0 !important;
+  height: 56px !important;
+  padding: 0 16px !important;
+  margin: 0 !important;
+  transition: background-color 0.2s ease;
+}
+
+.sidenav ::ng-deep .mat-mdc-list-item:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.sidenav ::ng-deep .mat-mdc-list-item-icon {
+  margin-right: 16px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.sidenav ::ng-deep .mdc-list-item__primary-text {
+  color: rgba(255, 255, 255, 0.87);
 }
 
 .sidenav-content {
@@ -47,7 +73,9 @@
 }
 
 .active-link {
-  background-color: rgba(0, 0, 0, 0.04);
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border-left: 3px solid var(--mat-sys-primary) !important;
+  padding-left: 13px !important;
 }
 
 .active-link mat-icon {
@@ -57,16 +85,5 @@
 .active-link span {
   color: var(--mat-sys-primary);
   font-weight: 500;
-}
-
-/* Dark theme support */
-@media (prefers-color-scheme: dark) {
-  .sidenav {
-    border-right-color: rgba(255, 255, 255, 0.12);
-  }
-
-  .active-link {
-    background-color: rgba(255, 255, 255, 0.08);
-  }
 }
 
