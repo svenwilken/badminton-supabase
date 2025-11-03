@@ -30,7 +30,7 @@ import { SupabaseService } from '../../services/supabase.service';
 })
 export class ClubAutocompleteComponent implements OnInit, ControlValueAccessor {
   @Input() placeholder: string = 'CLUB.PLACEHOLDER';
-  @Input() label: string = 'CLUB.LABEL';
+  @Input() label: string | null = null;
   @Input() appearance: 'fill' | 'outline' = 'outline';
   @Input() disabled: boolean = false;
   @Input() cssClass: string = '';

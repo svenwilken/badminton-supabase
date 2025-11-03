@@ -71,7 +71,8 @@
             @if (isEditing(player.id)) {
               <app-club-autocomplete
                 [(ngModel)]="editedClub"
-                cssClass="edit-field"
+                class="edit-field"
+                style="margin-top: 2px;"
               ></app-club-autocomplete>
             } @else {
               <span>{{ player.club || '-' }}</span>
