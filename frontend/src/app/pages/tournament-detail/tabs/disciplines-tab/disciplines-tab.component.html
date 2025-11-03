@@ -1,0 +1,61 @@
+<div class="disciplines-container">
+  <div class="header">
+    <h2>{{ 'TOURNAMENT_DETAIL.DISCIPLINES.TITLE' | translate }}</h2>
+    <button mat-raised-button color="primary">
+      <mat-icon>add</mat-icon>
+      {{ 'TOURNAMENT_DETAIL.DISCIPLINES.ADD' | translate }}
+    </button>
+  </div>
+
+  @if (loading()) {
+    <div class="loading-container">
+      <mat-progress-spinner mode="indeterminate" diameter="40"></mat-progress-spinner>
+    </div>
+  }
+
+  @if (!loading() && disciplines().length === 0) {
+    <div class="empty-state">
+      <mat-icon>category</mat-icon>
+      <h3>{{ 'TOURNAMENT_DETAIL.DISCIPLINES.EMPTY_TITLE' | translate }}</h3>
+      <p>{{ 'TOURNAMENT_DETAIL.DISCIPLINES.EMPTY_MESSAGE' | translate }}</p>
+      <button mat-raised-button color="primary">
+        <mat-icon>add</mat-icon>
+        {{ 'TOURNAMENT_DETAIL.DISCIPLINES.ADD' | translate }}
+      </button>
+    </div>
+  }
+
+  @if (!loading() && disciplines().length > 0) {
+    <div class="disciplines-grid">
+      @for (discipline of disciplines(); track discipline.id) {
+        <mat-card class="discipline-card">
+          <mat-card-header>
+            <mat-icon mat-card-avatar>category</mat-icon>
+            <mat-card-title>{{ discipline.name }}</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="discipline-info">
+              <mat-chip-set>
+                <mat-chip>
+                  <mat-icon>people</mat-icon>
+                  {{ 'TOURNAMENT_DETAIL.DISCIPLINES.PARTICIPANTS' | translate }}: 0
+                </mat-chip>
+              </mat-chip-set>
+            </div>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-button color="primary">
+              <mat-icon>visibility</mat-icon>
+              {{ 'COMMON.VIEW' | translate }}
+            </button>
+            <button mat-button color="accent">
+              <mat-icon>edit</mat-icon>
+              {{ 'COMMON.EDIT' | translate }}
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      }
+    </div>
+  }
+</div>
+

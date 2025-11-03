@@ -1,0 +1,62 @@
+.settings-container {
+  max-width: 800px;
+}
+
+h2 {
+  margin: 0 0 24px 0;
+  font-size: 24px;
+  font-weight: 400;
+}
+
+.settings-card,
+.danger-zone-card {
+  margin-bottom: 24px;
+}
+
+.info-text {
+  color: rgba(0, 0, 0, 0.6);
+  margin: 0;
+}
+
+.danger-zone-card {
+  border: 2px solid #f44336;
+}
+
+.danger-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+}
+
+.danger-info {
+  flex: 1;
+}
+
+.danger-info h3 {
+  margin: 0 0 8px 0;
+  font-size: 16px;
+  font-weight: 500;
+  color: #f44336;
+}
+
+.danger-info p {
+  margin: 0;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+@media (prefers-color-scheme: dark) {
+  .info-text,
+  .danger-info p {
+    color: rgba(255, 255, 255, 0.7);
+  }
+}
+
+@media (max-width: 600px) {
+  .danger-section {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
