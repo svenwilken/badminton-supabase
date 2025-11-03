@@ -36,11 +36,6 @@ import { SupabaseService, Tournament } from '../../../services/supabase.service'
               <span class="info-label">{{ 'TOURNAMENT_DETAIL.OVERVIEW.CREATED_AT' | translate }}:</span>
               <span class="info-value">{{ tournament()?.created_at | date:'medium' }}</span>
             </div>
-            <mat-divider></mat-divider>
-            <div class="info-row">
-              <span class="info-label">{{ 'TOURNAMENT_DETAIL.OVERVIEW.ID' | translate }}:</span>
-              <span class="info-value">{{ tournament()?.id }}</span>
-            </div>
           </mat-card-content>
         </mat-card>
 
