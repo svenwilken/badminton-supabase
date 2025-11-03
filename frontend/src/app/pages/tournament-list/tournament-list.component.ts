@@ -87,8 +87,7 @@ export class TournamentListComponent implements OnInit {
   }
 
   viewTournament(tournament: Tournament) {
-    // TODO: Navigate to tournament details
-    console.log('View tournament:', tournament);
+    this.router.navigate(['/tournament', tournament.id]);
   }
 
   navigateToPlayers() {

@@ -43,7 +43,7 @@
   @if (!loading() && !error() && tournaments().length > 0) {
     <div class="tournaments-grid">
       @for (tournament of tournaments(); track tournament.id) {
-        <mat-card class="tournament-card">
+        <mat-card class="tournament-card clickable" (click)="viewTournament(tournament)">
           <mat-card-header>
             <mat-icon mat-card-avatar>emoji_events</mat-icon>
             <mat-card-title>{{ tournament.name }}</mat-card-title>
@@ -53,11 +53,7 @@
             <p>{{ 'TOURNAMENTS.LIST.DESCRIPTION' | translate }}</p>
           </mat-card-content>
           <mat-card-actions>
-            <button mat-button color="primary" (click)="viewTournament(tournament)">
-              <mat-icon>visibility</mat-icon>
-              {{ 'COMMON.VIEW' | translate }}
-            </button>
-            <button mat-button color="warn" (click)="deleteTournament(tournament)">
+            <button mat-button color="warn" (click)="deleteTournament(tournament); $event.stopPropagation()">
               <mat-icon>delete</mat-icon>
               {{ 'COMMON.DELETE' | translate }}
             </button>

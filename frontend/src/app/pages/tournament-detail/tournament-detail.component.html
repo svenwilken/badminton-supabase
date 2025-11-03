@@ -1,0 +1,51 @@
+<div class="tournament-detail-container">
+  @if (loading()) {
+    <div class="loading-container">
+      <mat-progress-spinner mode="indeterminate" diameter="50"></mat-progress-spinner>
+      <p>{{ 'TOURNAMENT_DETAIL.LOADING' | translate }}</p>
+    </div>
+  }
+
+  @if (error()) {
+    <div class="error-container">
+      <mat-icon color="warn">error</mat-icon>
+      <p>{{ error() }}</p>
+      <button mat-raised-button (click)="navigateBack()">
+        {{ 'COMMON.BACK' | translate }}
+      </button>
+    </div>
+  }
+
+  @if (!loading() && !error() && tournament()) {
+    <mat-toolbar class="detail-toolbar">
+      <button mat-icon-button (click)="navigateBack()">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <mat-icon style="margin-left: 10px;">emoji_events</mat-icon>
+      <span style="margin-left: 10px;">{{ tournament()?.name }}</span>
+    </mat-toolbar>
+
+    <mat-sidenav-container class="sidenav-container">
+      <mat-sidenav mode="side" opened class="sidenav">
+        <mat-nav-list>
+          @for (item of navItems; track item.route) {
+            <a mat-list-item 
+               [routerLink]="[item.route]" 
+               routerLinkActive="active-link"
+               [routerLinkActiveOptions]="{exact: false}">
+              <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+              <span matListItemTitle>{{ item.label | translate }}</span>
+            </a>
+          }
+        </mat-nav-list>
+      </mat-sidenav>
+
+      <mat-sidenav-content class="sidenav-content">
+        <div class="content-wrapper">
+          <router-outlet></router-outlet>
+        </div>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  }
+</div>
+

@@ -86,6 +86,52 @@
       "ERROR": "Failed to delete player"
     },
     "ERROR_LOADING": "Failed to load players"
+  },
+  "TOURNAMENT_DETAIL": {
+    "LOADING": "Loading tournament...",
+    "ERROR_NOT_FOUND": "Tournament not found",
+    "ERROR_LOADING": "Failed to load tournament",
+    "TABS": {
+      "OVERVIEW": "Overview",
+      "DISCIPLINES": "Disciplines",
+      "MATCHES": "Matches",
+      "SETTINGS": "Settings"
+    },
+    "OVERVIEW": {
+      "TITLE": "Tournament Overview",
+      "INFORMATION": "Tournament Information",
+      "NAME": "Name",
+      "CREATED_AT": "Created",
+      "ID": "Tournament ID",
+      "STATISTICS": "Statistics",
+      "DISCIPLINES": "Disciplines",
+      "MATCHES": "Matches",
+      "PARTICIPANTS": "Participants"
+    },
+    "DISCIPLINES": {
+      "TITLE": "Disciplines",
+      "ADD": "Add Discipline",
+      "EMPTY_TITLE": "No disciplines yet",
+      "EMPTY_MESSAGE": "Add your first discipline to get started!",
+      "PARTICIPANTS": "Participants"
+    },
+    "MATCHES": {
+      "TITLE": "Matches",
+      "CREATE": "Create Match",
+      "EMPTY_TITLE": "No matches yet",
+      "EMPTY_MESSAGE": "Create your first match to get started!"
+    },
+    "SETTINGS": {
+      "TITLE": "Tournament Settings",
+      "GENERAL": "General Settings",
+      "GENERAL_DESCRIPTION": "Configure general tournament settings.",
+      "DANGER_ZONE": "Danger Zone",
+      "DELETE_TOURNAMENT": "Delete Tournament",
+      "DELETE_WARNING": "Once you delete a tournament, there is no going back. Please be certain.",
+      "DELETE_CONFIRM": "Are you sure you want to delete \"{{name}}\"? This action cannot be undone.",
+      "DELETE_SUCCESS": "Tournament deleted successfully",
+      "DELETE_ERROR": "Failed to delete tournament"
+    }
   }
 }
 

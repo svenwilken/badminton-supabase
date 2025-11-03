@@ -86,6 +86,52 @@
       "ERROR": "Spieler konnte nicht gelöscht werden"
     },
     "ERROR_LOADING": "Spieler konnten nicht geladen werden"
+  },
+  "TOURNAMENT_DETAIL": {
+    "LOADING": "Turnier wird geladen...",
+    "ERROR_NOT_FOUND": "Turnier nicht gefunden",
+    "ERROR_LOADING": "Turnier konnte nicht geladen werden",
+    "TABS": {
+      "OVERVIEW": "Übersicht",
+      "DISCIPLINES": "Disziplinen",
+      "MATCHES": "Spiele",
+      "SETTINGS": "Einstellungen"
+    },
+    "OVERVIEW": {
+      "TITLE": "Turnier-Übersicht",
+      "INFORMATION": "Turnierinformationen",
+      "NAME": "Name",
+      "CREATED_AT": "Erstellt",
+      "ID": "Turnier-ID",
+      "STATISTICS": "Statistiken",
+      "DISCIPLINES": "Disziplinen",
+      "MATCHES": "Spiele",
+      "PARTICIPANTS": "Teilnehmer"
+    },
+    "DISCIPLINES": {
+      "TITLE": "Disziplinen",
+      "ADD": "Disziplin hinzufügen",
+      "EMPTY_TITLE": "Noch keine Disziplinen",
+      "EMPTY_MESSAGE": "Fügen Sie Ihre erste Disziplin hinzu, um loszulegen!",
+      "PARTICIPANTS": "Teilnehmer"
+    },
+    "MATCHES": {
+      "TITLE": "Spiele",
+      "CREATE": "Spiel erstellen",
+      "EMPTY_TITLE": "Noch keine Spiele",
+      "EMPTY_MESSAGE": "Erstellen Sie Ihr erstes Spiel, um loszulegen!"
+    },
+    "SETTINGS": {
+      "TITLE": "Turniereinstellungen",
+      "GENERAL": "Allgemeine Einstellungen",
+      "GENERAL_DESCRIPTION": "Konfigurieren Sie allgemeine Turniereinstellungen.",
+      "DANGER_ZONE": "Gefahrenzone",
+      "DELETE_TOURNAMENT": "Turnier löschen",
+      "DELETE_WARNING": "Wenn Sie ein Turnier löschen, gibt es kein Zurück. Bitte seien Sie sicher.",
+      "DELETE_CONFIRM": "Möchten Sie \"{{name}}\" wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.",
+      "DELETE_SUCCESS": "Turnier erfolgreich gelöscht",
+      "DELETE_ERROR": "Turnier konnte nicht gelöscht werden"
+    }
   }
 }
 

@@ -1,0 +1,72 @@
+.tournament-detail-container {
+  height: calc(100vh - 64px);
+  display: flex;
+  flex-direction: column;
+}
+
+.loading-container,
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 20px;
+}
+
+.error-container mat-icon {
+  font-size: 64px;
+  width: 64px;
+  height: 64px;
+}
+
+.detail-toolbar {
+  flex-shrink: 0;
+  height: 64px;
+}
+
+.sidenav-container {
+  flex: 1;
+  height: calc(100% - 64px);
+}
+
+.sidenav {
+  width: 250px;
+  border-right: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.sidenav-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.content-wrapper {
+  flex: 1;
+  padding: 24px;
+  overflow-y: auto;
+}
+
+.active-link {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+.active-link mat-icon {
+  color: var(--mat-sys-primary);
+}
+
+.active-link span {
+  color: var(--mat-sys-primary);
+  font-weight: 500;
+}
+
+/* Dark theme support */
+@media (prefers-color-scheme: dark) {
+  .sidenav {
+    border-right-color: rgba(255, 255, 255, 0.12);
+  }
+
+  .active-link {
+    background-color: rgba(255, 255, 255, 0.08);
+  }
+}
+
