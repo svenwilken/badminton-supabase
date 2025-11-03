@@ -27,7 +27,7 @@ import { ClubAutocompleteComponent } from '../club-autocomplete/club-autocomplet
     ClubAutocompleteComponent
   ],
   templateUrl: './create-player-dialog.component.html',
-  styleUrl: './create-player-dialog.component.css'
+  styleUrl: './create-player-dialog.component.scss'
 })
 export class CreatePlayerDialogComponent {
   // Expose Gender enum to template

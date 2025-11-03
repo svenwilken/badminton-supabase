@@ -23,7 +23,7 @@ import { SupabaseService, Tournament } from '../../../../services/supabase.servi
     TranslateModule
   ],
   templateUrl: './settings-tab.component.html',
-  styleUrl: './settings-tab.component.css'
+  styleUrl: './settings-tab.component.scss'
 })
 export class SettingsTabComponent implements OnInit {
   tournament = signal<Tournament | null>(null);

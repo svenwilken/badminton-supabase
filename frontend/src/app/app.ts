@@ -19,7 +19,7 @@ import { CommonModule } from '@angular/common';
     TranslateModule
   ],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrl: './app.scss'
 })
 export class App implements OnInit {
   currentLanguage = signal('en');

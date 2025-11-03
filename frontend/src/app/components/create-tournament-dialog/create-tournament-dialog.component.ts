@@ -22,7 +22,7 @@ import { SupabaseService } from '../../services/supabase.service';
     TranslateModule
   ],
   templateUrl: './create-tournament-dialog.component.html',
-  styleUrl: './create-tournament-dialog.component.css'
+  styleUrl: './create-tournament-dialog.component.scss'
 })
 export class CreateTournamentDialogComponent {
   tournamentName = '';

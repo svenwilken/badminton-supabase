@@ -21,7 +21,7 @@ import { SupabaseService, Discipline } from '../../../../services/supabase.servi
     TranslateModule
   ],
   templateUrl: './disciplines-tab.component.html',
-  styleUrl: './disciplines-tab.component.css'
+  styleUrl: './disciplines-tab.component.scss'
 })
 export class DisciplinesTabComponent implements OnInit {
   disciplines = signal<Discipline[]>([]);

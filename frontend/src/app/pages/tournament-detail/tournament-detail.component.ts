@@ -30,7 +30,7 @@ interface NavItem {
     TranslateModule
   ],
   templateUrl: './tournament-detail.component.html',
-  styleUrl: './tournament-detail.component.css'
+  styleUrl: './tournament-detail.component.scss'
 })
 export class TournamentDetailComponent implements OnInit {
   tournament = signal<Tournament | null>(null);

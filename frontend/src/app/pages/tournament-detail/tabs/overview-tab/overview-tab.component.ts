@@ -17,7 +17,7 @@ import { SupabaseService, Tournament } from '../../../../services/supabase.servi
     TranslateModule
   ],
   templateUrl: './overview-tab.component.html',
-  styleUrl: './overview-tab.component.css'
+  styleUrl: './overview-tab.component.scss'
 })
 export class OverviewTabComponent implements OnInit {
   tournament = signal<Tournament | null>(null);

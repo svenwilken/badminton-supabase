@@ -24,7 +24,7 @@ import { CreateTournamentDialogComponent } from '../../components/create-tournam
     TranslateModule
   ],
   templateUrl: './tournament-list.component.html',
-  styleUrl: './tournament-list.component.css'
+  styleUrl: './tournament-list.component.scss'
 })
 export class TournamentListComponent implements OnInit {
   tournaments = signal<Tournament[]>([]);

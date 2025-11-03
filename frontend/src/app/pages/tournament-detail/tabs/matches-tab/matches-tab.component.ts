@@ -15,7 +15,7 @@ import { TranslateModule } from '@ngx-translate/core';
     TranslateModule
   ],
   templateUrl: './matches-tab.component.html',
-  styleUrl: './matches-tab.component.css'
+  styleUrl: './matches-tab.component.scss'
 })
 export class MatchesTabComponent {}
 

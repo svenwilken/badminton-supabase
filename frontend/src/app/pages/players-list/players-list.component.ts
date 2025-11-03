@@ -39,7 +39,7 @@ import { Gender } from '../../models/types';
     ClubAutocompleteComponent
   ],
   templateUrl: './players-list.component.html',
-  styleUrl: './players-list.component.css'
+  styleUrl: './players-list.component.scss'
 })
 export class PlayersListComponent implements OnInit, AfterViewInit {
   dataSource = new MatTableDataSource<Player>([]);

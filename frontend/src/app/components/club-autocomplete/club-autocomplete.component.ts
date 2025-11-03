@@ -19,7 +19,7 @@ import { SupabaseService } from '../../services/supabase.service';
     TranslateModule
   ],
   templateUrl: './club-autocomplete.component.html',
-  styleUrl: './club-autocomplete.component.css',
+  styleUrl: './club-autocomplete.component.scss',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
