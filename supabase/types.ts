@@ -329,6 +329,39 @@ export type Database = {
           },
         ]
       }
+      singles_player: {
+        Row: {
+          created_at: string
+          discipline_id: string
+          player_id: string
+        }
+        Insert: {
+          created_at?: string
+          discipline_id: string
+          player_id: string
+        }
+        Update: {
+          created_at?: string
+          discipline_id?: string
+          player_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "singles_player_discipline_id_fkey"
+            columns: ["discipline_id"]
+            isOneToOne: false
+            referencedRelation: "discipline"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "singles_player_player_id_fkey"
+            columns: ["player_id"]
+            isOneToOne: false
+            referencedRelation: "player"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       tournament: {
         Row: {
           created_at: string
