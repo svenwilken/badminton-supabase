@@ -8,6 +8,7 @@
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "start:all": "concurrently \"npm run supabase:start\" \"npm run frontend:start\" --names \"supabase,frontend\" --prefix-colors \"blue,green\"",
     "supabase:start": "supabase start",
     "supabase:stop": "supabase stop",
     "supabase:types": "supabase gen types typescript --local > supabase/types.ts && cp supabase/types.ts frontend/src/app/models/database.types.ts",
@@ -24,6 +25,7 @@
   "type": "commonjs",
   "devDependencies": {
     "@angular/cli": "^20.3.8",
+    "concurrently": "^9.2.1",
     "supabase": "^2.54.11"
   }
 }
