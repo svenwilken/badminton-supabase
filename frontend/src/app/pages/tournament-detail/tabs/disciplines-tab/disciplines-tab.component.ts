@@ -9,6 +9,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { SupabaseService, Discipline } from '../../../../services/supabase.service';
 import { CreateDisciplineDialogComponent } from '../../../../components/create-discipline-dialog/create-discipline-dialog.component';
@@ -24,6 +25,7 @@ import { CreateDisciplineDialogComponent } from '../../../../components/create-d
     MatProgressSpinnerModule,
     MatTableModule,
     MatTooltipModule,
+    MatSnackBarModule,
     TranslateModule
   ],
   templateUrl: './disciplines-tab.component.html',
@@ -39,6 +41,7 @@ export class DisciplinesTabComponent implements OnInit {
     private route: ActivatedRoute,
     private supabaseService: SupabaseService,
     private dialog: MatDialog,
+    private snackBar: MatSnackBar,
     private translate: TranslateService
   ) {}
 
@@ -89,9 +92,28 @@ export class DisciplinesTabComponent implements OnInit {
     console.log('Edit discipline:', discipline);
   }
 
-  onDeleteDiscipline(discipline: Discipline) {
-    // TODO: Confirm and delete discipline
-    console.log('Delete discipline:', discipline);
+  async onDeleteDiscipline(discipline: Discipline) {
+    const confirmMessage = this.translate.instant('TOURNAMENT_DETAIL.DISCIPLINES.DELETE.CONFIRM', { name: discipline.name });
+    if (!confirm(confirmMessage)) {
+      return;
+    }
+
+    try {
+      await this.supabaseService.deleteDiscipline(discipline.id);
+      this.snackBar.open(
+        this.translate.instant('TOURNAMENT_DETAIL.DISCIPLINES.DELETE.SUCCESS'),
+        this.translate.instant('COMMON.CLOSE'),
+        { duration: 3000 }
+      );
+      await this.loadDisciplines();
+    } catch (err: any) {
+      console.error('Error deleting discipline:', err);
+      this.snackBar.open(
+        this.translate.instant('TOURNAMENT_DETAIL.DISCIPLINES.DELETE.ERROR'),
+        this.translate.instant('COMMON.CLOSE'),
+        { duration: 3000 }
+      );
+    }
   }
 
   getDisciplineType(discipline: Discipline): string {

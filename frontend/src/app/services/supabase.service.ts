@@ -112,7 +112,9 @@ export class SupabaseService {
         singles_player:singles_player!discipline_id(count),
         doubles_pair:doubles_pair!discipline(count)
       `)
-      .eq('tournament', tournamentId);
+      .eq('tournament', tournamentId)
+      .order('is_doubles')
+      .order('name');
     
     if (error) throw error;
     
@@ -146,6 +148,15 @@ export class SupabaseService {
     
     if (error) throw error;
     return data;
+  }
+
+  async deleteDiscipline(id: string) {
+    const { error } = await this.supabase
+      .from('discipline')
+      .delete()
+      .eq('id', id);
+    
+    if (error) throw error;
   }
 }
 

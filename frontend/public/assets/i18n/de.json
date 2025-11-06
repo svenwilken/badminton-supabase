@@ -134,8 +134,14 @@
         "GENDER_MIXED": "Mixed",
         "CHARGE_LABEL": "Startgebühr",
         "CHARGE_PLACEHOLDER": "0.00",
+        "MIXED_SINGLES_ERROR": "Mixed-Disziplinen müssen Doppel sein. Bitte aktivieren Sie den Doppel-Schalter.",
         "SUCCESS": "Disziplin erfolgreich erstellt",
         "ERROR": "Disziplin konnte nicht erstellt werden"
+      },
+      "DELETE": {
+        "CONFIRM": "Möchten Sie \"{{name}}\" wirklich löschen?",
+        "SUCCESS": "Disziplin erfolgreich gelöscht",
+        "ERROR": "Disziplin konnte nicht gelöscht werden"
       }
     },
     "MATCHES": {

@@ -51,9 +51,22 @@ export class CreateDisciplineDialogComponent {
     private translate: TranslateService
   ) {}
 
+  isMixedSingles(): boolean {
+    return this.gender === DisciplineGender.Mixed && !this.isDoubles;
+  }
+
+  isFormValid(): boolean {
+    return this.disciplineName.trim().length > 0 && !this.isMixedSingles();
+  }
+
   async createDiscipline() {
     if (!this.disciplineName.trim()) {
       this.error.set(this.translate.instant('TOURNAMENT_DETAIL.DISCIPLINES.CREATE.NAME_REQUIRED'));
+      return;
+    }
+
+    if (this.isMixedSingles()) {
+      this.error.set(this.translate.instant('TOURNAMENT_DETAIL.DISCIPLINES.CREATE.MIXED_SINGLES_ERROR'));
       return;
     }
 

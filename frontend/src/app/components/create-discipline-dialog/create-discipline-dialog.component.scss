@@ -4,6 +4,16 @@
   margin-top: 0.5rem;
 }
 
+.warning-message {
+  color: #ff9800;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+  padding: 0.75rem;
+  background-color: rgba(255, 152, 0, 0.1);
+  border-radius: 4px;
+  border-left: 3px solid #ff9800;
+}
+
 mat-dialog-content {
   padding-top: 1rem;
   min-width: 400px;

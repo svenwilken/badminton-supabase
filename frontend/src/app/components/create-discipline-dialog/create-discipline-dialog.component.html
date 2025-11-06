@@ -41,6 +41,12 @@
     <span matTextPrefix>€&nbsp;</span>
   </mat-form-field>
 
+  @if (isMixedSingles()) {
+    <div class="warning-message">
+      {{ 'TOURNAMENT_DETAIL.DISCIPLINES.CREATE.MIXED_SINGLES_ERROR' | translate }}
+    </div>
+  }
+
   @if (error()) {
     <div class="error-message">
       {{ error() }}
@@ -54,7 +60,7 @@
     mat-raised-button
     color="primary"
     (click)="createDiscipline()"
-    [disabled]="loading() || !disciplineName.trim()"
+    [disabled]="loading() || !isFormValid()"
   >
     @if (loading()) {
       <mat-progress-spinner diameter="20" mode="indeterminate"></mat-progress-spinner>

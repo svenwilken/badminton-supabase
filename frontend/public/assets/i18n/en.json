@@ -134,8 +134,14 @@
         "GENDER_MIXED": "Mixed",
         "CHARGE_LABEL": "Entry Fee",
         "CHARGE_PLACEHOLDER": "0.00",
+        "MIXED_SINGLES_ERROR": "Mixed disciplines must be doubles. Please enable the doubles toggle.",
         "SUCCESS": "Discipline created successfully",
         "ERROR": "Failed to create discipline"
+      },
+      "DELETE": {
+        "CONFIRM": "Are you sure you want to delete \"{{name}}\"?",
+        "SUCCESS": "Discipline deleted successfully",
+        "ERROR": "Failed to delete discipline"
       }
     },
     "MATCHES": {
