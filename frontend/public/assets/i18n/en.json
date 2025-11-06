@@ -113,7 +113,30 @@
       "ADD": "Add Discipline",
       "EMPTY_TITLE": "No disciplines yet",
       "EMPTY_MESSAGE": "Add your first discipline to get started!",
-      "PARTICIPANTS": "Participants"
+      "PARTICIPANTS": "Participants",
+      "TABLE": {
+        "NAME": "Name",
+        "TYPE": "Type",
+        "GENDER": "Gender",
+        "CHARGE": "Charge",
+        "PARTICIPANTS": "Participants",
+        "ACTIONS": "Actions"
+      },
+      "CREATE": {
+        "TITLE": "Add New Discipline",
+        "NAME_LABEL": "Discipline Name",
+        "NAME_PLACEHOLDER": "Enter discipline name",
+        "NAME_REQUIRED": "Discipline name is required",
+        "IS_DOUBLES": "Doubles",
+        "GENDER_LABEL": "Gender:",
+        "GENDER_MALE": "Male",
+        "GENDER_FEMALE": "Female",
+        "GENDER_MIXED": "Mixed",
+        "CHARGE_LABEL": "Entry Fee",
+        "CHARGE_PLACEHOLDER": "0.00",
+        "SUCCESS": "Discipline created successfully",
+        "ERROR": "Failed to create discipline"
+      }
     },
     "MATCHES": {
       "TITLE": "Matches",

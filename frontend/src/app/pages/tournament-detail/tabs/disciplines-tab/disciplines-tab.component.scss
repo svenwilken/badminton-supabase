@@ -1,5 +1,5 @@
 .disciplines-container {
-  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .header {
@@ -49,37 +49,70 @@ h2 {
   color: rgba(0, 0, 0, 0.6);
 }
 
-.disciplines-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 24px;
+// Table styles
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.discipline-card {
-  height: 100%;
+.disciplines-table {
+  width: 100%;
+  
+  th {
+    font-weight: 600;
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.87);
+  }
+  
+  td, th {
+    padding: 16px;
+  }
+  
+  tr:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+  }
+}
+
+.name-cell {
   display: flex;
-  flex-direction: column;
-}
-
-.discipline-info {
-  padding: 8px 0;
-}
-
-mat-chip-set {
-  display: flex;
-  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  
+  mat-icon {
+    color: rgba(0, 0, 0, 0.54);
+  }
+  
+  span {
+    font-weight: 500;
+  }
 }
 
 mat-chip {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
+  
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
 }
 
-mat-chip mat-icon {
-  font-size: 18px;
-  width: 18px;
-  height: 18px;
+.participants-chips {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 4px;
+  justify-content: flex-start;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -90,5 +123,37 @@ mat-chip mat-icon {
   .empty-state p {
     color: rgba(255, 255, 255, 0.7);
   }
+
+  .table-container {
+    background: #1e1e1e;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+
+  .disciplines-table {
+    th {
+      color: rgba(255, 255, 255, 0.87);
+    }
+
+    tr:hover {
+      background-color: rgba(255, 255, 255, 0.04);
+    }
+  }
+
+  .name-cell mat-icon {
+    color: rgba(255, 255, 255, 0.54);
+  }
 }
 
+@media (max-width: 768px) {
+  .disciplines-table {
+    font-size: 14px;
+    
+    td, th {
+      padding: 12px 8px;
+    }
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+}

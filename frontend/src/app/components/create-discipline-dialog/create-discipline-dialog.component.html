@@ -1,0 +1,66 @@
+<h2 mat-dialog-title>{{ 'TOURNAMENT_DETAIL.DISCIPLINES.CREATE.TITLE' | translate }}</h2>
+
+<mat-dialog-content>
+  <mat-form-field appearance="outline" class="content">
+    <mat-label>{{ 'TOURNAMENT_DETAIL.DISCIPLINES.CREATE.NAME_LABEL' | translate }}</mat-label>
+    <input
+      matInput
+      [(ngModel)]="disciplineName"
+      [placeholder]="'TOURNAMENT_DETAIL.DISCIPLINES.CREATE.NAME_PLACEHOLDER' | translate"
+      [disabled]="loading()"
+      (keyup.enter)="createDiscipline()"
+    />
+  </mat-form-field>
+
+  <div class="toggle-field content">
+    <mat-slide-toggle [(ngModel)]="isDoubles" [disabled]="loading()">
+      {{ 'TOURNAMENT_DETAIL.DISCIPLINES.CREATE.IS_DOUBLES' | translate }}
+    </mat-slide-toggle>
+  </div>
+
+  <div class="gender-selection">
+    <label>{{ 'TOURNAMENT_DETAIL.DISCIPLINES.CREATE.GENDER_LABEL' | translate }}</label>
+    <mat-radio-group [(ngModel)]="gender" [disabled]="loading()">
+      <mat-radio-button [value]="DisciplineGender.Male">{{ 'TOURNAMENT_DETAIL.DISCIPLINES.CREATE.GENDER_MALE' | translate }}</mat-radio-button>
+      <mat-radio-button [value]="DisciplineGender.Female">{{ 'TOURNAMENT_DETAIL.DISCIPLINES.CREATE.GENDER_FEMALE' | translate }}</mat-radio-button>
+      <mat-radio-button [value]="DisciplineGender.Mixed">{{ 'TOURNAMENT_DETAIL.DISCIPLINES.CREATE.GENDER_MIXED' | translate }}</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <mat-form-field appearance="outline" class="content">
+    <mat-label>{{ 'TOURNAMENT_DETAIL.DISCIPLINES.CREATE.CHARGE_LABEL' | translate }}</mat-label>
+    <input
+      matInput
+      type="number"
+      [(ngModel)]="charge"
+      [placeholder]="'TOURNAMENT_DETAIL.DISCIPLINES.CREATE.CHARGE_PLACEHOLDER' | translate"
+      [disabled]="loading()"
+      step="0.01"
+      min="0"
+    />
+    <span matTextPrefix>€&nbsp;</span>
+  </mat-form-field>
+
+  @if (error()) {
+    <div class="error-message">
+      {{ error() }}
+    </div>
+  }
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cancel()" [disabled]="loading()">{{ 'COMMON.CANCEL' | translate }}</button>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="createDiscipline()"
+    [disabled]="loading() || !disciplineName.trim()"
+  >
+    @if (loading()) {
+      <mat-progress-spinner diameter="20" mode="indeterminate"></mat-progress-spinner>
+    } @else {
+      {{ 'COMMON.ADD' | translate }}
+    }
+  </button>
+</mat-dialog-actions>
+

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { environment } from '../environment';
-import { Gender } from '../models/types';
+import { Gender, DisciplineGender } from '../models/types';
 import { Database } from '../models/database.types';
 
 export type Tournament = Database['public']['Tables']['tournament']['Row'];
@@ -107,8 +107,42 @@ export class SupabaseService {
   async getDisciplinesByTournament(tournamentId: string) {
     const { data, error } = await this.supabase
       .from('discipline')
-      .select('*')
+      .select(`
+        *,
+        singles_player:singles_player!discipline_id(count),
+        doubles_pair:doubles_pair!discipline(count)
+      `)
       .eq('tournament', tournamentId);
+    
+    if (error) throw error;
+    
+    // Add participants_count based on discipline type
+    return data?.map(discipline => ({
+      ...discipline,
+      participants_count: discipline.is_doubles 
+        ? (discipline.doubles_pair?.[0]?.count || 0)
+        : (discipline.singles_player?.[0]?.count || 0)
+    })) || [];
+  }
+
+  async createDiscipline(discipline: { 
+    name: string; 
+    is_doubles: boolean; 
+    gender: DisciplineGender; 
+    charge: number | null;
+    tournament: string;
+  }) {
+    const { data, error } = await this.supabase
+      .from('discipline')
+      .insert({
+        name: discipline.name,
+        is_doubles: discipline.is_doubles,
+        gender: discipline.gender,
+        charge: discipline.charge,
+        tournament: discipline.tournament
+      })
+      .select()
+      .single();
     
     if (error) throw error;
     return data;
