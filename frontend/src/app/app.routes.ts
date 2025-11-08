@@ -6,7 +6,7 @@ import { OverviewTabComponent } from './pages/tournament-detail/tabs/overview-ta
 import { DisciplinesTabComponent } from './pages/tournament-detail/tabs/disciplines-tab/disciplines-tab.component';
 import { MatchesTabComponent } from './pages/tournament-detail/tabs/matches-tab/matches-tab.component';
 import { SettingsTabComponent } from './pages/tournament-detail/tabs/settings-tab/settings-tab.component';
-import { DisciplineDetailComponent } from './pages/discipline-detail/discipline-detail.component';
+import { DisciplineDetailComponent } from './pages/tournament-detail/discipline-detail/discipline-detail.component';
 
 export const routes: Routes = [
   {

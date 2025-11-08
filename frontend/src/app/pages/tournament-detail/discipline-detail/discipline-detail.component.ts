@@ -6,7 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { TranslateModule } from '@ngx-translate/core';
-import { SupabaseService, Discipline } from '../../services/supabase.service';
+import { SupabaseService, Discipline } from '../../../services/supabase.service';
 
 @Component({
   selector: 'app-discipline-detail',
