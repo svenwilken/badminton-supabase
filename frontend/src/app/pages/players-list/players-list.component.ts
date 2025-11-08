@@ -157,18 +157,20 @@ export class PlayersListComponent implements OnInit, AfterViewInit {
   }
 
   async deletePlayer(player: Player) {
-    const confirmMessage = this.translate.instant('PLAYERS.DELETE.CONFIRM', { name: player.name });
+    const confirmMessage = this.translate.instant('DELETE.CONFIRM', { name: player.name });
     if (!confirm(confirmMessage)) {
       return;
     }
 
     try {
       await this.supabaseService.deletePlayer(player.id);
-      this.snackBar.open(this.translate.instant('PLAYERS.DELETE.SUCCESS'), this.translate.instant('COMMON.CLOSE'), { duration: 3000 });
+      const item = this.translate.instant('PLAYERS.TITLE').slice(0, -1); // Remove 's' from 'Players'
+      this.snackBar.open(this.translate.instant('DELETE.SUCCESS', { item }), this.translate.instant('COMMON.CLOSE'), { duration: 3000 });
       await this.loadPlayers();
     } catch (err: any) {
       console.error('Error deleting player:', err);
-      this.snackBar.open(this.translate.instant('PLAYERS.DELETE.ERROR'), this.translate.instant('COMMON.CLOSE'), { duration: 3000 });
+      const item = this.translate.instant('PLAYERS.TITLE').slice(0, -1).toLowerCase();
+      this.snackBar.open(this.translate.instant('DELETE.ERROR', { item }), this.translate.instant('COMMON.CLOSE'), { duration: 3000 });
     }
   }
 

@@ -95,23 +95,25 @@ export class DisciplinesTabComponent implements OnInit {
   }
 
   async onDeleteDiscipline(discipline: Discipline) {
-    const confirmMessage = this.translate.instant('TOURNAMENT_DETAIL.DISCIPLINES.DELETE.CONFIRM', { name: discipline.name });
+    const confirmMessage = this.translate.instant('DELETE.CONFIRM', { name: discipline.name });
     if (!confirm(confirmMessage)) {
       return;
     }
 
     try {
       await this.supabaseService.deleteDiscipline(discipline.id);
+      const item = this.translate.instant('TOURNAMENT_DETAIL.DISCIPLINES.TITLE').slice(0, -1); // Remove 's'
       this.snackBar.open(
-        this.translate.instant('TOURNAMENT_DETAIL.DISCIPLINES.DELETE.SUCCESS'),
+        this.translate.instant('DELETE.SUCCESS', { item }),
         this.translate.instant('COMMON.CLOSE'),
         { duration: 3000 }
       );
       await this.loadDisciplines();
     } catch (err: any) {
       console.error('Error deleting discipline:', err);
+      const item = this.translate.instant('TOURNAMENT_DETAIL.DISCIPLINES.TITLE').slice(0, -1).toLowerCase();
       this.snackBar.open(
-        this.translate.instant('TOURNAMENT_DETAIL.DISCIPLINES.DELETE.ERROR'),
+        this.translate.instant('DELETE.ERROR', { item }),
         this.translate.instant('COMMON.CLOSE'),
         { duration: 3000 }
       );

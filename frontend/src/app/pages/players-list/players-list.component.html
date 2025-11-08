@@ -46,7 +46,7 @@
         <!-- Name Column -->
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>
-            {{ 'PLAYERS.TABLE.NAME' | translate }}
+            {{ 'TABLE.NAME' | translate }}
           </th>
           <td mat-cell *matCellDef="let player">
             @if (isEditing(player.id)) {
@@ -65,7 +65,7 @@
         <!-- Club Column -->
         <ng-container matColumnDef="club">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>
-            {{ 'PLAYERS.TABLE.CLUB' | translate }}
+            {{ 'TABLE.CLUB' | translate }}
           </th>
           <td mat-cell *matCellDef="let player">
             @if (isEditing(player.id)) {
@@ -83,7 +83,7 @@
         <!-- Gender Column -->
         <ng-container matColumnDef="gender">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>
-            {{ 'PLAYERS.TABLE.GENDER' | translate }}
+            {{ 'TABLE.GENDER' | translate }}
           </th>
           <td mat-cell *matCellDef="let player">
             @if (isEditing(player.id)) {
@@ -104,7 +104,7 @@
         <!-- Created At Column -->
         <ng-container matColumnDef="created_at">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>
-            {{ 'PLAYERS.TABLE.REGISTERED' | translate }}
+            {{ 'TABLE.REGISTERED' | translate }}
           </th>
           <td mat-cell *matCellDef="let player">
             {{ player.created_at | date:'short' }}
@@ -114,7 +114,7 @@
         <!-- Actions Column -->
         <ng-container matColumnDef="actions">
           <th mat-header-cell *matHeaderCellDef>
-            {{ 'PLAYERS.TABLE.ACTIONS' | translate }}
+            {{ 'TABLE.ACTIONS' | translate }}
           </th>
           <td mat-cell *matCellDef="let player">
             @if (isEditing(player.id)) {

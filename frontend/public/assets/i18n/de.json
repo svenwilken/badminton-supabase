@@ -25,6 +25,30 @@
     "FEMALE": "Weiblich",
     "MIXED": "Mixed"
   },
+  "TABLE": {
+    "NAME": "Name",
+    "GENDER": "Geschlecht",
+    "CLUB": "Verein",
+    "TYPE": "Typ",
+    "CHARGE": "Gebühr",
+    "PARTICIPANTS": "Teilnehmer",
+    "ACTIONS": "Aktionen",
+    "REGISTERED": "Registriert"
+  },
+  "DELETE": {
+    "CONFIRM": "Möchten Sie \"{{name}}\" wirklich löschen?",
+    "SUCCESS": "{{item}} erfolgreich gelöscht",
+    "ERROR": "{{item}} konnte nicht gelöscht werden"
+  },
+  "EMPTY_STATE": {
+    "NO_ITEMS": "Noch keine {{items}}",
+    "GET_STARTED": "{{action}} Sie {{item}}, um loszulegen!"
+  },
+  "FORM": {
+    "NAME_LABEL": "Name",
+    "NAME_PLACEHOLDER": "Name eingeben",
+    "NAME_REQUIRED": "Name ist erforderlich"
+  },
   "TOURNAMENTS": {
     "TITLE": "Turniere",
     "LIST": {
@@ -45,11 +69,6 @@
       "SUCCESS": "Turnier erfolgreich erstellt",
       "ERROR": "Turnier konnte nicht erstellt werden"
     },
-    "DELETE": {
-      "CONFIRM": "Möchten Sie \"{{name}}\" wirklich löschen?",
-      "SUCCESS": "Turnier erfolgreich gelöscht",
-      "ERROR": "Turnier konnte nicht gelöscht werden"
-    },
     "ERROR_LOADING": "Turniere konnten nicht geladen werden"
   },
   "CLUB": {
@@ -65,13 +84,6 @@
       "EMPTY_MESSAGE": "Fügen Sie Ihren ersten Spieler hinzu, um loszulegen!",
       "REGISTERED": "Registriert: {{date}}"
     },
-    "TABLE": {
-      "NAME": "Name",
-      "GENDER": "Geschlecht",
-      "CLUB": "Verein",
-      "REGISTERED": "Registriert",
-      "ACTIONS": "Aktionen"
-    },
     "CREATE": {
       "TITLE": "Neuen Spieler hinzufügen",
       "NAME_LABEL": "Spielername",
@@ -85,11 +97,6 @@
     "EDIT": {
       "SUCCESS": "Spieler erfolgreich aktualisiert",
       "ERROR": "Spieler konnte nicht aktualisiert werden"
-    },
-    "DELETE": {
-      "CONFIRM": "Möchten Sie \"{{name}}\" wirklich löschen?",
-      "SUCCESS": "Spieler erfolgreich gelöscht",
-      "ERROR": "Spieler konnte nicht gelöscht werden"
     },
     "ERROR_LOADING": "Spieler konnten nicht geladen werden"
   },
@@ -120,14 +127,6 @@
       "EMPTY_TITLE": "Noch keine Disziplinen",
       "EMPTY_MESSAGE": "Fügen Sie Ihre erste Disziplin hinzu, um loszulegen!",
       "PARTICIPANTS": "Teilnehmer",
-      "TABLE": {
-        "NAME": "Name",
-        "TYPE": "Typ",
-        "GENDER": "Geschlecht",
-        "CHARGE": "Gebühr",
-        "PARTICIPANTS": "Teilnehmer",
-        "ACTIONS": "Aktionen"
-      },
       "CREATE": {
         "TITLE": "Neue Disziplin hinzufügen",
         "NAME_LABEL": "Disziplinname",
@@ -139,11 +138,6 @@
         "MIXED_SINGLES_ERROR": "Mixed-Disziplinen müssen Doppel sein. Bitte aktivieren Sie den Doppel-Schalter.",
         "SUCCESS": "Disziplin erfolgreich erstellt",
         "ERROR": "Disziplin konnte nicht erstellt werden"
-      },
-      "DELETE": {
-        "CONFIRM": "Möchten Sie \"{{name}}\" wirklich löschen?",
-        "SUCCESS": "Disziplin erfolgreich gelöscht",
-        "ERROR": "Disziplin konnte nicht gelöscht werden"
       }
     },
     "MATCHES": {

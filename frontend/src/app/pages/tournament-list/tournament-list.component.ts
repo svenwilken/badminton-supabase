@@ -71,18 +71,20 @@ export class TournamentListComponent implements OnInit {
   }
 
   async deleteTournament(tournament: Tournament) {
-    const confirmMessage = this.translate.instant('TOURNAMENTS.DELETE.CONFIRM', { name: tournament.name });
+    const confirmMessage = this.translate.instant('DELETE.CONFIRM', { name: tournament.name });
     if (!confirm(confirmMessage)) {
       return;
     }
 
     try {
       await this.supabaseService.deleteTournament(tournament.id);
-      this.snackBar.open(this.translate.instant('TOURNAMENTS.DELETE.SUCCESS'), this.translate.instant('COMMON.CLOSE'), { duration: 3000 });
+      const item = this.translate.instant('TOURNAMENTS.TITLE').slice(0, -1); // Remove 's'
+      this.snackBar.open(this.translate.instant('DELETE.SUCCESS', { item }), this.translate.instant('COMMON.CLOSE'), { duration: 3000 });
       await this.loadTournaments();
     } catch (err: any) {
       console.error('Error deleting tournament:', err);
-      this.snackBar.open(this.translate.instant('TOURNAMENTS.DELETE.ERROR'), this.translate.instant('COMMON.CLOSE'), { duration: 3000 });
+      const item = this.translate.instant('TOURNAMENTS.TITLE').slice(0, -1).toLowerCase();
+      this.snackBar.open(this.translate.instant('DELETE.ERROR', { item }), this.translate.instant('COMMON.CLOSE'), { duration: 3000 });
     }
   }
 

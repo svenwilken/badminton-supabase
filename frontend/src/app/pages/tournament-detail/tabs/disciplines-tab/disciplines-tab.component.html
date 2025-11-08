@@ -30,7 +30,7 @@
       <table mat-table [dataSource]="disciplines()" class="disciplines-table">
         <!-- Name Column -->
         <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef>{{ 'TOURNAMENT_DETAIL.DISCIPLINES.TABLE.NAME' | translate }}</th>
+          <th mat-header-cell *matHeaderCellDef>{{ 'TABLE.NAME' | translate }}</th>
           <td mat-cell *matCellDef="let discipline">
             <div class="name-cell">
               <mat-icon>category</mat-icon>
@@ -41,7 +41,7 @@
 
         <!-- Type Column -->
         <ng-container matColumnDef="type">
-          <th mat-header-cell *matHeaderCellDef>{{ 'TOURNAMENT_DETAIL.DISCIPLINES.TABLE.TYPE' | translate }}</th>
+          <th mat-header-cell *matHeaderCellDef>{{ 'TABLE.TYPE' | translate }}</th>
           <td mat-cell *matCellDef="let discipline">
             <mat-chip [highlighted]="discipline.is_doubles">
               <mat-icon>{{ discipline.is_doubles ? 'groups' : 'person' }}</mat-icon>
@@ -52,7 +52,7 @@
 
         <!-- Gender Column -->
         <ng-container matColumnDef="gender">
-          <th mat-header-cell *matHeaderCellDef>{{ 'TOURNAMENT_DETAIL.DISCIPLINES.TABLE.GENDER' | translate }}</th>
+          <th mat-header-cell *matHeaderCellDef>{{ 'TABLE.GENDER' | translate }}</th>
           <td mat-cell *matCellDef="let discipline">
             {{ getGenderDisplay(discipline.gender) }}
           </td>
@@ -60,7 +60,7 @@
 
         <!-- Charge Column -->
         <ng-container matColumnDef="charge">
-          <th mat-header-cell *matHeaderCellDef>{{ 'TOURNAMENT_DETAIL.DISCIPLINES.TABLE.CHARGE' | translate }}</th>
+          <th mat-header-cell *matHeaderCellDef>{{ 'TABLE.CHARGE' | translate }}</th>
           <td mat-cell *matCellDef="let discipline">
             {{ formatCharge(discipline.charge) }}
           </td>
@@ -68,7 +68,7 @@
 
         <!-- Participants Column -->
         <ng-container matColumnDef="participants">
-          <th mat-header-cell *matHeaderCellDef>{{ 'TOURNAMENT_DETAIL.DISCIPLINES.TABLE.PARTICIPANTS' | translate }}</th>
+          <th mat-header-cell *matHeaderCellDef>{{ 'TABLE.PARTICIPANTS' | translate }}</th>
           <td mat-cell *matCellDef="let discipline">
             @if (discipline.is_doubles) {
               <div class="participants-chips">
@@ -92,7 +92,7 @@
 
         <!-- Actions Column -->
         <ng-container matColumnDef="actions">
-          <th mat-header-cell *matHeaderCellDef>{{ 'TOURNAMENT_DETAIL.DISCIPLINES.TABLE.ACTIONS' | translate }}</th>
+          <th mat-header-cell *matHeaderCellDef>{{ 'TABLE.ACTIONS' | translate }}</th>
           <td mat-cell *matCellDef="let discipline">
             <div class="action-buttons">
               <button mat-icon-button color="primary" 

@@ -25,6 +25,30 @@
     "FEMALE": "Female",
     "MIXED": "Mixed"
   },
+  "TABLE": {
+    "NAME": "Name",
+    "GENDER": "Gender",
+    "CLUB": "Club",
+    "TYPE": "Type",
+    "CHARGE": "Charge",
+    "PARTICIPANTS": "Participants",
+    "ACTIONS": "Actions",
+    "REGISTERED": "Registered"
+  },
+  "DELETE": {
+    "CONFIRM": "Are you sure you want to delete \"{{name}}\"?",
+    "SUCCESS": "{{item}} deleted successfully",
+    "ERROR": "Failed to delete {{item}}"
+  },
+  "EMPTY_STATE": {
+    "NO_ITEMS": "No {{items}} yet",
+    "GET_STARTED": "{{action}} your first {{item}} to get started!"
+  },
+  "FORM": {
+    "NAME_LABEL": "Name",
+    "NAME_PLACEHOLDER": "Enter name",
+    "NAME_REQUIRED": "Name is required"
+  },
   "TOURNAMENTS": {
     "TITLE": "Tournaments",
     "LIST": {
@@ -45,11 +69,6 @@
       "SUCCESS": "Tournament created successfully",
       "ERROR": "Failed to create tournament"
     },
-    "DELETE": {
-      "CONFIRM": "Are you sure you want to delete \"{{name}}\"?",
-      "SUCCESS": "Tournament deleted successfully",
-      "ERROR": "Failed to delete tournament"
-    },
     "ERROR_LOADING": "Failed to load tournaments"
   },
   "CLUB": {
@@ -65,13 +84,6 @@
       "EMPTY_MESSAGE": "Add your first player to get started!",
       "REGISTERED": "Registered: {{date}}"
     },
-    "TABLE": {
-      "NAME": "Name",
-      "GENDER": "Gender",
-      "CLUB": "Club",
-      "REGISTERED": "Registered",
-      "ACTIONS": "Actions"
-    },
     "CREATE": {
       "TITLE": "Add New Player",
       "NAME_LABEL": "Player Name",
@@ -85,11 +97,6 @@
     "EDIT": {
       "SUCCESS": "Player updated successfully",
       "ERROR": "Failed to update player"
-    },
-    "DELETE": {
-      "CONFIRM": "Are you sure you want to delete \"{{name}}\"?",
-      "SUCCESS": "Player deleted successfully",
-      "ERROR": "Failed to delete player"
     },
     "ERROR_LOADING": "Failed to load players"
   },
@@ -120,14 +127,6 @@
       "EMPTY_TITLE": "No disciplines yet",
       "EMPTY_MESSAGE": "Add your first discipline to get started!",
       "PARTICIPANTS": "Participants",
-      "TABLE": {
-        "NAME": "Name",
-        "TYPE": "Type",
-        "GENDER": "Gender",
-        "CHARGE": "Charge",
-        "PARTICIPANTS": "Participants",
-        "ACTIONS": "Actions"
-      },
       "CREATE": {
         "TITLE": "Add New Discipline",
         "NAME_LABEL": "Discipline Name",
@@ -139,11 +138,6 @@
         "MIXED_SINGLES_ERROR": "Mixed disciplines must be doubles. Please enable the doubles toggle.",
         "SUCCESS": "Discipline created successfully",
         "ERROR": "Failed to create discipline"
-      },
-      "DELETE": {
-        "CONFIRM": "Are you sure you want to delete \"{{name}}\"?",
-        "SUCCESS": "Discipline deleted successfully",
-        "ERROR": "Failed to delete discipline"
       }
     },
     "MATCHES": {
