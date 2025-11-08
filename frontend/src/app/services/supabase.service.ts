@@ -9,6 +9,18 @@ export type Player = Database['public']['Tables']['player']['Row'];
 export type Discipline = Database['public']['Tables']['discipline']['Row'] & {
   participants_count?: number;
 };
+export type SinglesPlayer = Database['public']['Tables']['singles_player']['Row'];
+export type DoublesPair = Database['public']['Tables']['doubles_pair']['Row'];
+
+// Extended types with player details
+export interface SinglesParticipant extends SinglesPlayer {
+  player: Player;
+}
+
+export interface DoublesParticipant extends DoublesPair {
+  player_1_details: Player;
+  player_2_details: Player;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -181,6 +193,36 @@ export class SupabaseService {
       .eq('id', id);
     
     if (error) throw error;
+  }
+
+  // Participants operations
+  async getSinglesParticipants(disciplineId: string): Promise<SinglesParticipant[]> {
+    const { data, error } = await this.supabase
+      .from('singles_player')
+      .select(`
+        *,
+        player:player_id (*)
+      `)
+      .eq('discipline_id', disciplineId)
+      .order('created_at', { ascending: true });
+    
+    if (error) throw error;
+    return data as SinglesParticipant[];
+  }
+
+  async getDoublesParticipants(disciplineId: string): Promise<DoublesParticipant[]> {
+    const { data, error } = await this.supabase
+      .from('doubles_pair')
+      .select(`
+        *,
+        player_1_details:player!doubles_pair_player_1_fkey (*),
+        player_2_details:player!doubles_pair_player_2_fkey (*)
+      `)
+      .eq('discipline', disciplineId)
+      .order('created_at', { ascending: true });
+    
+    if (error) throw error;
+    return data as DoublesParticipant[];
   }
 }
 

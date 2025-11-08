@@ -160,7 +160,14 @@
   },
   "DISCIPLINE_DETAIL": {
     "TITLE": "Disziplin-Details",
-    "NOT_FOUND": "Disziplin nicht gefunden"
+    "NOT_FOUND": "Disziplin nicht gefunden",
+    "PARTICIPANTS": {
+      "TITLE": "Teilnehmer",
+      "NUMBER": "#",
+      "PLAYER_1": "Spieler 1",
+      "PLAYER_2": "Spieler 2",
+      "EMPTY": "Noch keine Teilnehmer angemeldet"
+    }
   }
 }
 

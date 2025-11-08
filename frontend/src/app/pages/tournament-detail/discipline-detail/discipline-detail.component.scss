@@ -83,6 +83,93 @@
       padding: 40px 0;
       margin: 0;
     }
+
+    .participants-section {
+      margin-top: 1rem;
+
+      h3 {
+        margin-bottom: 1rem;
+        font-size: 1.2rem;
+        font-weight: 500;
+      }
+
+      .participants-table {
+        width: 100%;
+        border-radius: 4px;
+        overflow: hidden;
+
+        th {
+          font-weight: 600;
+        }
+
+        td, th {
+          padding: 12px 16px;
+          border-bottom-color: var(--mat-table-row-item-outline-color, rgba(0, 0, 0, 0.12));
+        }
+
+        tr:last-child td {
+          border-bottom: none;
+        }
+
+        .player-info {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+
+          .gender-icon {
+            font-size: 18px;
+            width: 18px;
+            height: 18px;
+            opacity: 0.7;
+            flex-shrink: 0;
+          }
+        }
+
+        .player-details {
+          display: flex;
+          flex-direction: column;
+          gap: 2px;
+
+          .player-name {
+            font-weight: 500;
+          }
+
+          .player-club {
+            font-size: 0.875rem;
+            opacity: 0.7;
+          }
+        }
+
+        .gender-icon {
+          font-size: 20px;
+          width: 20px;
+          height: 20px;
+          opacity: 0.7;
+        }
+      }
+    }
+
+    .empty-participants {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem;
+      opacity: 0.7;
+
+      mat-icon {
+        font-size: 64px;
+        width: 64px;
+        height: 64px;
+        margin-bottom: 1rem;
+        opacity: 0.4;
+      }
+
+      p {
+        margin: 0;
+        font-size: 1rem;
+      }
+    }
   }
 
   .error-state {

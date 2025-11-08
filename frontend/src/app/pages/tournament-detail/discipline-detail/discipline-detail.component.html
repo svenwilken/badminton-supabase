@@ -53,8 +53,105 @@
         </mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
-        <!-- Content will be added here later -->
-        <p class="placeholder-text">Detail page content coming soon...</p>
+        <!-- Participants Table -->
+        @if (discipline()?.is_doubles) {
+          <!-- Doubles Pairs Table -->
+          @if (doublesParticipants().length > 0) {
+            <div class="participants-section">
+              <h3>{{ 'DISCIPLINE_DETAIL.PARTICIPANTS.TITLE' | translate }}</h3>
+              <table mat-table [dataSource]="doublesParticipants()" class="participants-table">
+                <!-- Number Column -->
+                <ng-container matColumnDef="number">
+                  <th mat-header-cell *matHeaderCellDef>{{ 'DISCIPLINE_DETAIL.PARTICIPANTS.NUMBER' | translate }}</th>
+                  <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
+                </ng-container>
+
+                <!-- Player 1 Column -->
+                <ng-container matColumnDef="player1">
+                  <th mat-header-cell *matHeaderCellDef>{{ 'DISCIPLINE_DETAIL.PARTICIPANTS.PLAYER_1' | translate }}</th>
+                  <td mat-cell *matCellDef="let element">
+                    <div class="player-info">
+                      <mat-icon class="gender-icon">{{ element.player_1_details.gender === 'male' ? 'male' : 'female' }}</mat-icon>
+                      <div class="player-details">
+                        <span class="player-name">{{ element.player_1_details.name }}</span>
+                        @if (element.player_1_details.club) {
+                          <span class="player-club">{{ element.player_1_details.club }}</span>
+                        }
+                      </div>
+                    </div>
+                  </td>
+                </ng-container>
+
+                <!-- Player 2 Column -->
+                <ng-container matColumnDef="player2">
+                  <th mat-header-cell *matHeaderCellDef>{{ 'DISCIPLINE_DETAIL.PARTICIPANTS.PLAYER_2' | translate }}</th>
+                  <td mat-cell *matCellDef="let element">
+                    <div class="player-info">
+                      <mat-icon class="gender-icon">{{ element.player_2_details.gender === 'male' ? 'male' : 'female' }}</mat-icon>
+                      <div class="player-details">
+                        <span class="player-name">{{ element.player_2_details.name }}</span>
+                        @if (element.player_2_details.club) {
+                          <span class="player-club">{{ element.player_2_details.club }}</span>
+                        }
+                      </div>
+                    </div>
+                  </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="doublesColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: doublesColumns;"></tr>
+              </table>
+            </div>
+          } @else {
+            <div class="empty-participants">
+              <mat-icon>group</mat-icon>
+              <p>{{ 'DISCIPLINE_DETAIL.PARTICIPANTS.EMPTY' | translate }}</p>
+            </div>
+          }
+        } @else {
+          <!-- Singles Players Table -->
+          @if (singlesParticipants().length > 0) {
+            <div class="participants-section">
+              <h3>{{ 'DISCIPLINE_DETAIL.PARTICIPANTS.TITLE' | translate }}</h3>
+              <table mat-table [dataSource]="singlesParticipants()" class="participants-table">
+                <!-- Number Column -->
+                <ng-container matColumnDef="number">
+                  <th mat-header-cell *matHeaderCellDef>{{ 'DISCIPLINE_DETAIL.PARTICIPANTS.NUMBER' | translate }}</th>
+                  <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="name">
+                  <th mat-header-cell *matHeaderCellDef>{{ 'TABLE.NAME' | translate }}</th>
+                  <td mat-cell *matCellDef="let element">
+                    <div class="player-details">
+                      <span class="player-name">{{ element.player.name }}</span>
+                      @if (element.player.club) {
+                        <span class="player-club">{{ element.player.club }}</span>
+                      }
+                    </div>
+                  </td>
+                </ng-container>
+
+                <!-- Gender Column -->
+                <ng-container matColumnDef="gender">
+                  <th mat-header-cell *matHeaderCellDef>{{ 'TABLE.GENDER' | translate }}</th>
+                  <td mat-cell *matCellDef="let element">
+                    <mat-icon class="gender-icon">{{ element.player.gender === 'male' ? 'male' : 'female' }}</mat-icon>
+                  </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="singlesColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: singlesColumns;"></tr>
+              </table>
+            </div>
+          } @else {
+            <div class="empty-participants">
+              <mat-icon>person</mat-icon>
+              <p>{{ 'DISCIPLINE_DETAIL.PARTICIPANTS.EMPTY' | translate }}</p>
+            </div>
+          }
+        }
       </mat-card-content>
     </mat-card>
   }
