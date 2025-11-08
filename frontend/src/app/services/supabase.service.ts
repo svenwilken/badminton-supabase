@@ -6,7 +6,9 @@ import { Database } from '../models/database.types';
 
 export type Tournament = Database['public']['Tables']['tournament']['Row'];
 export type Player = Database['public']['Tables']['player']['Row'];
-export type Discipline = Database['public']['Tables']['discipline']['Row'];
+export type Discipline = Database['public']['Tables']['discipline']['Row'] & {
+  participants_count?: number;
+};
 
 @Injectable({
   providedIn: 'root'

@@ -20,10 +20,10 @@
   ></app-club-autocomplete>
 
   <div class="gender-selection">
-    <label>{{ 'PLAYERS.CREATE.GENDER_LABEL' | translate }}</label>
+    <label>{{ 'GENDER.LABEL' | translate }}</label>
     <mat-radio-group [(ngModel)]="playerGender" [disabled]="loading()">
-      <mat-radio-button [value]="Gender.Male">{{ 'PLAYERS.CREATE.GENDER_MALE' | translate }}</mat-radio-button>
-      <mat-radio-button [value]="Gender.Female">{{ 'PLAYERS.CREATE.GENDER_FEMALE' | translate }}</mat-radio-button>
+      <mat-radio-button [value]="Gender.Male">{{ 'GENDER.MALE' | translate }}</mat-radio-button>
+      <mat-radio-button [value]="Gender.Female">{{ 'GENDER.FEMALE' | translate }}</mat-radio-button>
     </mat-radio-group>
   </div>
 

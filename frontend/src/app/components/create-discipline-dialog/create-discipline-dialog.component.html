@@ -19,11 +19,11 @@
   </div>
 
   <div class="gender-selection">
-    <label>{{ 'TOURNAMENT_DETAIL.DISCIPLINES.CREATE.GENDER_LABEL' | translate }}</label>
+    <label>{{ 'GENDER.LABEL' | translate }}</label>
     <mat-radio-group [(ngModel)]="gender" [disabled]="loading()">
-      <mat-radio-button [value]="DisciplineGender.Male">{{ 'TOURNAMENT_DETAIL.DISCIPLINES.CREATE.GENDER_MALE' | translate }}</mat-radio-button>
-      <mat-radio-button [value]="DisciplineGender.Female">{{ 'TOURNAMENT_DETAIL.DISCIPLINES.CREATE.GENDER_FEMALE' | translate }}</mat-radio-button>
-      <mat-radio-button [value]="DisciplineGender.Mixed">{{ 'TOURNAMENT_DETAIL.DISCIPLINES.CREATE.GENDER_MIXED' | translate }}</mat-radio-button>
+      <mat-radio-button [value]="DisciplineGender.Male">{{ 'GENDER.MALE' | translate }}</mat-radio-button>
+      <mat-radio-button [value]="DisciplineGender.Female">{{ 'GENDER.FEMALE' | translate }}</mat-radio-button>
+      <mat-radio-button [value]="DisciplineGender.Mixed">{{ 'GENDER.MIXED' | translate }}</mat-radio-button>
     </mat-radio-group>
   </div>
 

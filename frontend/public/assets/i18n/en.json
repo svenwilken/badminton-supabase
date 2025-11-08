@@ -15,7 +15,15 @@
     "BACK": "Back",
     "GO_BACK": "Go Back",
     "LOADING": "Loading...",
-    "ERROR": "Error"
+    "ERROR": "Error",
+    "SINGLES": "Singles",
+    "DOUBLES": "Doubles"
+  },
+  "GENDER": {
+    "LABEL": "Gender:",
+    "MALE": "Male",
+    "FEMALE": "Female",
+    "MIXED": "Mixed"
   },
   "TOURNAMENTS": {
     "TITLE": "Tournaments",
@@ -71,9 +79,6 @@
       "NAME_REQUIRED": "Player name is required",
       "CLUB_LABEL": "Club",
       "CLUB_PLACEHOLDER": "Enter or select club",
-      "GENDER_LABEL": "Gender:",
-      "GENDER_MALE": "Male",
-      "GENDER_FEMALE": "Female",
       "SUCCESS": "Player added successfully",
       "ERROR": "Failed to add player"
     },
@@ -129,10 +134,6 @@
         "NAME_PLACEHOLDER": "Enter discipline name",
         "NAME_REQUIRED": "Discipline name is required",
         "IS_DOUBLES": "Doubles",
-        "GENDER_LABEL": "Gender:",
-        "GENDER_MALE": "Male",
-        "GENDER_FEMALE": "Female",
-        "GENDER_MIXED": "Mixed",
         "CHARGE_LABEL": "Entry Fee",
         "CHARGE_PLACEHOLDER": "0.00",
         "MIXED_SINGLES_ERROR": "Mixed disciplines must be doubles. Please enable the doubles toggle.",

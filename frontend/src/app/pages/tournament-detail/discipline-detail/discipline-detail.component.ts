@@ -63,5 +63,18 @@ export class DisciplineDetailComponent implements OnInit {
       this.router.navigate(['/']);
     }
   }
+
+  getGenderTranslationKey(gender: string): string {
+    switch (gender?.toLowerCase()) {
+      case 'male':
+        return 'GENDER.MALE';
+      case 'female':
+        return 'GENDER.FEMALE';
+      case 'mixed':
+        return 'GENDER.MIXED';
+      default:
+        return 'GENDER.MIXED';
+    }
+  }
 }
 

@@ -15,7 +15,15 @@
     "BACK": "Zurück",
     "GO_BACK": "Zurück",
     "LOADING": "Lädt...",
-    "ERROR": "Fehler"
+    "ERROR": "Fehler",
+    "SINGLES": "Einzel",
+    "DOUBLES": "Doppel"
+  },
+  "GENDER": {
+    "LABEL": "Geschlecht:",
+    "MALE": "Männlich",
+    "FEMALE": "Weiblich",
+    "MIXED": "Mixed"
   },
   "TOURNAMENTS": {
     "TITLE": "Turniere",
@@ -71,9 +79,6 @@
       "NAME_REQUIRED": "Spielername ist erforderlich",
       "CLUB_LABEL": "Verein",
       "CLUB_PLACEHOLDER": "Verein eingeben oder auswählen",
-      "GENDER_LABEL": "Geschlecht:",
-      "GENDER_MALE": "Männlich",
-      "GENDER_FEMALE": "Weiblich",
       "SUCCESS": "Spieler erfolgreich hinzugefügt",
       "ERROR": "Spieler konnte nicht hinzugefügt werden"
     },
@@ -129,10 +134,6 @@
         "NAME_PLACEHOLDER": "Disziplinname eingeben",
         "NAME_REQUIRED": "Disziplinname ist erforderlich",
         "IS_DOUBLES": "Doppel",
-        "GENDER_LABEL": "Geschlecht:",
-        "GENDER_MALE": "Männlich",
-        "GENDER_FEMALE": "Weiblich",
-        "GENDER_MIXED": "Mixed",
         "CHARGE_LABEL": "Startgebühr",
         "CHARGE_PLACEHOLDER": "0.00",
         "MIXED_SINGLES_ERROR": "Mixed-Disziplinen müssen Doppel sein. Bitte aktivieren Sie den Doppel-Schalter.",

@@ -89,13 +89,13 @@
             @if (isEditing(player.id)) {
               <mat-form-field appearance="outline" class="edit-field">
                 <mat-select [(ngModel)]="editedGender">
-                  <mat-option [value]="Gender.Male">{{ 'PLAYERS.CREATE.GENDER_MALE' | translate }}</mat-option>
-                  <mat-option [value]="Gender.Female">{{ 'PLAYERS.CREATE.GENDER_FEMALE' | translate }}</mat-option>
+                  <mat-option [value]="Gender.Male">{{ 'GENDER.MALE' | translate }}</mat-option>
+                  <mat-option [value]="Gender.Female">{{ 'GENDER.FEMALE' | translate }}</mat-option>
                 </mat-select>
               </mat-form-field>
             } @else {
               <mat-chip [highlighted]="true" [color]="player.gender === Gender.Male ? 'primary' : 'accent'">
-                {{ (player.gender === Gender.Male ? 'PLAYERS.CREATE.GENDER_MALE' : 'PLAYERS.CREATE.GENDER_FEMALE') | translate }}
+                {{ (player.gender === Gender.Male ? 'GENDER.MALE' : 'GENDER.FEMALE') | translate }}
               </mat-chip>
             }
           </td>
