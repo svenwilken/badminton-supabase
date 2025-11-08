@@ -1,0 +1,60 @@
+<h2 mat-dialog-title>
+  {{ isEditMode ? ('DISCIPLINE_DETAIL.PARTICIPANTS.EDIT.TITLE_SINGLES' | translate) : ('DISCIPLINE_DETAIL.PARTICIPANTS.ADD.TITLE_SINGLES' | translate) }}
+</h2>
+
+<mat-dialog-content>
+  @if (loading()) {
+    <div class="loading-container">
+      <mat-progress-spinner mode="indeterminate" diameter="40"></mat-progress-spinner>
+      <p>{{ 'COMMON.LOADING' | translate }}</p>
+    </div>
+  } @else if (availablePlayers().length === 0) {
+    <div class="empty-state">
+      <p>{{ 'DISCIPLINE_DETAIL.PARTICIPANTS.ADD.NO_PLAYERS' | translate }}</p>
+    </div>
+  } @else {
+    <mat-form-field appearance="outline" class="full-width" style="margin-top: 1rem;">
+      <mat-label>{{ 'DISCIPLINE_DETAIL.PARTICIPANTS.ADD.SELECT_PLAYER' | translate }}</mat-label>
+      <input type="text"
+             matInput
+             [(ngModel)]="selectedPlayer"
+             (ngModelChange)="onPlayerChanged($event)"
+             [matAutocomplete]="auto"
+             required>
+      <mat-autocomplete #auto="matAutocomplete" 
+                        [displayWith]="displayPlayerFn.bind(this)"
+                        (optionSelected)="onPlayerSelected($event.option.value)">
+        @for (player of filteredPlayers(); track player.id) {
+          <mat-option [value]="player">
+            {{ player.name }}
+            @if (player.club) {
+              <span class="club-info"> - {{ player.club }}</span>
+            }
+          </mat-option>
+        }
+      </mat-autocomplete>
+    </mat-form-field>
+
+    @if (error()) {
+      <div class="error-message">
+        {{ error() }}
+      </div>
+    }
+  }
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cancel()" [disabled]="submitting()">
+    {{ 'COMMON.CANCEL' | translate }}
+  </button>
+  <button mat-raised-button color="primary" 
+          (click)="addParticipant()" 
+          [disabled]="loading() || submitting() || availablePlayers().length === 0">
+    @if (submitting()) {
+      <mat-progress-spinner mode="indeterminate" diameter="20"></mat-progress-spinner>
+    } @else {
+      {{ isEditMode ? ('COMMON.SAVE' | translate) : ('COMMON.ADD' | translate) }}
+    }
+  </button>
+</mat-dialog-actions>
+

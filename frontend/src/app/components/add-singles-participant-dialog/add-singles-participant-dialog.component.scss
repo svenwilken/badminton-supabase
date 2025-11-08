@@ -1,0 +1,54 @@
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  
+  mat-progress-spinner {
+    margin-bottom: 1rem;
+  }
+}
+
+.empty-state {
+  padding: 2rem;
+  text-align: center;
+  
+  p {
+    color: rgba(255, 255, 255, 0.95);
+    font-weight: 500;
+    font-size: 1rem;
+  }
+}
+
+.full-width {
+  width: 100%;
+}
+
+.club-info {
+  font-size: 0.9em;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.error-message {
+  color: #f44336;
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+}
+
+mat-dialog-content {
+  min-width: 400px;
+  max-width: 500px;
+  padding: 1rem;
+}
+
+mat-dialog-actions {
+  padding: 1rem;
+  
+  button {
+    mat-progress-spinner {
+      display: inline-block;
+      vertical-align: middle;
+    }
+  }
+}
+

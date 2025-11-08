@@ -1,0 +1,82 @@
+<h2 mat-dialog-title>
+  {{ isEditMode ? ('DISCIPLINE_DETAIL.PARTICIPANTS.EDIT.TITLE_DOUBLES' | translate) : ('DISCIPLINE_DETAIL.PARTICIPANTS.ADD.TITLE_DOUBLES' | translate) }}
+</h2>
+
+<mat-dialog-content>
+  @if (loading()) {
+    <div class="loading-container">
+      <mat-progress-spinner mode="indeterminate" diameter="40"></mat-progress-spinner>
+      <p>{{ 'COMMON.LOADING' | translate }}</p>
+    </div>
+  } @else if (availablePlayers().length < 2) {
+    <div class="empty-state">
+      <p>{{ 'DISCIPLINE_DETAIL.PARTICIPANTS.ADD.NOT_ENOUGH_PLAYERS' | translate }}</p>
+    </div>
+  } @else {
+    <mat-form-field appearance="outline" class="full-width player1">
+      <mat-label>{{ 'DISCIPLINE_DETAIL.PARTICIPANTS.PLAYER_1' | translate }}</mat-label>
+      <input type="text"
+             matInput
+             [(ngModel)]="selectedPlayer1"
+             (ngModelChange)="onPlayer1Changed($event)"
+             [matAutocomplete]="auto1"
+             required>
+      <mat-autocomplete #auto1="matAutocomplete" 
+                        [displayWith]="displayPlayerFn.bind(this)"
+                        (optionSelected)="onPlayer1Selected($event.option.value)">
+        @for (player of filteredPlayer1Options(); track player.id) {
+          <mat-option [value]="player">
+            {{ player.name }}
+            @if (player.club) {
+              <span class="club-info"> - {{ player.club }}</span>
+            }
+          </mat-option>
+        }
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>{{ 'DISCIPLINE_DETAIL.PARTICIPANTS.PLAYER_2' | translate }}</mat-label>
+      <input type="text"
+             matInput
+             [(ngModel)]="selectedPlayer2"
+             (ngModelChange)="onPlayer2Changed($event)"
+             [matAutocomplete]="auto2"
+             required>
+      <mat-autocomplete #auto2="matAutocomplete" 
+                        [displayWith]="displayPlayerFn.bind(this)"
+                        (optionSelected)="onPlayer2Selected($event.option.value)">
+        @for (player of filteredPlayer2Options(); track player.id) {
+          <mat-option [value]="player">
+            {{ player.name }}
+            @if (player.club) {
+              <span class="club-info"> - {{ player.club }}</span>
+            }
+          </mat-option>
+        }
+      </mat-autocomplete>
+    </mat-form-field>
+
+    @if (error()) {
+      <div class="error-message">
+        {{ error() }}
+      </div>
+    }
+  }
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cancel()" [disabled]="submitting()">
+    {{ 'COMMON.CANCEL' | translate }}
+  </button>
+  <button mat-raised-button color="primary" 
+          (click)="addParticipant()" 
+          [disabled]="loading() || submitting() || availablePlayers().length < 2">
+    @if (submitting()) {
+      <mat-progress-spinner mode="indeterminate" diameter="20"></mat-progress-spinner>
+    } @else {
+      {{ isEditMode ? ('COMMON.SAVE' | translate) : ('COMMON.ADD' | translate) }}
+    }
+  </button>
+</mat-dialog-actions>
+

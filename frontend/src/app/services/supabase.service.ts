@@ -243,5 +243,50 @@ export class SupabaseService {
     
     if (error) throw error;
   }
+
+  async addSinglesParticipant(disciplineId: string, playerId: string) {
+    const { error } = await this.supabase
+      .from('singles_player')
+      .insert({
+        discipline_id: disciplineId,
+        player_id: playerId
+      });
+    
+    if (error) throw error;
+  }
+
+  async addDoublesParticipant(disciplineId: string, player1Id: string, player2Id: string) {
+    const { error } = await this.supabase
+      .from('doubles_pair')
+      .insert({
+        discipline: disciplineId,
+        player_1: player1Id,
+        player_2: player2Id
+      });
+    
+    if (error) throw error;
+  }
+
+  async updateSinglesParticipant(disciplineId: string, oldPlayerId: string, newPlayerId: string) {
+    const { error } = await this.supabase
+      .from('singles_player')
+      .update({ player_id: newPlayerId })
+      .eq('discipline_id', disciplineId)
+      .eq('player_id', oldPlayerId);
+    
+    if (error) throw error;
+  }
+
+  async updateDoublesParticipant(pairId: string, player1Id: string, player2Id: string) {
+    const { error } = await this.supabase
+      .from('doubles_pair')
+      .update({
+        player_1: player1Id,
+        player_2: player2Id
+      })
+      .eq('id', pairId);
+    
+    if (error) throw error;
+  }
 }
 

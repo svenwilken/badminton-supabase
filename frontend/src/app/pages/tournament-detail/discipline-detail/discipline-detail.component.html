@@ -57,7 +57,13 @@
           <!-- Doubles Pairs Table -->
           @if (doublesParticipants().length > 0) {
             <div class="participants-section">
-              <h3>{{ 'DISCIPLINE_DETAIL.PARTICIPANTS.TITLE' | translate }}</h3>
+              <div class="section-header">
+                <h3>{{ 'DISCIPLINE_DETAIL.PARTICIPANTS.TITLE' | translate }}</h3>
+                <button mat-raised-button color="primary" (click)="onAddDoublesParticipant()">
+                  <mat-icon>add</mat-icon>
+                  {{ 'DISCIPLINE_DETAIL.PARTICIPANTS.ADD.BUTTON' | translate }}
+                </button>
+              </div>
               <table mat-table [dataSource]="doublesParticipants()" class="participants-table">
                 <!-- Number Column -->
                 <ng-container matColumnDef="number">
@@ -101,11 +107,18 @@
                 <ng-container matColumnDef="actions">
                   <th mat-header-cell *matHeaderCellDef>{{ 'COMMON.ACTIONS' | translate }}</th>
                   <td mat-cell *matCellDef="let element">
-                    <button mat-icon-button color="warn"
-                            (click)="onDeleteDoublesParticipant(element)"
-                            [matTooltip]="'COMMON.DELETE' | translate">
-                      <mat-icon>delete</mat-icon>
-                    </button>
+                    <div class="action-buttons">
+                      <button mat-icon-button color="accent"
+                              (click)="onEditDoublesParticipant(element)"
+                              [matTooltip]="'COMMON.EDIT' | translate">
+                        <mat-icon>edit</mat-icon>
+                      </button>
+                      <button mat-icon-button color="warn"
+                              (click)="onDeleteDoublesParticipant(element)"
+                              [matTooltip]="'COMMON.DELETE' | translate">
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </div>
                   </td>
                 </ng-container>
 
@@ -117,13 +130,23 @@
             <div class="empty-participants">
               <mat-icon>group</mat-icon>
               <p>{{ 'DISCIPLINE_DETAIL.PARTICIPANTS.EMPTY' | translate }}</p>
+              <button mat-raised-button color="primary" (click)="onAddDoublesParticipant()">
+                <mat-icon>add</mat-icon>
+                {{ 'DISCIPLINE_DETAIL.PARTICIPANTS.ADD.BUTTON' | translate }}
+              </button>
             </div>
           }
         } @else {
           <!-- Singles Players Table -->
           @if (singlesParticipants().length > 0) {
             <div class="participants-section">
-              <h3>{{ 'DISCIPLINE_DETAIL.PARTICIPANTS.TITLE' | translate }}</h3>
+              <div class="section-header">
+                <h3>{{ 'DISCIPLINE_DETAIL.PARTICIPANTS.TITLE' | translate }}</h3>
+                <button mat-raised-button color="primary" (click)="onAddSinglesParticipant()">
+                  <mat-icon>add</mat-icon>
+                  {{ 'DISCIPLINE_DETAIL.PARTICIPANTS.ADD.BUTTON' | translate }}
+                </button>
+              </div>
               <table mat-table [dataSource]="singlesParticipants()" class="participants-table">
                 <!-- Number Column -->
                 <ng-container matColumnDef="number">
@@ -151,11 +174,18 @@
                 <ng-container matColumnDef="actions">
                   <th mat-header-cell *matHeaderCellDef>{{ 'COMMON.ACTIONS' | translate }}</th>
                   <td mat-cell *matCellDef="let element">
-                    <button mat-icon-button color="warn"
-                            (click)="onDeleteSinglesParticipant(element)"
-                            [matTooltip]="'COMMON.DELETE' | translate">
-                      <mat-icon>delete</mat-icon>
-                    </button>
+                    <div class="action-buttons">
+                      <button mat-icon-button color="accent"
+                              (click)="onEditSinglesParticipant(element)"
+                              [matTooltip]="'COMMON.EDIT' | translate">
+                        <mat-icon>edit</mat-icon>
+                      </button>
+                      <button mat-icon-button color="warn"
+                              (click)="onDeleteSinglesParticipant(element)"
+                              [matTooltip]="'COMMON.DELETE' | translate">
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </div>
                   </td>
                 </ng-container>
 
@@ -167,6 +197,10 @@
             <div class="empty-participants">
               <mat-icon>person</mat-icon>
               <p>{{ 'DISCIPLINE_DETAIL.PARTICIPANTS.EMPTY' | translate }}</p>
+              <button mat-raised-button color="primary" (click)="onAddSinglesParticipant()">
+                <mat-icon>add</mat-icon>
+                {{ 'DISCIPLINE_DETAIL.PARTICIPANTS.ADD.BUTTON' | translate }}
+              </button>
             </div>
           }
         }
