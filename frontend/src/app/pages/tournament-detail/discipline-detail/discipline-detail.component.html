@@ -3,7 +3,7 @@
     <button mat-icon-button (click)="goBack()" class="back-button">
       <mat-icon>arrow_back</mat-icon>
     </button>
-    <h1>{{ 'DISCIPLINE_DETAIL.TITLE' | translate }}</h1>
+    <h1>{{ discipline()?.name }}</h1>
   </div>
 
   @if (loading()) {
@@ -16,7 +16,6 @@
     <mat-card class="detail-card">
       <mat-card-header>
         <mat-icon mat-card-avatar>category</mat-icon>
-        <mat-card-title>{{ discipline()?.name }}</mat-card-title>
         <mat-card-subtitle>
           <div class="discipline-info">
             <span class="info-item">
