@@ -13,6 +13,7 @@
     "CLOSE": "Close",
     "RETRY": "Retry",
     "BACK": "Back",
+    "GO_BACK": "Go Back",
     "LOADING": "Loading...",
     "ERROR": "Error"
   },
@@ -161,6 +162,10 @@
       "DELETE_SUCCESS": "Tournament deleted successfully",
       "DELETE_ERROR": "Failed to delete tournament"
     }
+  },
+  "DISCIPLINE_DETAIL": {
+    "TITLE": "Discipline Details",
+    "NOT_FOUND": "Discipline not found"
   }
 }
 

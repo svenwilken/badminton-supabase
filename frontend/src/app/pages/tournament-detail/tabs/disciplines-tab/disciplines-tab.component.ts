@@ -1,6 +1,6 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -39,6 +39,7 @@ export class DisciplinesTabComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private supabaseService: SupabaseService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
@@ -83,8 +84,9 @@ export class DisciplinesTabComponent implements OnInit {
   }
 
   onViewDiscipline(discipline: Discipline) {
-    // TODO: Navigate to discipline detail view
-    console.log('View discipline:', discipline);
+    if (!this.tournamentId) return;
+    
+    this.router.navigate(['/tournament', this.tournamentId, 'discipline', discipline.id]);
   }
 
   onEditDiscipline(discipline: Discipline) {

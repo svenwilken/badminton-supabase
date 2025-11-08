@@ -13,6 +13,7 @@
     "CLOSE": "Schließen",
     "RETRY": "Wiederholen",
     "BACK": "Zurück",
+    "GO_BACK": "Zurück",
     "LOADING": "Lädt...",
     "ERROR": "Fehler"
   },
@@ -161,6 +162,10 @@
       "DELETE_SUCCESS": "Turnier erfolgreich gelöscht",
       "DELETE_ERROR": "Turnier konnte nicht gelöscht werden"
     }
+  },
+  "DISCIPLINE_DETAIL": {
+    "TITLE": "Disziplin-Details",
+    "NOT_FOUND": "Disziplin nicht gefunden"
   }
 }
 

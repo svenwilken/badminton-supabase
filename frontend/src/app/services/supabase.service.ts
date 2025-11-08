@@ -127,6 +127,28 @@ export class SupabaseService {
     })) || [];
   }
 
+  async getDisciplineById(disciplineId: string) {
+    const { data, error } = await this.supabase
+      .from('discipline')
+      .select(`
+        *,
+        singles_player:singles_player!discipline_id(count),
+        doubles_pair:doubles_pair!discipline(count)
+      `)
+      .eq('id', disciplineId)
+      .single();
+    
+    if (error) throw error;
+    
+    // Add participants_count based on discipline type
+    return {
+      ...data,
+      participants_count: data.is_doubles 
+        ? (data.doubles_pair?.[0]?.count || 0)
+        : (data.singles_player?.[0]?.count || 0)
+    };
+  }
+
   async createDiscipline(discipline: { 
     name: string; 
     is_doubles: boolean; 
