@@ -224,5 +224,24 @@ export class SupabaseService {
     if (error) throw error;
     return data as DoublesParticipant[];
   }
+
+  async deleteSinglesParticipant(disciplineId: string, playerId: string) {
+    const { error } = await this.supabase
+      .from('singles_player')
+      .delete()
+      .eq('discipline_id', disciplineId)
+      .eq('player_id', playerId);
+    
+    if (error) throw error;
+  }
+
+  async deleteDoublesParticipant(id: string) {
+    const { error } = await this.supabase
+      .from('doubles_pair')
+      .delete()
+      .eq('id', id);
+    
+    if (error) throw error;
+  }
 }
 

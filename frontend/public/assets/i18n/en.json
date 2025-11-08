@@ -16,6 +16,7 @@
     "GO_BACK": "Go Back",
     "LOADING": "Loading...",
     "ERROR": "Error",
+    "ACTIONS": "Actions",
     "SINGLES": "Singles",
     "DOUBLES": "Doubles"
   },
@@ -164,9 +165,16 @@
     "PARTICIPANTS": {
       "TITLE": "Participants",
       "NUMBER": "#",
+      "PLAYER": "Player",
       "PLAYER_1": "Player 1",
       "PLAYER_2": "Player 2",
-      "EMPTY": "No participants registered yet"
+      "EMPTY": "No participants registered yet",
+      "DELETE": {
+        "CONFIRM": "Are you sure you want to remove \"{{name}}\" from this discipline?",
+        "CONFIRM_PAIR": "Are you sure you want to remove the pair \"{{player1}}\" / \"{{player2}}\" from this discipline?",
+        "SUCCESS": "Participant removed successfully",
+        "ERROR": "Failed to remove participant"
+      }
     }
   }
 }

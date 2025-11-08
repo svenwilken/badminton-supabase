@@ -6,7 +6,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTableModule } from '@angular/material/table';
-import { TranslateModule } from '@ngx-translate/core';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { SupabaseService, Discipline, SinglesParticipant, DoublesParticipant } from '../../../services/supabase.service';
 
 @Component({
@@ -18,6 +20,8 @@ import { SupabaseService, Discipline, SinglesParticipant, DoublesParticipant } f
     MatButtonModule,
     MatProgressSpinnerModule,
     MatTableModule,
+    MatSnackBarModule,
+    MatTooltipModule,
     TranslateModule
   ],
   templateUrl: './discipline-detail.component.html',
@@ -32,13 +36,15 @@ export class DisciplineDetailComponent implements OnInit {
   tournamentId: string | null = null;
   
   // Column definitions
-  singlesColumns: string[] = ['number', 'name', 'gender'];
-  doublesColumns: string[] = ['number', 'player1', 'player2'];
+  singlesColumns: string[] = ['number', 'player', 'actions'];
+  doublesColumns: string[] = ['number', 'player1', 'player2', 'actions'];
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private supabaseService: SupabaseService
+    private supabaseService: SupabaseService,
+    private snackBar: MatSnackBar,
+    private translate: TranslateService
   ) {}
 
   async ngOnInit() {
@@ -57,7 +63,7 @@ export class DisciplineDetailComponent implements OnInit {
       this.loading.set(true);
       const data = await this.supabaseService.getDisciplineById(this.disciplineId);
       this.discipline.set(data);
-      
+
       // Load participants based on discipline type
       if (data.is_doubles) {
         await this.loadDoublesParticipants();
@@ -111,6 +117,69 @@ export class DisciplineDetailComponent implements OnInit {
         return 'GENDER.MIXED';
       default:
         return 'GENDER.MIXED';
+    }
+  }
+
+  async onDeleteSinglesParticipant(participant: SinglesParticipant) {
+    const confirmMessage = this.translate.instant('DISCIPLINE_DETAIL.PARTICIPANTS.DELETE.CONFIRM', { 
+      name: participant.player.name 
+    });
+    if (!confirm(confirmMessage)) {
+      return;
+    }
+
+    try {
+      await this.supabaseService.deleteSinglesParticipant(participant.discipline_id, participant.player_id);
+      this.snackBar.open(
+        this.translate.instant('DISCIPLINE_DETAIL.PARTICIPANTS.DELETE.SUCCESS'),
+        this.translate.instant('COMMON.CLOSE'),
+        { duration: 3000 }
+      );
+      await this.loadSinglesParticipants();
+      // Reload discipline to update participant count
+      if (this.disciplineId) {
+        const data = await this.supabaseService.getDisciplineById(this.disciplineId);
+        this.discipline.set(data);
+      }
+    } catch (err: any) {
+      console.error('Error deleting singles participant:', err);
+      this.snackBar.open(
+        this.translate.instant('DISCIPLINE_DETAIL.PARTICIPANTS.DELETE.ERROR'),
+        this.translate.instant('COMMON.CLOSE'),
+        { duration: 3000 }
+      );
+    }
+  }
+
+  async onDeleteDoublesParticipant(participant: DoublesParticipant) {
+    const confirmMessage = this.translate.instant('DISCIPLINE_DETAIL.PARTICIPANTS.DELETE.CONFIRM_PAIR', { 
+      player1: participant.player_1_details.name,
+      player2: participant.player_2_details.name
+    });
+    if (!confirm(confirmMessage)) {
+      return;
+    }
+
+    try {
+      await this.supabaseService.deleteDoublesParticipant(participant.id);
+      this.snackBar.open(
+        this.translate.instant('DISCIPLINE_DETAIL.PARTICIPANTS.DELETE.SUCCESS'),
+        this.translate.instant('COMMON.CLOSE'),
+        { duration: 3000 }
+      );
+      await this.loadDoublesParticipants();
+      // Reload discipline to update participant count
+      if (this.disciplineId) {
+        const data = await this.supabaseService.getDisciplineById(this.disciplineId);
+        this.discipline.set(data);
+      }
+    } catch (err: any) {
+      console.error('Error deleting doubles participant:', err);
+      this.snackBar.open(
+        this.translate.instant('DISCIPLINE_DETAIL.PARTICIPANTS.DELETE.ERROR'),
+        this.translate.instant('COMMON.CLOSE'),
+        { duration: 3000 }
+      );
     }
   }
 }

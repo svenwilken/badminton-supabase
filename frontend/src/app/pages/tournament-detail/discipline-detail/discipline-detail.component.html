@@ -15,7 +15,6 @@
   @if (!loading() && discipline()) {
     <mat-card class="detail-card">
       <mat-card-header>
-        <mat-icon mat-card-avatar>category</mat-icon>
         <mat-card-subtitle>
           <div class="discipline-info">
             <span class="info-item">
@@ -98,6 +97,18 @@
                   </td>
                 </ng-container>
 
+                <!-- Actions Column -->
+                <ng-container matColumnDef="actions">
+                  <th mat-header-cell *matHeaderCellDef>{{ 'COMMON.ACTIONS' | translate }}</th>
+                  <td mat-cell *matCellDef="let element">
+                    <button mat-icon-button color="warn"
+                            (click)="onDeleteDoublesParticipant(element)"
+                            [matTooltip]="'COMMON.DELETE' | translate">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </td>
+                </ng-container>
+
                 <tr mat-header-row *matHeaderRowDef="doublesColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: doublesColumns;"></tr>
               </table>
@@ -120,24 +131,31 @@
                   <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
                 </ng-container>
 
-                <!-- Name Column -->
-                <ng-container matColumnDef="name">
-                  <th mat-header-cell *matHeaderCellDef>{{ 'TABLE.NAME' | translate }}</th>
+                <!-- Player Column -->
+                <ng-container matColumnDef="player">
+                  <th mat-header-cell *matHeaderCellDef>{{ 'DISCIPLINE_DETAIL.PARTICIPANTS.PLAYER' | translate }}</th>
                   <td mat-cell *matCellDef="let element">
-                    <div class="player-details">
-                      <span class="player-name">{{ element.player.name }}</span>
-                      @if (element.player.club) {
-                        <span class="player-club">{{ element.player.club }}</span>
-                      }
+                    <div class="player-info">
+                      <mat-icon class="gender-icon">{{ element.player.gender === 'male' ? 'male' : 'female' }}</mat-icon>
+                      <div class="player-details">
+                        <span class="player-name">{{ element.player.name }}</span>
+                        @if (element.player.club) {
+                          <span class="player-club">{{ element.player.club }}</span>
+                        }
+                      </div>
                     </div>
                   </td>
                 </ng-container>
 
-                <!-- Gender Column -->
-                <ng-container matColumnDef="gender">
-                  <th mat-header-cell *matHeaderCellDef>{{ 'TABLE.GENDER' | translate }}</th>
+                <!-- Actions Column -->
+                <ng-container matColumnDef="actions">
+                  <th mat-header-cell *matHeaderCellDef>{{ 'COMMON.ACTIONS' | translate }}</th>
                   <td mat-cell *matCellDef="let element">
-                    <mat-icon class="gender-icon">{{ element.player.gender === 'male' ? 'male' : 'female' }}</mat-icon>
+                    <button mat-icon-button color="warn"
+                            (click)="onDeleteSinglesParticipant(element)"
+                            [matTooltip]="'COMMON.DELETE' | translate">
+                      <mat-icon>delete</mat-icon>
+                    </button>
                   </td>
                 </ng-container>
 

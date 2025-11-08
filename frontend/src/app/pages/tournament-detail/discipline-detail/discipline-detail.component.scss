@@ -1,12 +1,10 @@
 .discipline-detail-container {
-  padding: 24px;
-  margin: 0 auto;
-
   .header {
     display: flex;
     align-items: center;
     gap: 16px;
     margin-bottom: 24px;
+    padding: 24px 24px 0;
 
     .back-button {
       flex-shrink: 0;
@@ -24,10 +22,13 @@
     justify-content: center;
     align-items: center;
     min-height: 300px;
+    padding: 24px;
   }
 
   .detail-card {
-    margin-bottom: 24px;
+    max-width: 1400px;
+    margin: 0 auto 24px;
+    padding: 24px;
 
     mat-card-header {
       margin-bottom: 16px;
@@ -179,6 +180,7 @@
     justify-content: center;
     min-height: 300px;
     text-align: center;
+    padding: 24px;
 
     mat-icon {
       font-size: 64px;

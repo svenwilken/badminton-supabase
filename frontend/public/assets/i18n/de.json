@@ -16,6 +16,7 @@
     "GO_BACK": "Zurück",
     "LOADING": "Lädt...",
     "ERROR": "Fehler",
+    "ACTIONS": "Aktionen",
     "SINGLES": "Einzel",
     "DOUBLES": "Doppel"
   },
@@ -164,9 +165,16 @@
     "PARTICIPANTS": {
       "TITLE": "Teilnehmer",
       "NUMBER": "#",
+      "PLAYER": "Spieler",
       "PLAYER_1": "Spieler 1",
       "PLAYER_2": "Spieler 2",
-      "EMPTY": "Noch keine Teilnehmer angemeldet"
+      "EMPTY": "Noch keine Teilnehmer angemeldet",
+      "DELETE": {
+        "CONFIRM": "Möchten Sie \"{{name}}\" wirklich aus dieser Disziplin entfernen?",
+        "CONFIRM_PAIR": "Möchten Sie das Paar \"{{player1}}\" / \"{{player2}}\" wirklich aus dieser Disziplin entfernen?",
+        "SUCCESS": "Teilnehmer erfolgreich entfernt",
+        "ERROR": "Teilnehmer konnte nicht entfernt werden"
+      }
     }
   }
 }
