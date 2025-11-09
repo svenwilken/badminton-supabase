@@ -177,6 +177,7 @@
       },
       "ADD": {
         "BUTTON": "Teilnehmer hinzufügen",
+        "BUTTON_DOUBLES": "Paar hinzufügen",
         "TITLE_SINGLES": "Einzelspieler hinzufügen",
         "TITLE_DOUBLES": "Doppelpaar hinzufügen",
         "SELECT_PLAYER": "Spieler auswählen",

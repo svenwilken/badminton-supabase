@@ -61,7 +61,7 @@
                 <h3>{{ 'DISCIPLINE_DETAIL.PARTICIPANTS.TITLE' | translate }}</h3>
                 <button mat-raised-button color="primary" (click)="onAddDoublesParticipant()">
                   <mat-icon>add</mat-icon>
-                  {{ 'DISCIPLINE_DETAIL.PARTICIPANTS.ADD.BUTTON' | translate }}
+                  {{ 'DISCIPLINE_DETAIL.PARTICIPANTS.ADD.BUTTON_DOUBLES' | translate }}
                 </button>
               </div>
               <table mat-table [dataSource]="doublesParticipants()" class="participants-table">
@@ -132,7 +132,7 @@
               <p>{{ 'DISCIPLINE_DETAIL.PARTICIPANTS.EMPTY' | translate }}</p>
               <button mat-raised-button color="primary" (click)="onAddDoublesParticipant()">
                 <mat-icon>add</mat-icon>
-                {{ 'DISCIPLINE_DETAIL.PARTICIPANTS.ADD.BUTTON' | translate }}
+                {{ 'DISCIPLINE_DETAIL.PARTICIPANTS.ADD.BUTTON_DOUBLES' | translate }}
               </button>
             </div>
           }

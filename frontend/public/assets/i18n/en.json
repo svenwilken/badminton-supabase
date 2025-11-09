@@ -177,6 +177,7 @@
       },
       "ADD": {
         "BUTTON": "Add Participant",
+        "BUTTON_DOUBLES": "Add Pair",
         "TITLE_SINGLES": "Add Singles Player",
         "TITLE_DOUBLES": "Add Doubles Pair",
         "SELECT_PLAYER": "Select Player",
