@@ -124,6 +124,12 @@ export class DisciplineDetailComponent implements OnInit {
     }
   }
 
+  calculateProfit(): number {
+    const discipline = this.discipline();
+    if (!discipline || !discipline.charge) return 0;
+    return (discipline.participants_count || 0) * discipline.charge;
+  }
+
   async onDeleteSinglesParticipant(participant: SinglesParticipant) {
     const confirmMessage = this.translate.instant('DISCIPLINE_DETAIL.PARTICIPANTS.DELETE.CONFIRM', { 
       name: participant.player.name 

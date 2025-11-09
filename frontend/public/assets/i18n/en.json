@@ -162,6 +162,7 @@
   "DISCIPLINE_DETAIL": {
     "TITLE": "Discipline Details",
     "NOT_FOUND": "Discipline not found",
+    "PROFIT": "Profit",
     "PARTICIPANTS": {
       "TITLE": "Participants",
       "NUMBER": "#",

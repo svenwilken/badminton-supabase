@@ -30,6 +30,10 @@
                 <mat-icon>euro</mat-icon>
                 {{ discipline()?.charge | number:'1.2-2' }}
               </span>
+              <span class="info-item profit">
+                <mat-icon>payments</mat-icon>
+                {{ calculateProfit() | number:'1.2-2' }}
+              </span>
             }
             <span class="info-item participants">
               @if (discipline()?.is_doubles) {

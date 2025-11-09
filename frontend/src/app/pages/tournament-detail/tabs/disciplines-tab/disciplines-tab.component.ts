@@ -35,7 +35,7 @@ export class DisciplinesTabComponent implements OnInit {
   disciplines = signal<Discipline[]>([]);
   loading = signal(true);
   tournamentId: string | null = null;
-  displayedColumns: string[] = ['name', 'type', 'gender', 'charge', 'participants', 'actions'];
+  displayedColumns: string[] = ['name', 'type', 'gender', 'participants', 'actions'];
 
   constructor(
     private route: ActivatedRoute,
