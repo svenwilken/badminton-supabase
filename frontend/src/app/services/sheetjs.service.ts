@@ -33,11 +33,7 @@ export class SheetJsService {
    * @param options Export options
    */
   exportToCsv<T>(data: T[], options: ExportOptions = {}): void {
-    const {
-      filename = 'export.csv',
-      sheetName = 'Sheet1',
-      skipHeader = false,
-    } = options;
+    const { filename = 'export.csv', sheetName = 'Sheet1', skipHeader = false } = options;
 
     // Convert data to worksheet
     const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data, {
@@ -60,11 +56,7 @@ export class SheetJsService {
    * @param options Export options
    */
   exportToExcel<T>(data: T[], options: ExportOptions = {}): void {
-    const {
-      filename = 'export.xlsx',
-      sheetName = 'Sheet1',
-      skipHeader = false,
-    } = options;
+    const { filename = 'export.xlsx', sheetName = 'Sheet1', skipHeader = false } = options;
 
     // Convert data to worksheet
     const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data, {
@@ -89,7 +81,7 @@ export class SheetJsService {
    */
   exportMultipleSheets<T>(
     sheets: { [sheetName: string]: T[] },
-    filename: string = 'export.xlsx'
+    filename: string = 'export.xlsx',
   ): void {
     const workbook: XLSX.WorkBook = XLSX.utils.book_new();
 
@@ -108,10 +100,7 @@ export class SheetJsService {
    * @param options Import options
    * @returns Promise with parsed data
    */
-  importFromCsv<T = any>(
-    file: File,
-    options: ImportOptions = {}
-  ): Promise<ImportResult<T>> {
+  importFromCsv<T = any>(file: File, options: ImportOptions = {}): Promise<ImportResult<T>> {
     return this.importFile<T>(file, { ...options, raw: false });
   }
 
@@ -121,10 +110,7 @@ export class SheetJsService {
    * @param options Import options
    * @returns Promise with parsed data
    */
-  importFromExcel<T = any>(
-    file: File,
-    options: ImportOptions = {}
-  ): Promise<ImportResult<T>> {
+  importFromExcel<T = any>(file: File, options: ImportOptions = {}): Promise<ImportResult<T>> {
     return this.importFile<T>(file, options);
   }
 
@@ -134,17 +120,9 @@ export class SheetJsService {
    * @param options Import options
    * @returns Promise with parsed data
    */
-  private importFile<T = any>(
-    file: File,
-    options: ImportOptions = {}
-  ): Promise<ImportResult<T>> {
+  private importFile<T = any>(file: File, options: ImportOptions = {}): Promise<ImportResult<T>> {
     return new Promise((resolve, reject) => {
-      const {
-        hasHeader = true,
-        sheetIndex = 0,
-        sheetName,
-        raw = false,
-      } = options;
+      const { hasHeader = true, sheetIndex = 0, sheetName, raw = false } = options;
 
       const reader = new FileReader();
 
@@ -249,7 +227,7 @@ export class SheetJsService {
       'text/csv',
       'application/vnd.ms-excel',
       'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-    ]
+    ],
   ): boolean {
     return allowedTypes.includes(file.type);
   }
@@ -292,7 +270,7 @@ export class SheetJsService {
         ...data.map((row) => {
           const value = (row as any)[key];
           return value ? String(value).length : 0;
-        })
+        }),
       );
       return { wch: Math.min(maxLength + 2, 50) }; // Cap at 50 characters
     });
@@ -300,4 +278,3 @@ export class SheetJsService {
     worksheet['!cols'] = colWidths;
   }
 }
-

@@ -13,6 +13,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { SupabaseService, Discipline } from '../../../../services/supabase.service';
 import { CreateDisciplineDialogComponent } from '../../../../components/create-discipline-dialog/create-discipline-dialog.component';
+import { ImportDisciplinesDialogComponent } from '../../../../components/import-disciplines-dialog/import-disciplines-dialog.component';
 
 @Component({
   selector: 'app-disciplines-tab',
@@ -78,6 +79,30 @@ export class DisciplinesTabComponent implements OnInit {
     dialogRef.afterClosed().subscribe(async (result) => {
       if (result) {
         // Discipline was created successfully, reload the list
+        await this.loadDisciplines();
+      }
+    });
+  }
+
+  onImportDisciplines() {
+    if (!this.tournamentId) return;
+
+    const dialogRef = this.dialog.open(ImportDisciplinesDialogComponent, {
+      width: '90vw',
+      height: '90vh',
+      maxWidth: '1200px',
+      maxHeight: '900px',
+      data: { tournamentId: this.tournamentId }
+    });
+
+    dialogRef.afterClosed().subscribe(async (result) => {
+      if (result?.success) {
+        // Import was successful, show message and reload the list
+        this.snackBar.open(
+          this.translate.instant('TOURNAMENT_DETAIL.DISCIPLINES.IMPORT_SUCCESS'),
+          this.translate.instant('COMMON.CLOSE'),
+          { duration: 3000 }
+        );
         await this.loadDisciplines();
       }
     });

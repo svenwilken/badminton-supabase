@@ -125,6 +125,7 @@
     "DISCIPLINES": {
       "TITLE": "Disciplines",
       "ADD": "Add Discipline",
+      "IMPORT": "Import",
       "EMPTY_TITLE": "No disciplines yet",
       "EMPTY_MESSAGE": "Add your first discipline to get started!",
       "PARTICIPANTS": "Participants",
@@ -139,7 +140,17 @@
         "MIXED_SINGLES_ERROR": "Mixed disciplines must be doubles. Please enable the doubles toggle.",
         "SUCCESS": "Discipline created successfully",
         "ERROR": "Failed to create discipline"
-      }
+      },
+      "IMPORT_TITLE": "Import Disciplines",
+      "IMPORT_DRAG_DROP": "Drag and drop your file here",
+      "IMPORT_OR": "or",
+      "IMPORT_BROWSE": "Browse Files",
+      "IMPORT_SUPPORTED": "Supported formats: CSV, Excel (.xls, .xlsx)",
+      "IMPORT_PROCESSING": "Processing your file...",
+      "IMPORT_FORMAT_TITLE": "Expected File Format",
+      "IMPORT_FORMAT_DESC": "Your file should contain the following columns:",
+      "IMPORT_BUTTON": "Import Disciplines",
+      "IMPORT_SUCCESS": "Disciplines imported successfully"
     },
     "MATCHES": {
       "TITLE": "Matches",

@@ -1,10 +1,16 @@
 <div class="disciplines-container">
   <div class="header">
     <h2>{{ 'TOURNAMENT_DETAIL.DISCIPLINES.TITLE' | translate }}</h2>
-    <button mat-raised-button color="primary" (click)="onAddDiscipline()">
-      <mat-icon>add</mat-icon>
-      {{ 'TOURNAMENT_DETAIL.DISCIPLINES.ADD' | translate }}
-    </button>
+    <div class="header-actions">
+      <button mat-raised-button color="accent" (click)="onImportDisciplines()">
+        <mat-icon>upload_file</mat-icon>
+        {{ 'TOURNAMENT_DETAIL.DISCIPLINES.IMPORT' | translate }}
+      </button>
+      <button mat-raised-button color="primary" (click)="onAddDiscipline()">
+        <mat-icon>add</mat-icon>
+        {{ 'TOURNAMENT_DETAIL.DISCIPLINES.ADD' | translate }}
+      </button>
+    </div>
   </div>
 
   @if (loading()) {

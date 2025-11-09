@@ -1,0 +1,87 @@
+<div class="import-dialog">
+  <div class="dialog-header">
+    <h2 mat-dialog-title>
+      <mat-icon>upload_file</mat-icon>
+      {{ 'TOURNAMENT_DETAIL.DISCIPLINES.IMPORT_TITLE' | translate }}
+    </h2>
+    <button mat-icon-button (click)="onCancel()" class="close-button">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <mat-dialog-content>
+    @if (!selectedFile()) {
+      <div class="upload-area"
+           [class.drag-over]="dragOver()"
+           (dragover)="onDragOver($event)"
+           (dragleave)="onDragLeave($event)"
+           (drop)="onDrop($event)">
+        <mat-icon class="upload-icon">cloud_upload</mat-icon>
+        <h3>{{ 'TOURNAMENT_DETAIL.DISCIPLINES.IMPORT_DRAG_DROP' | translate }}</h3>
+        <p>{{ 'TOURNAMENT_DETAIL.DISCIPLINES.IMPORT_OR' | translate }}</p>
+        <button mat-raised-button color="primary" (click)="fileInput.click()">
+          <mat-icon>folder_open</mat-icon>
+          {{ 'TOURNAMENT_DETAIL.DISCIPLINES.IMPORT_BROWSE' | translate }}
+        </button>
+        <input #fileInput
+               type="file"
+               accept=".csv,.xls,.xlsx,text/csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+               (change)="onFileSelected($event)"
+               hidden>
+        <p class="file-info">{{ 'TOURNAMENT_DETAIL.DISCIPLINES.IMPORT_SUPPORTED' | translate }}</p>
+      </div>
+    } @else {
+      <div class="file-preview">
+        <mat-icon class="file-icon">description</mat-icon>
+        <div class="file-details">
+          <h3>{{ selectedFile()!.name }}</h3>
+          <p>{{ formatFileSize(selectedFile()!.size) }}</p>
+        </div>
+        @if (!uploading()) {
+          <button mat-icon-button color="warn" (click)="removeFile()" class="remove-button">
+            <mat-icon>delete</mat-icon>
+          </button>
+        }
+      </div>
+
+      @if (uploading()) {
+        <div class="upload-progress">
+          <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+          <p>{{ 'TOURNAMENT_DETAIL.DISCIPLINES.IMPORT_PROCESSING' | translate }}</p>
+        </div>
+      }
+
+    }
+    @if (validationErrors()?.length  && validationErrors()!.length > 0) {
+        <div class="validation-errors">
+          <mat-expansion-panel class="error-panel">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <mat-icon class="error-icon">error</mat-icon>
+                <span>Validation Errors ({{ validationErrors()!.length }})</span>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            
+            <div class="error-content">
+              <pre class="error-json">{{ validationErrors() | json }}</pre>
+            </div>
+          </mat-expansion-panel>
+        </div>
+      }
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <button mat-button (click)="onCancel()" [disabled]="uploading()">
+      {{ 'COMMON.CANCEL' | translate }}
+    </button>
+    <button mat-raised-button 
+            color="primary" 
+            (click)="onImport()"
+            [disabled]="!selectedFile() || uploading()">
+      <mat-icon>upload</mat-icon>
+      {{ 'TOURNAMENT_DETAIL.DISCIPLINES.IMPORT_BUTTON' | translate }}
+    </button>
+  </mat-dialog-actions>
+</div>
+
+

@@ -125,6 +125,7 @@
     "DISCIPLINES": {
       "TITLE": "Disziplinen",
       "ADD": "Disziplin hinzufügen",
+      "IMPORT": "Importieren",
       "EMPTY_TITLE": "Noch keine Disziplinen",
       "EMPTY_MESSAGE": "Fügen Sie Ihre erste Disziplin hinzu, um loszulegen!",
       "PARTICIPANTS": "Teilnehmer",
@@ -139,7 +140,17 @@
         "MIXED_SINGLES_ERROR": "Mixed-Disziplinen müssen Doppel sein. Bitte aktivieren Sie den Doppel-Schalter.",
         "SUCCESS": "Disziplin erfolgreich erstellt",
         "ERROR": "Disziplin konnte nicht erstellt werden"
-      }
+      },
+      "IMPORT_TITLE": "Disziplinen importieren",
+      "IMPORT_DRAG_DROP": "Ziehen Sie Ihre Datei hierher",
+      "IMPORT_OR": "oder",
+      "IMPORT_BROWSE": "Dateien durchsuchen",
+      "IMPORT_SUPPORTED": "Unterstützte Formate: CSV, Excel (.xls, .xlsx)",
+      "IMPORT_PROCESSING": "Datei wird verarbeitet...",
+      "IMPORT_FORMAT_TITLE": "Erwartetes Dateiformat",
+      "IMPORT_FORMAT_DESC": "Ihre Datei sollte die folgenden Spalten enthalten:",
+      "IMPORT_BUTTON": "Disziplinen importieren",
+      "IMPORT_SUCCESS": "Disziplinen erfolgreich importiert"
     },
     "MATCHES": {
       "TITLE": "Spiele",
