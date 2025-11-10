@@ -1,12 +1,23 @@
 <h2 mat-dialog-title>{{ 'PLAYERS.CREATE.TITLE' | translate }}</h2>
 
 <mat-dialog-content>
-  <mat-form-field appearance="outline" class="content" >
-    <mat-label>{{ 'PLAYERS.CREATE.NAME_LABEL' | translate }}</mat-label>
+  <mat-form-field appearance="outline" class="content" style="margin-top: 1rem;">
+    <mat-label>{{ 'PLAYERS.CREATE.FIRSTNAME_LABEL' | translate }}</mat-label>
     <input
       matInput
-      [(ngModel)]="playerName"
-      [placeholder]="'PLAYERS.CREATE.NAME_PLACEHOLDER' | translate"
+      [(ngModel)]="playerFirstname"
+      [placeholder]="'PLAYERS.CREATE.FIRSTNAME_PLACEHOLDER' | translate"
+      [disabled]="loading()"
+      (keyup.enter)="createPlayer()"
+    />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="content" >
+    <mat-label>{{ 'PLAYERS.CREATE.LASTNAME_LABEL' | translate }}</mat-label>
+    <input
+      matInput
+      [(ngModel)]="playerLastname"
+      [placeholder]="'PLAYERS.CREATE.LASTNAME_PLACEHOLDER' | translate"
       [disabled]="loading()"
       (keyup.enter)="createPlayer()"
     />
@@ -40,7 +51,7 @@
     mat-raised-button
     color="primary"
     (click)="createPlayer()"
-    [disabled]="loading() || !playerName.trim()"
+    [disabled]="loading() || !playerFirstname.trim() || !playerLastname.trim()"
   >
     @if (loading()) {
       <mat-progress-spinner diameter="20" mode="indeterminate"></mat-progress-spinner>

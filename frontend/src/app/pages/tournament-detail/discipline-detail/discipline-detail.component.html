@@ -82,7 +82,7 @@
                     <div class="player-info">
                       <mat-icon class="gender-icon">{{ element.player_1_details.gender === 'male' ? 'male' : 'female' }}</mat-icon>
                       <div class="player-details">
-                        <span class="player-name">{{ element.player_1_details.name }}</span>
+                        <span class="player-name">{{ element.player_1_details.firstname + ' ' + element.player_1_details.lastname }}</span>
                         @if (element.player_1_details.club) {
                           <span class="player-club">{{ element.player_1_details.club }}</span>
                         }
@@ -98,7 +98,7 @@
                     <div class="player-info">
                       <mat-icon class="gender-icon">{{ element.player_2_details.gender === 'male' ? 'male' : 'female' }}</mat-icon>
                       <div class="player-details">
-                        <span class="player-name">{{ element.player_2_details.name }}</span>
+                        <span class="player-name">{{ element.player_2_details.firstname + ' ' + element.player_2_details.lastname }}</span>
                         @if (element.player_2_details.club) {
                           <span class="player-club">{{ element.player_2_details.club }}</span>
                         }
@@ -165,7 +165,7 @@
                     <div class="player-info">
                       <mat-icon class="gender-icon">{{ element.player.gender === 'male' ? 'male' : 'female' }}</mat-icon>
                       <div class="player-details">
-                        <span class="player-name">{{ element.player.name }}</span>
+                        <span class="player-name">{{ element.player.firstname + ' ' + element.player.lastname }}</span>
                         @if (element.player.club) {
                           <span class="player-club">{{ element.player.club }}</span>
                         }

@@ -10,7 +10,13 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { SupabaseService, Discipline, SinglesParticipant, DoublesParticipant } from '../../../services/supabase.service';
+import {
+  SupabaseService,
+  Discipline,
+  SinglesParticipant,
+  DoublesParticipant,
+  getPlayerFullName,
+} from '../../../services/supabase.service';
 import { AddSinglesParticipantDialogComponent } from '../../../components/add-singles-participant-dialog/add-singles-participant-dialog.component';
 import { AddDoublesParticipantDialogComponent } from '../../../components/add-doubles-participant-dialog/add-doubles-participant-dialog.component';
 
@@ -25,10 +31,10 @@ import { AddDoublesParticipantDialogComponent } from '../../../components/add-do
     MatTableModule,
     MatSnackBarModule,
     MatTooltipModule,
-    TranslateModule
+    TranslateModule,
   ],
   templateUrl: './discipline-detail.component.html',
-  styleUrl: './discipline-detail.component.scss'
+  styleUrl: './discipline-detail.component.scss',
 })
 export class DisciplineDetailComponent implements OnInit {
   discipline = signal<Discipline | null>(null);
@@ -37,7 +43,7 @@ export class DisciplineDetailComponent implements OnInit {
   doublesParticipants = signal<DoublesParticipant[]>([]);
   disciplineId: string | null = null;
   tournamentId: string | null = null;
-  
+
   // Column definitions
   singlesColumns: string[] = ['number', 'player', 'actions'];
   doublesColumns: string[] = ['number', 'player1', 'player2', 'actions'];
@@ -48,13 +54,13 @@ export class DisciplineDetailComponent implements OnInit {
     private supabaseService: SupabaseService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
-    private translate: TranslateService
+    private translate: TranslateService,
   ) {}
 
   async ngOnInit() {
     this.disciplineId = this.route.snapshot.paramMap.get('disciplineId');
     this.tournamentId = this.route.snapshot.paramMap.get('tournamentId');
-    
+
     if (this.disciplineId) {
       await this.loadDiscipline();
     }
@@ -62,7 +68,7 @@ export class DisciplineDetailComponent implements OnInit {
 
   async loadDiscipline() {
     if (!this.disciplineId) return;
-    
+
     try {
       this.loading.set(true);
       const data = await this.supabaseService.getDisciplineById(this.disciplineId);
@@ -83,7 +89,7 @@ export class DisciplineDetailComponent implements OnInit {
 
   async loadSinglesParticipants() {
     if (!this.disciplineId) return;
-    
+
     try {
       const participants = await this.supabaseService.getSinglesParticipants(this.disciplineId);
       this.singlesParticipants.set(participants);
@@ -94,7 +100,7 @@ export class DisciplineDetailComponent implements OnInit {
 
   async loadDoublesParticipants() {
     if (!this.disciplineId) return;
-    
+
     try {
       const participants = await this.supabaseService.getDoublesParticipants(this.disciplineId);
       this.doublesParticipants.set(participants);
@@ -131,19 +137,22 @@ export class DisciplineDetailComponent implements OnInit {
   }
 
   async onDeleteSinglesParticipant(participant: SinglesParticipant) {
-    const confirmMessage = this.translate.instant('DISCIPLINE_DETAIL.PARTICIPANTS.DELETE.CONFIRM', { 
-      name: participant.player.name 
+    const confirmMessage = this.translate.instant('DISCIPLINE_DETAIL.PARTICIPANTS.DELETE.CONFIRM', {
+      name: getPlayerFullName(participant.player),
     });
     if (!confirm(confirmMessage)) {
       return;
     }
 
     try {
-      await this.supabaseService.deleteSinglesParticipant(participant.discipline_id, participant.player_id);
+      await this.supabaseService.deleteSinglesParticipant(
+        participant.discipline_id,
+        participant.player_id,
+      );
       this.snackBar.open(
         this.translate.instant('DISCIPLINE_DETAIL.PARTICIPANTS.DELETE.SUCCESS'),
         this.translate.instant('COMMON.CLOSE'),
-        { duration: 3000 }
+        { duration: 3000 },
       );
       await this.loadSinglesParticipants();
       // Reload discipline to update participant count
@@ -156,16 +165,19 @@ export class DisciplineDetailComponent implements OnInit {
       this.snackBar.open(
         this.translate.instant('DISCIPLINE_DETAIL.PARTICIPANTS.DELETE.ERROR'),
         this.translate.instant('COMMON.CLOSE'),
-        { duration: 3000 }
+        { duration: 3000 },
       );
     }
   }
 
   async onDeleteDoublesParticipant(participant: DoublesParticipant) {
-    const confirmMessage = this.translate.instant('DISCIPLINE_DETAIL.PARTICIPANTS.DELETE.CONFIRM_PAIR', { 
-      player1: participant.player_1_details.name,
-      player2: participant.player_2_details.name
-    });
+    const confirmMessage = this.translate.instant(
+      'DISCIPLINE_DETAIL.PARTICIPANTS.DELETE.CONFIRM_PAIR',
+      {
+        player1: getPlayerFullName(participant.player_1_details),
+        player2: getPlayerFullName(participant.player_2_details),
+      },
+    );
     if (!confirm(confirmMessage)) {
       return;
     }
@@ -175,7 +187,7 @@ export class DisciplineDetailComponent implements OnInit {
       this.snackBar.open(
         this.translate.instant('DISCIPLINE_DETAIL.PARTICIPANTS.DELETE.SUCCESS'),
         this.translate.instant('COMMON.CLOSE'),
-        { duration: 3000 }
+        { duration: 3000 },
       );
       await this.loadDoublesParticipants();
       // Reload discipline to update participant count
@@ -188,7 +200,7 @@ export class DisciplineDetailComponent implements OnInit {
       this.snackBar.open(
         this.translate.instant('DISCIPLINE_DETAIL.PARTICIPANTS.DELETE.ERROR'),
         this.translate.instant('COMMON.CLOSE'),
-        { duration: 3000 }
+        { duration: 3000 },
       );
     }
   }
@@ -197,15 +209,15 @@ export class DisciplineDetailComponent implements OnInit {
     const discipline = this.discipline();
     if (!discipline || !this.disciplineId) return;
 
-    const existingPlayerIds = this.singlesParticipants().map(p => p.player_id);
+    const existingPlayerIds = this.singlesParticipants().map((p) => p.player_id);
 
     const dialogRef = this.dialog.open(AddSinglesParticipantDialogComponent, {
       width: '500px',
       data: {
         disciplineId: this.disciplineId,
         gender: discipline.gender,
-        existingPlayerIds
-      }
+        existingPlayerIds,
+      },
     });
 
     dialogRef.afterClosed().subscribe(async (result) => {
@@ -213,7 +225,7 @@ export class DisciplineDetailComponent implements OnInit {
         this.snackBar.open(
           this.translate.instant('DISCIPLINE_DETAIL.PARTICIPANTS.ADD.SUCCESS'),
           this.translate.instant('COMMON.CLOSE'),
-          { duration: 3000 }
+          { duration: 3000 },
         );
         await this.loadSinglesParticipants();
         // Reload discipline to update participant count
@@ -231,7 +243,7 @@ export class DisciplineDetailComponent implements OnInit {
 
     // Get all player IDs from existing pairs
     const existingPlayerIds: string[] = [];
-    this.doublesParticipants().forEach(pair => {
+    this.doublesParticipants().forEach((pair) => {
       existingPlayerIds.push(pair.player_1, pair.player_2);
     });
 
@@ -240,8 +252,8 @@ export class DisciplineDetailComponent implements OnInit {
       data: {
         disciplineId: this.disciplineId,
         gender: discipline.gender,
-        existingPlayerIds
-      }
+        existingPlayerIds,
+      },
     });
 
     dialogRef.afterClosed().subscribe(async (result) => {
@@ -249,7 +261,7 @@ export class DisciplineDetailComponent implements OnInit {
         this.snackBar.open(
           this.translate.instant('DISCIPLINE_DETAIL.PARTICIPANTS.ADD.SUCCESS'),
           this.translate.instant('COMMON.CLOSE'),
-          { duration: 3000 }
+          { duration: 3000 },
         );
         await this.loadDoublesParticipants();
         // Reload discipline to update participant count
@@ -267,8 +279,8 @@ export class DisciplineDetailComponent implements OnInit {
 
     // Get existing player IDs excluding the one being edited
     const existingPlayerIds = this.singlesParticipants()
-      .filter(p => p.player_id !== participant.player_id)
-      .map(p => p.player_id);
+      .filter((p) => p.player_id !== participant.player_id)
+      .map((p) => p.player_id);
 
     const dialogRef = this.dialog.open(AddSinglesParticipantDialogComponent, {
       width: '500px',
@@ -276,8 +288,8 @@ export class DisciplineDetailComponent implements OnInit {
         disciplineId: this.disciplineId,
         gender: discipline.gender,
         existingPlayerIds,
-        editParticipant: participant
-      }
+        editParticipant: participant,
+      },
     });
 
     dialogRef.afterClosed().subscribe(async (result) => {
@@ -285,7 +297,7 @@ export class DisciplineDetailComponent implements OnInit {
         this.snackBar.open(
           this.translate.instant('DISCIPLINE_DETAIL.PARTICIPANTS.EDIT.SUCCESS'),
           this.translate.instant('COMMON.CLOSE'),
-          { duration: 3000 }
+          { duration: 3000 },
         );
         await this.loadSinglesParticipants();
         // Reload discipline to update participant count
@@ -303,7 +315,7 @@ export class DisciplineDetailComponent implements OnInit {
 
     // Get all player IDs from existing pairs excluding the one being edited
     const existingPlayerIds: string[] = [];
-    this.doublesParticipants().forEach(pair => {
+    this.doublesParticipants().forEach((pair) => {
       if (pair.id !== participant.id) {
         existingPlayerIds.push(pair.player_1, pair.player_2);
       }
@@ -315,8 +327,8 @@ export class DisciplineDetailComponent implements OnInit {
         disciplineId: this.disciplineId,
         gender: discipline.gender,
         existingPlayerIds,
-        editParticipant: participant
-      }
+        editParticipant: participant,
+      },
     });
 
     dialogRef.afterClosed().subscribe(async (result) => {
@@ -324,7 +336,7 @@ export class DisciplineDetailComponent implements OnInit {
         this.snackBar.open(
           this.translate.instant('DISCIPLINE_DETAIL.PARTICIPANTS.EDIT.SUCCESS'),
           this.translate.instant('COMMON.CLOSE'),
-          { duration: 3000 }
+          { duration: 3000 },
         );
         await this.loadDoublesParticipants();
         // Reload discipline to update participant count
@@ -336,4 +348,3 @@ export class DisciplineDetailComponent implements OnInit {
     });
   }
 }
-

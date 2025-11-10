@@ -24,16 +24,17 @@ import { ClubAutocompleteComponent } from '../club-autocomplete/club-autocomplet
     MatProgressSpinnerModule,
     MatRadioModule,
     TranslateModule,
-    ClubAutocompleteComponent
+    ClubAutocompleteComponent,
   ],
   templateUrl: './create-player-dialog.component.html',
-  styleUrl: './create-player-dialog.component.scss'
+  styleUrl: './create-player-dialog.component.scss',
 })
 export class CreatePlayerDialogComponent {
   // Expose Gender enum to template
   readonly Gender = Gender;
-  
-  playerName = '';
+
+  playerFirstname = '';
+  playerLastname = '';
   playerGender: Gender = Gender.Male;
   playerClub = '';
   loading = signal(false);
@@ -42,12 +43,17 @@ export class CreatePlayerDialogComponent {
   constructor(
     private dialogRef: MatDialogRef<CreatePlayerDialogComponent>,
     private supabaseService: SupabaseService,
-    private translate: TranslateService
+    private translate: TranslateService,
   ) {}
 
   async createPlayer() {
-    if (!this.playerName.trim()) {
-      this.error.set(this.translate.instant('PLAYERS.CREATE.NAME_REQUIRED'));
+    if (!this.playerFirstname.trim()) {
+      this.error.set(this.translate.instant('PLAYERS.CREATE.FIRSTNAME_REQUIRED'));
+      return;
+    }
+
+    if (!this.playerLastname.trim()) {
+      this.error.set(this.translate.instant('PLAYERS.CREATE.LASTNAME_REQUIRED'));
       return;
     }
 
@@ -55,9 +61,10 @@ export class CreatePlayerDialogComponent {
       this.loading.set(true);
       this.error.set(null);
       await this.supabaseService.createPlayer({
-        name: this.playerName.trim(),
+        firstname: this.playerFirstname.trim(),
+        lastname: this.playerLastname.trim(),
         gender: this.playerGender,
-        club: this.playerClub.trim() || null
+        club: this.playerClub.trim() || null,
       });
       this.dialogRef.close(true);
     } catch (err: any) {
@@ -72,4 +79,3 @@ export class CreatePlayerDialogComponent {
     this.dialogRef.close(false);
   }
 }
-

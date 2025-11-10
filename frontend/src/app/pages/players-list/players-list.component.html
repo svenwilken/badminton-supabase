@@ -50,13 +50,18 @@
           </th>
           <td mat-cell *matCellDef="let player">
             @if (isEditing(player.id)) {
-              <mat-form-field appearance="outline" class="edit-field">
-                <input matInput [(ngModel)]="editedName" [placeholder]="'PLAYERS.CREATE.NAME_PLACEHOLDER' | translate">
-              </mat-form-field>
+              <div class="name-edit-fields">
+                <mat-form-field appearance="outline" class="edit-field firstname-field">
+                  <input matInput [(ngModel)]="editedFirstname" [placeholder]="'PLAYERS.CREATE.FIRSTNAME_PLACEHOLDER' | translate">
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="edit-field lastname-field">
+                  <input matInput [(ngModel)]="editedLastname" [placeholder]="'PLAYERS.CREATE.LASTNAME_PLACEHOLDER' | translate">
+                </mat-form-field>
+              </div>
             } @else {
               <div class="name-cell">
                 <mat-icon>person</mat-icon>
-                <span>{{ player.name }}</span>
+                <span>{{ player.firstname + ' ' + player.lastname }}</span>
               </div>
             }
           </td>

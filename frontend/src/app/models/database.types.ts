@@ -215,23 +215,26 @@ export type Database = {
         Row: {
           club: string | null
           created_at: string
+          firstname: string
           gender: string
           id: string
-          name: string
+          lastname: string
         }
         Insert: {
           club?: string | null
           created_at?: string
+          firstname: string
           gender: string
           id?: string
-          name: string
+          lastname: string
         }
         Update: {
           club?: string | null
           created_at?: string
+          firstname?: string
           gender?: string
           id?: string
-          name?: string
+          lastname?: string
         }
         Relationships: []
       }

@@ -26,7 +26,7 @@
                         (optionSelected)="onPlayerSelected($event.option.value)">
         @for (player of filteredPlayers(); track player.id) {
           <mat-option [value]="player">
-            {{ player.name }}
+            {{ player.firstname + ' ' + player.lastname }}
             @if (player.club) {
               <span class="club-info"> - {{ player.club }}</span>
             }
