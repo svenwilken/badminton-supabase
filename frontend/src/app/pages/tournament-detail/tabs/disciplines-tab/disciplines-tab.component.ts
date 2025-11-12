@@ -27,10 +27,10 @@ import { ImportDisciplinesDialogComponent } from '../../../../components/import-
     MatTableModule,
     MatTooltipModule,
     MatSnackBarModule,
-    TranslateModule
+    TranslateModule,
   ],
   templateUrl: './disciplines-tab.component.html',
-  styleUrl: './disciplines-tab.component.scss'
+  styleUrl: './disciplines-tab.component.scss',
 })
 export class DisciplinesTabComponent implements OnInit {
   disciplines = signal<Discipline[]>([]);
@@ -44,7 +44,7 @@ export class DisciplinesTabComponent implements OnInit {
     private supabaseService: SupabaseService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
-    private translate: TranslateService
+    private translate: TranslateService,
   ) {}
 
   async ngOnInit() {
@@ -56,7 +56,7 @@ export class DisciplinesTabComponent implements OnInit {
 
   async loadDisciplines() {
     if (!this.tournamentId) return;
-    
+
     try {
       this.loading.set(true);
       const data = await this.supabaseService.getDisciplinesByTournament(this.tournamentId);
@@ -73,7 +73,7 @@ export class DisciplinesTabComponent implements OnInit {
 
     const dialogRef = this.dialog.open(CreateDisciplineDialogComponent, {
       width: '500px',
-      data: { tournamentId: this.tournamentId }
+      data: { tournamentId: this.tournamentId },
     });
 
     dialogRef.afterClosed().subscribe(async (result) => {
@@ -88,11 +88,11 @@ export class DisciplinesTabComponent implements OnInit {
     if (!this.tournamentId) return;
 
     const dialogRef = this.dialog.open(ImportDisciplinesDialogComponent, {
-      width: '90vw',
-      height: '90vh',
-      maxWidth: '1400px',
-      maxHeight: '900px',
-      data: { tournamentId: this.tournamentId }
+      width: '95vw',
+      height: '95vh',
+      maxWidth: '95vw',
+      maxHeight: '95vh',
+      data: { tournamentId: this.tournamentId },
     });
 
     dialogRef.afterClosed().subscribe(async (result) => {
@@ -101,7 +101,7 @@ export class DisciplinesTabComponent implements OnInit {
         this.snackBar.open(
           this.translate.instant('TOURNAMENT_DETAIL.DISCIPLINES.IMPORT_SUCCESS'),
           this.translate.instant('COMMON.CLOSE'),
-          { duration: 3000 }
+          { duration: 3000 },
         );
         await this.loadDisciplines();
       }
@@ -110,7 +110,7 @@ export class DisciplinesTabComponent implements OnInit {
 
   onViewDiscipline(discipline: Discipline) {
     if (!this.tournamentId) return;
-    
+
     this.router.navigate(['/tournament', this.tournamentId, 'discipline', discipline.id]);
   }
 
@@ -131,16 +131,19 @@ export class DisciplinesTabComponent implements OnInit {
       this.snackBar.open(
         this.translate.instant('DELETE.SUCCESS', { item }),
         this.translate.instant('COMMON.CLOSE'),
-        { duration: 3000 }
+        { duration: 3000 },
       );
       await this.loadDisciplines();
     } catch (err: any) {
       console.error('Error deleting discipline:', err);
-      const item = this.translate.instant('TOURNAMENT_DETAIL.DISCIPLINES.TITLE').slice(0, -1).toLowerCase();
+      const item = this.translate
+        .instant('TOURNAMENT_DETAIL.DISCIPLINES.TITLE')
+        .slice(0, -1)
+        .toLowerCase();
       this.snackBar.open(
         this.translate.instant('DELETE.ERROR', { item }),
         this.translate.instant('COMMON.CLOSE'),
-        { duration: 3000 }
+        { duration: 3000 },
       );
     }
   }
@@ -164,4 +167,3 @@ export class DisciplinesTabComponent implements OnInit {
     return charge !== null ? `€${charge.toFixed(2)}` : '-';
   }
 }
-

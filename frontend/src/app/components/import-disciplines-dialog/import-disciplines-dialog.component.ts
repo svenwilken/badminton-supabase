@@ -1,16 +1,17 @@
-import { Component, Inject, signal } from '@angular/core';
+import { Component, Inject, signal, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatDialogModule, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { MatStepperModule } from '@angular/material/stepper';
+import { MatStepperModule, MatStepper } from '@angular/material/stepper';
 import { TranslateModule } from '@ngx-translate/core';
 import { SheetJsService } from '../../services/sheetjs.service';
 import { ImportData, ImportDataSchema, ParsedImportData } from './model/import.model';
 import z from 'zod';
 import { ImportService } from '../../services/data-import/data-import.service';
+import { Discipline } from '../../services/supabase.service';
 
 export interface ImportDialogData {
   tournamentId: string;
@@ -33,12 +34,15 @@ export interface ImportDialogData {
   styleUrl: './import-disciplines-dialog.component.scss',
 })
 export class ImportDisciplinesDialogComponent {
+  @ViewChild('stepper') stepper!: MatStepper;
+
   selectedFile = signal<File | null>(null);
   uploading = signal(false);
   dragOver = signal(false);
   validationErrors = signal<z.core.$ZodIssue[] | null>(null);
   parsedImportData = signal<ParsedImportData | null>(null);
   disciplineKeys = signal<string[]>([]);
+  processedDisciplineKeys = signal<string[]>([]);
 
   constructor(
     public dialogRef: MatDialogRef<ImportDisciplinesDialogComponent>,
@@ -133,6 +137,17 @@ export class ImportDisciplinesDialogComponent {
     this.parsedImportData.set(parsedImportData);
     this.disciplineKeys.set(Object.keys(parsedImportData));
     this.uploading.set(false);
+  }
+
+  onImportDiscipline() {
+    const index = this.stepper.selectedIndex;
+    if (index !== undefined) {
+      const disciplineKey = this.disciplineKeys()[index];
+      const discipline = this.parsedImportData()![disciplineKey];
+
+      this.processedDisciplineKeys.set([...this.processedDisciplineKeys(), disciplineKey]);
+      this.stepper.next();
+    }
   }
 
   onCancel() {
