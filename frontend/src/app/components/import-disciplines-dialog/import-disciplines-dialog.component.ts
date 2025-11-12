@@ -5,10 +5,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatStepperModule } from '@angular/material/stepper';
 import { TranslateModule } from '@ngx-translate/core';
 import { SheetJsService } from '../../services/sheetjs.service';
-import { ImportData, ImportDataSchema } from './model/import.model';
+import { ImportData, ImportDataSchema, ParsedImportData } from './model/import.model';
 import z from 'zod';
+import { ImportService } from '../../services/data-import/data-import.service';
 
 export interface ImportDialogData {
   tournamentId: string;
@@ -24,6 +26,7 @@ export interface ImportDialogData {
     MatIconModule,
     MatProgressBarModule,
     MatExpansionModule,
+    MatStepperModule,
     TranslateModule,
   ],
   templateUrl: './import-disciplines-dialog.component.html',
@@ -34,11 +37,14 @@ export class ImportDisciplinesDialogComponent {
   uploading = signal(false);
   dragOver = signal(false);
   validationErrors = signal<z.core.$ZodIssue[] | null>(null);
+  parsedImportData = signal<ParsedImportData | null>(null);
+  disciplineKeys = signal<string[]>([]);
 
   constructor(
     public dialogRef: MatDialogRef<ImportDisciplinesDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ImportDialogData,
     private sheetJsService: SheetJsService,
+    private importService: ImportService,
   ) {}
 
   async onFileSelected(event: Event) {
@@ -92,23 +98,9 @@ export class ImportDisciplinesDialogComponent {
 
     const fileExtension = '.' + file.name.split('.').pop()?.toLowerCase();
     const isValid = validTypes.includes(file.type) || validTypes.includes(fileExtension);
-
-    let { data } = file.type.includes('csv')
-      ? await this.sheetJsService.importFromCsv(file)
-      : await this.sheetJsService.importFromExcel(file);
-
-    data = data.filter((row) => row['Partner Name'] !== 'Freimeldung'); // remove freimeldung row
-
-    const parsedData = ImportDataSchema.safeParse(data);
-    if (!parsedData.success) {
-      this.validationErrors.set(parsedData.error.issues);
-      this.selectedFile.set(null);
-      throw new Error('Invalid file');
+    if (isValid) {
+      this.selectedFile.set(file);
     }
-
-    // Clear validation errors on success
-    this.validationErrors.set(null);
-    this.selectedFile.set(file);
   }
 
   removeFile() {
@@ -120,15 +112,27 @@ export class ImportDisciplinesDialogComponent {
     if (!this.selectedFile()) {
       return;
     }
-
     this.uploading.set(true);
+    const file = this.selectedFile()!;
 
-    // TODO: Implement actual import logic
-    // For now, just simulate upload
-    setTimeout(() => {
+    let { data } = file.type.includes('csv')
+      ? await this.sheetJsService.importFromCsv(file)
+      : await this.sheetJsService.importFromExcel(file);
+
+    data = data.filter((row) => row['Partner Name'] !== 'Freimeldung'); // remove freimeldung row
+
+    const parsedData = ImportDataSchema.safeParse(data);
+    if (!parsedData.success) {
+      this.validationErrors.set(parsedData.error.issues);
       this.uploading.set(false);
-      this.dialogRef.close({ success: true, file: this.selectedFile() });
-    }, 2000);
+      throw new Error('Invalid file');
+    }
+    this.validationErrors.set(null);
+
+    const parsedImportData = this.importService.groupByDisciplines(parsedData.data);
+    this.parsedImportData.set(parsedImportData);
+    this.disciplineKeys.set(Object.keys(parsedImportData));
+    this.uploading.set(false);
   }
 
   onCancel() {

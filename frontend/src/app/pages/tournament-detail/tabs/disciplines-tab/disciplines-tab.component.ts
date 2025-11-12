@@ -90,7 +90,7 @@ export class DisciplinesTabComponent implements OnInit {
     const dialogRef = this.dialog.open(ImportDisciplinesDialogComponent, {
       width: '90vw',
       height: '90vh',
-      maxWidth: '1200px',
+      maxWidth: '1400px',
       maxHeight: '900px',
       data: { tournamentId: this.tournamentId }
     });

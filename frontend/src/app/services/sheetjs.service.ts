@@ -182,7 +182,7 @@ export class SheetJsService {
         reject(error);
       };
 
-      reader.readAsBinaryString(file);
+      reader.readAsText(file);
     });
   }
 
