@@ -16,18 +16,18 @@ import { CommonModule } from '@angular/common';
     MatToolbarModule,
     MatIconModule,
     MatMenuModule,
-    TranslateModule
+    TranslateModule,
   ],
   templateUrl: './app.html',
-  styleUrl: './app.scss'
+  styleUrl: './app.scss',
 })
 export class App implements OnInit {
   currentLanguage = signal('en');
 
   constructor(private translate: TranslateService) {
     // Set default language
-    translate.setDefaultLang('en');
-    
+    translate.setFallbackLang('en');
+
     // Try to get saved language from localStorage
     const savedLang = localStorage.getItem('language') || 'en';
     this.currentLanguage.set(savedLang);
@@ -49,9 +49,5 @@ export class App implements OnInit {
 
   getLanguageName(lang: string): string {
     return lang === 'en' ? 'English' : 'Deutsch';
-  }
-
-  getLanguageFlag(lang: string): string {
-    return lang === 'en' ? '🇬🇧' : '🇩🇪';
   }
 }
