@@ -8,7 +8,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { SupabaseService, Tournament } from '../../services/supabase.service';
+import { SupabaseService } from '../../services/supabase.service';
+import { Tournament } from '../../../shared/supabase.types';
 
 interface NavItem {
   label: string;
@@ -27,10 +28,10 @@ interface NavItem {
     MatButtonModule,
     MatToolbarModule,
     MatProgressSpinnerModule,
-    TranslateModule
+    TranslateModule,
   ],
   templateUrl: './tournament-detail.component.html',
-  styleUrl: './tournament-detail.component.scss'
+  styleUrl: './tournament-detail.component.scss',
 })
 export class TournamentDetailComponent implements OnInit {
   tournament = signal<Tournament | null>(null);
@@ -42,14 +43,14 @@ export class TournamentDetailComponent implements OnInit {
     { label: 'TOURNAMENT_DETAIL.TABS.OVERVIEW', route: 'overview', icon: 'dashboard' },
     { label: 'TOURNAMENT_DETAIL.TABS.DISCIPLINES', route: 'disciplines', icon: 'category' },
     { label: 'TOURNAMENT_DETAIL.TABS.MATCHES', route: 'matches', icon: 'sports' },
-    { label: 'TOURNAMENT_DETAIL.TABS.SETTINGS', route: 'settings', icon: 'settings' }
+    { label: 'TOURNAMENT_DETAIL.TABS.SETTINGS', route: 'settings', icon: 'settings' },
   ];
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private supabaseService: SupabaseService,
-    private translate: TranslateService
+    private translate: TranslateService,
   ) {}
 
   async ngOnInit() {
@@ -66,8 +67,8 @@ export class TournamentDetailComponent implements OnInit {
       this.loading.set(true);
       this.error.set(null);
       const tournaments = await this.supabaseService.getTournaments();
-      const tournament = tournaments.find(t => t.id === this.tournamentId);
-      
+      const tournament = tournaments.find((t) => t.id === this.tournamentId);
+
       if (tournament) {
         this.tournament.set(tournament);
       } else {
@@ -89,5 +90,3 @@ export class TournamentDetailComponent implements OnInit {
     return this.router.url.includes(route);
   }
 }
-
-

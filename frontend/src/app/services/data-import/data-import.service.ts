@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
-import { InsertPlayer, Player, SupabaseService } from '../supabase.service';
+import { SupabaseService } from '../supabase.service';
+import { ImportData } from '../../components/import-disciplines-dialog/model/import.model';
+import { groupBy, mapValues } from 'lodash';
 import {
-  ImportData,
   MatchedImportData,
   ParsedImportData,
   PlayerMatchResult,
-} from '../../components/import-disciplines-dialog/model/import.model';
-import { groupBy, mapValues } from 'lodash';
+} from '../../../shared/import.type';
+import { InsertPlayer, Player } from '../../../shared/supabase.types';
 
 @Injectable({
   providedIn: 'root',

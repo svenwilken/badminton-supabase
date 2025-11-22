@@ -14,11 +14,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { SupabaseService, Player, getPlayerFullName } from '../../services/supabase.service';
+import { SupabaseService, getPlayerFullName } from '../../services/supabase.service';
 import { CreatePlayerDialogComponent } from '../../components/create-player-dialog/create-player-dialog.component';
 import { ClubAutocompleteComponent } from '../../components/club-autocomplete/club-autocomplete.component';
 import { Gender } from '../../models/types';
-
+import { Player } from '../../../shared/supabase.types';
 @Component({
   selector: 'app-players-list',
   imports: [

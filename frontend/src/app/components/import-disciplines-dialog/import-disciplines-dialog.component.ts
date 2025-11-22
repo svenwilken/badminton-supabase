@@ -8,10 +8,10 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatStepperModule, MatStepper } from '@angular/material/stepper';
 import { TranslateModule } from '@ngx-translate/core';
 import { SheetJsService } from '../../services/sheetjs.service';
-import { ImportData, ImportDataSchema, ParsedImportData } from './model/import.model';
+import { ImportData, ImportDataSchema } from './model/import.model';
 import z from 'zod';
 import { ImportService } from '../../services/data-import/data-import.service';
-import { Discipline } from '../../services/supabase.service';
+import { ParsedImportData } from '../../../shared/import.type';
 
 export interface ImportDialogData {
   tournamentId: string;

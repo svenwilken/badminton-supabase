@@ -10,15 +10,14 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import {
-  SupabaseService,
-  Discipline,
-  SinglesParticipant,
-  DoublesParticipant,
-  getPlayerFullName,
-} from '../../../services/supabase.service';
+import { SupabaseService, getPlayerFullName } from '../../../services/supabase.service';
 import { AddSinglesParticipantDialogComponent } from '../../../components/add-singles-participant-dialog/add-singles-participant-dialog.component';
 import { AddDoublesParticipantDialogComponent } from '../../../components/add-doubles-participant-dialog/add-doubles-participant-dialog.component';
+import {
+  Discipline,
+  DoublesParticipant,
+  SinglesParticipant,
+} from '../../../../shared/supabase.types';
 
 @Component({
   selector: 'app-discipline-detail',

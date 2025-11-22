@@ -11,7 +11,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { SupabaseService, Discipline } from '../../../../services/supabase.service';
+import { SupabaseService } from '../../../../services/supabase.service';
+import { Discipline } from '../../../../../shared/supabase.types';
 import { CreateDisciplineDialogComponent } from '../../../../components/create-discipline-dialog/create-discipline-dialog.component';
 import { ImportDisciplinesDialogComponent } from '../../../../components/import-disciplines-dialog/import-disciplines-dialog.component';
 

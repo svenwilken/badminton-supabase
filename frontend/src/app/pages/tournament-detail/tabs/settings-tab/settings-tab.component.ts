@@ -8,7 +8,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { SupabaseService, Tournament } from '../../../../services/supabase.service';
+import { SupabaseService } from '../../../../services/supabase.service';
+import { Tournament } from '../../../../../shared/supabase.types';
 
 @Component({
   selector: 'app-settings-tab',
@@ -20,10 +21,10 @@ import { SupabaseService, Tournament } from '../../../../services/supabase.servi
     MatFormFieldModule,
     MatInputModule,
     MatSnackBarModule,
-    TranslateModule
+    TranslateModule,
   ],
   templateUrl: './settings-tab.component.html',
-  styleUrl: './settings-tab.component.scss'
+  styleUrl: './settings-tab.component.scss',
 })
 export class SettingsTabComponent implements OnInit {
   tournament = signal<Tournament | null>(null);
@@ -34,7 +35,7 @@ export class SettingsTabComponent implements OnInit {
     private router: Router,
     private supabaseService: SupabaseService,
     private snackBar: MatSnackBar,
-    private translate: TranslateService
+    private translate: TranslateService,
   ) {}
 
   async ngOnInit() {
@@ -49,7 +50,7 @@ export class SettingsTabComponent implements OnInit {
 
     try {
       const tournaments = await this.supabaseService.getTournaments();
-      const tournament = tournaments.find(t => t.id === this.tournamentId);
+      const tournament = tournaments.find((t) => t.id === this.tournamentId);
       if (tournament) {
         this.tournament.set(tournament);
       }
@@ -61,10 +62,9 @@ export class SettingsTabComponent implements OnInit {
   async deleteTournament() {
     if (!this.tournament()) return;
 
-    const confirmMessage = this.translate.instant(
-      'TOURNAMENT_DETAIL.SETTINGS.DELETE_CONFIRM',
-      { name: this.tournament()?.name }
-    );
+    const confirmMessage = this.translate.instant('TOURNAMENT_DETAIL.SETTINGS.DELETE_CONFIRM', {
+      name: this.tournament()?.name,
+    });
 
     if (!confirm(confirmMessage)) {
       return;
@@ -75,7 +75,7 @@ export class SettingsTabComponent implements OnInit {
       this.snackBar.open(
         this.translate.instant('TOURNAMENT_DETAIL.SETTINGS.DELETE_SUCCESS'),
         this.translate.instant('COMMON.CLOSE'),
-        { duration: 3000 }
+        { duration: 3000 },
       );
       this.router.navigate(['/']);
     } catch (err: any) {
@@ -83,9 +83,8 @@ export class SettingsTabComponent implements OnInit {
       this.snackBar.open(
         this.translate.instant('TOURNAMENT_DETAIL.SETTINGS.DELETE_ERROR'),
         this.translate.instant('COMMON.CLOSE'),
-        { duration: 3000 }
+        { duration: 3000 },
       );
     }
   }
 }
-

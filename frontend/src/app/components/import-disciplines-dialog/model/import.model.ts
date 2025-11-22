@@ -1,5 +1,4 @@
 import { z } from 'zod';
-import { InsertPlayer, Player } from '../../../services/supabase.service';
 
 /**
  * Zod schema for tournament participant import data from spreadsheet
@@ -55,16 +54,3 @@ export const ImportDataSchema = z.array(ImportRowSchema);
  * Type for array of import rows
  */
 export type ImportData = z.infer<typeof ImportDataSchema>;
-
-export interface ParsedImportData {
-  [discipline: string]: InsertPlayer[][];
-}
-
-export interface PlayerMatchResult {
-  isExactMatch: boolean;
-  matchingPlayer: Player | null;
-  mostSimilarPlayers: Player[];
-}
-export interface MatchedImportData {
-  [discipline: string]: (InsertPlayer & { match: PlayerMatchResult })[][];
-}
