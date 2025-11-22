@@ -9,7 +9,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:all": "concurrently \"npm run supabase:start\" \"npm run frontend:start\" --names \"supabase,frontend\" --prefix-colors \"blue,green\"",
-    "supabase:start": "supabase start",
+    "supabase:start": "concurrently \"supabase start\" \"supabase functions serve\"",
     "supabase:stop": "supabase stop",
     "supabase:types": "supabase gen types typescript --local > shared/database.types.ts",
     "supabase:migration:new": "supabase migration new",
@@ -23,8 +23,12 @@
   "author": "",
   "license": "ISC",
   "type": "commonjs",
+  "dependencies": {
+    "lodash": "^4.17.21"
+  },
   "devDependencies": {
     "@angular/cli": "^20.3.8",
+    "@types/lodash": "^4.17.15",
     "concurrently": "^9.2.1",
     "supabase": "^2.54.11"
   }

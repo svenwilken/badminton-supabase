@@ -2,9 +2,16 @@ import "@supabase/functions-js";
 import { createClient } from "@supabase/supabase-js";
 import { match } from "name-match";
 import { Database } from "databaseTypes";
-import { Player } from "supabaseTypes";
+import { InsertPlayer } from "supabaseTypes";
+import { ParsedImportData, PlayerMatchResult } from "import.type";
+// @deno-types="@types/lodash"
+import { chain, orderBy } from "lodash";
+import { getPlayerKey, getFullName } from "import.util";
 
-Deno.serve(async (req) => {
+Deno.serve(async (req: Request): Promise<Response> => {
+  return new Response("Test", {
+    headers: { "Content-Type": "application/json" },
+  });
   const supabaseClient = createClient<Database>(
     // Supabase  URL
     Deno.env.get("SUPABASE_URL") ?? "",
@@ -22,15 +29,41 @@ Deno.serve(async (req) => {
   );
 
   try {
-    const allPlayers = (await supabaseClient.from("player").select("*")).data;
-    const { name } = await req.json();
-    const data = {
-      message: `Hello ${name}!`,
-    };
+    const importData: ParsedImportData = await req.json();
+    const allPlayers = (await supabaseClient.from("player").select("*")).data!;
 
-    match("John Doe", "Jane Doe");
+    const importPlayers: InsertPlayer[] = chain(Object.values(importData))
+      .flattenDeep()
+      .uniqBy(getPlayerKey)
+      .value();
 
-    return new Response(JSON.stringify(data), {
+    const playerMatches = new Map<string, PlayerMatchResult>();
+    for (const player of importPlayers) {
+      const playerKey = getPlayerKey(player);
+      const currentPlayerFullName = getFullName(player);
+
+      const playerMatching = allPlayers.map((p) => {
+        return {
+          player: p,
+          score: match(currentPlayerFullName, getFullName(p)) as number,
+        };
+      });
+
+      const sortedPlayerMatching = orderBy(
+        playerMatching,
+        (p) => p.score,
+        "desc"
+      );
+
+      const bestMatch = sortedPlayerMatching[0];
+      playerMatches.set(playerKey, {
+        isExactMatch: bestMatch.score === 1,
+        matchingPlayer: bestMatch.score > 0.75 ? bestMatch.player : null,
+        mostSimilarPlayers: sortedPlayerMatching.slice(0, 5),
+      });
+    }
+
+    return new Response(JSON.stringify(Object.fromEntries(playerMatches)), {
       headers: { "Content-Type": "application/json" },
     });
   } catch (error) {

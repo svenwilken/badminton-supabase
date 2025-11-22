@@ -4,6 +4,10 @@
     "@supabase/supabase-js": "jsr:@supabase/supabase-js@2",
     "name-match": "npm:name-match",
     "databaseTypes": "../../../shared/database.types.ts",
-    "supabaseTypes": "../../../shared/supabase.types.ts"
+    "supabaseTypes": "../../../shared/supabase.types.ts",
+    "import.type": "../../../shared/import.type.ts",
+    "import.util": "../../../shared/import.util.ts",
+    "lodash": "npm:lodash",
+    "@types/lodash": "npm:@types/lodash"
   }
 }
