@@ -17,8 +17,8 @@ import z from 'zod';
 import { ImportService } from '../../services/data-import/data-import.service';
 import { ParsedImportData, PlayerMatchResult } from '../../../shared/import.type';
 import { SupabaseService } from '../../services/supabase.service';
-import { DisciplineGender } from '../../models/types';
-import { InsertPlayer, Player } from '../../../shared/supabase.types';
+import { DisciplineGender, Gender } from '../../models/types';
+import { Discipline, InsertPlayer, Player } from '../../../shared/supabase.types';
 
 export interface ImportDialogData {
   tournamentId: string;
@@ -192,8 +192,11 @@ export class ImportDisciplinesDialogComponent {
           tournament: this.data.tournamentId,
         });
 
-        // TODO: Add participants to the discipline
-        // This would require matching or creating players and adding them to the discipline
+        await this.createPlayersForDiscipline({
+          createdDiscipline,
+          disciplineKey,
+          participants,
+        });
 
         this.processedDisciplineKeys.set([...this.processedDisciplineKeys(), disciplineKey]);
         this.uploading.set(false);
@@ -207,6 +210,64 @@ export class ImportDisciplinesDialogComponent {
           this.importError.set(error.message);
         } else {
           this.importError.set('IMPORT_ERROR');
+        }
+      }
+    }
+  }
+
+  private async createPlayersForDiscipline({
+    createdDiscipline,
+    disciplineKey,
+    participants,
+  }: {
+    createdDiscipline: Discipline;
+    disciplineKey: string;
+    participants: InsertPlayer[][];
+  }) {
+    // Add participants to the discipline
+    const matchedEntries = this.matchedPlayers().get(disciplineKey);
+    if (matchedEntries && createdDiscipline) {
+      for (let entryIndex = 0; entryIndex < matchedEntries.length; entryIndex++) {
+        const matchEntry = matchedEntries[entryIndex];
+        const originalEntry = participants[entryIndex];
+
+        // Get or create player IDs for all players in this entry
+        const playerIds: string[] = [];
+
+        for (let playerIndex = 0; playerIndex < matchEntry.length; playerIndex++) {
+          const matchResult = matchEntry[playerIndex];
+          const originalPlayer = originalEntry[playerIndex];
+          let playerId: string;
+
+          if (matchResult.matchingPlayer) {
+            // Use existing player
+            playerId = matchResult.matchingPlayer.id;
+          } else {
+            // Create new player from the import data
+            // Convert gender from 'M'/'W' to Gender enum
+            const gender = originalPlayer.gender === 'M' ? Gender.Male : Gender.Female;
+
+            const newPlayer = await this.supabaseService.createPlayer({
+              firstname: originalPlayer.firstname,
+              lastname: originalPlayer.lastname,
+              gender: gender,
+              club: originalPlayer.club || null,
+            });
+            playerId = newPlayer.id;
+          }
+
+          playerIds.push(playerId);
+        }
+
+        // Add participant(s) to discipline
+        if (createdDiscipline.is_doubles && playerIds.length === 2) {
+          await this.supabaseService.addDoublesParticipant(
+            createdDiscipline.id,
+            playerIds[0],
+            playerIds[1],
+          );
+        } else if (!createdDiscipline.is_doubles && playerIds.length === 1) {
+          await this.supabaseService.addSinglesParticipant(createdDiscipline.id, playerIds[0]);
         }
       }
     }
