@@ -2,12 +2,8 @@ import { Injectable } from '@angular/core';
 import { SupabaseService } from '../supabase.service';
 import { ImportData } from '../../components/import-disciplines-dialog/model/import.model';
 import { groupBy, mapValues } from 'lodash';
-import {
-  MatchedImportData,
-  ParsedImportData,
-  PlayerMatchResult,
-} from '../../../shared/import.type';
-import { InsertPlayer, Player } from '../../../shared/supabase.types';
+import { ParsedImportData } from '../../../shared/import.type';
+import { InsertPlayer } from '../../../shared/supabase.types';
 
 @Injectable({
   providedIn: 'root',
@@ -42,25 +38,5 @@ export class ImportService {
         return players;
       });
     });
-  }
-
-  public async matchPlayers(importData: ParsedImportData): Promise<MatchedImportData> {
-    const databasePlayers = await this.supabase.getPlayers();
-    return mapValues(importData, (importPlayers) => {
-      return importPlayers.map((team) => {
-        return team.map((player) => ({
-          ...player,
-          match: this.matchPlayer(player, databasePlayers),
-        }));
-      });
-    });
-  }
-
-  private matchPlayer(importPlayer: InsertPlayer, databasePlayers: Player[]): PlayerMatchResult {
-    return {
-      isExactMatch: false,
-      matchingPlayer: null,
-      mostSimilarPlayers: [],
-    };
   }
 }

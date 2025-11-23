@@ -6,12 +6,18 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatStepperModule, MatStepper } from '@angular/material/stepper';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { SheetJsService } from '../../services/sheetjs.service';
 import { ImportData, ImportDataSchema } from './model/import.model';
 import z from 'zod';
 import { ImportService } from '../../services/data-import/data-import.service';
 import { ParsedImportData } from '../../../shared/import.type';
+import { SupabaseService } from '../../services/supabase.service';
+import { DisciplineGender } from '../../models/types';
+import { InsertPlayer } from '../../../shared/supabase.types';
 
 export interface ImportDialogData {
   tournamentId: string;
@@ -28,6 +34,9 @@ export interface ImportDialogData {
     MatProgressBarModule,
     MatExpansionModule,
     MatStepperModule,
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule,
     TranslateModule,
   ],
   templateUrl: './import-disciplines-dialog.component.html',
@@ -43,12 +52,14 @@ export class ImportDisciplinesDialogComponent {
   parsedImportData = signal<ParsedImportData | null>(null);
   disciplineKeys = signal<string[]>([]);
   processedDisciplineKeys = signal<string[]>([]);
+  editedDisciplineNames = signal<Map<string, string>>(new Map());
 
   constructor(
     public dialogRef: MatDialogRef<ImportDisciplinesDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ImportDialogData,
     private sheetJsService: SheetJsService,
     private importService: ImportService,
+    private supabaseService: SupabaseService,
   ) {}
 
   async onFileSelected(event: Event) {
@@ -135,18 +146,73 @@ export class ImportDisciplinesDialogComponent {
 
     const parsedImportData = this.importService.groupByDisciplines(parsedData.data);
     this.parsedImportData.set(parsedImportData);
-    this.disciplineKeys.set(Object.keys(parsedImportData));
+    const keys = Object.keys(parsedImportData);
+    this.disciplineKeys.set(keys);
+
+    // Initialize edited names with original names
+    const editedNames = new Map<string, string>();
+    keys.forEach((key) => editedNames.set(key, key));
+    this.editedDisciplineNames.set(editedNames);
+
     this.uploading.set(false);
   }
 
-  onImportDiscipline() {
+  async onImportDiscipline() {
     const index = this.stepper.selectedIndex;
     if (index !== undefined) {
       const disciplineKey = this.disciplineKeys()[index];
-      const discipline = this.parsedImportData()![disciplineKey];
+      const participants = this.parsedImportData()![disciplineKey];
+      const editedName = this.getEditedDisciplineName(disciplineKey);
 
-      this.processedDisciplineKeys.set([...this.processedDisciplineKeys(), disciplineKey]);
-      this.stepper.next();
+      try {
+        this.uploading.set(true);
+
+        // Determine discipline properties from participants
+        const isDoubles = participants[0].length > 1;
+        const gender = this.determineDisciplineGender(participants);
+
+        // Create the discipline
+        const createdDiscipline = await this.supabaseService.createDiscipline({
+          name: editedName,
+          is_doubles: isDoubles,
+          gender: gender,
+          charge: null,
+          tournament: this.data.tournamentId,
+        });
+
+        // TODO: Add participants to the discipline
+        // This would require matching or creating players and adding them to the discipline
+
+        this.processedDisciplineKeys.set([...this.processedDisciplineKeys(), disciplineKey]);
+        this.uploading.set(false);
+        this.stepper.next();
+      } catch (error) {
+        console.error('Error importing discipline:', error);
+        this.uploading.set(false);
+        // TODO: Show error message to user
+      }
+    }
+  }
+
+  private determineDisciplineGender(participants: InsertPlayer[][]): DisciplineGender {
+    // Get all unique genders from all players in the discipline
+    const genders = new Set<string>();
+    participants.forEach((entry) => {
+      entry.forEach((player) => {
+        if (player.gender === 'M') {
+          genders.add('male');
+        } else if (player.gender === 'W') {
+          genders.add('female');
+        }
+      });
+    });
+
+    if (genders.size === 2) {
+      return DisciplineGender.Mixed;
+    } else if (genders.has('male')) {
+      return DisciplineGender.Male;
+    } else {
+      return DisciplineGender.Female;
     }
   }
 
@@ -160,5 +226,15 @@ export class ImportDisciplinesDialogComponent {
     const sizes = ['Bytes', 'KB', 'MB', 'GB'];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
     return Math.round((bytes / Math.pow(k, i)) * 100) / 100 + ' ' + sizes[i];
+  }
+
+  getEditedDisciplineName(originalKey: string): string {
+    return this.editedDisciplineNames().get(originalKey) || originalKey;
+  }
+
+  onDisciplineNameChange(originalKey: string, newName: string) {
+    const updatedNames = new Map(this.editedDisciplineNames());
+    updatedNames.set(originalKey, newName);
+    this.editedDisciplineNames.set(updatedNames);
   }
 }

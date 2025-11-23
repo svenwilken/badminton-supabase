@@ -4,11 +4,13 @@ import { environment } from '../environment';
 import { Gender, DisciplineGender } from '../models/types';
 import {
   DoublesParticipant,
+  InsertPlayer,
   Player,
   SinglesParticipant,
   Tournament,
 } from '../../shared/supabase.types';
 import { Database } from '../models/database.types';
+import { PlayerMatchResult } from '../../shared/import.type';
 
 // Utility function to get full player name
 export function getPlayerFullName(player: Player | null | undefined): string {
@@ -278,5 +280,14 @@ export class SupabaseService {
       .eq('id', pairId);
 
     if (error) throw error;
+  }
+
+  async matchPlayers(importPlayers: InsertPlayer[]) {
+    const { data, error } = await this.supabase.functions.invoke('match-players', {
+      body: importPlayers,
+    });
+
+    if (error) throw error;
+    return data as PlayerMatchResult[];
   }
 }

@@ -156,7 +156,8 @@
       "IMPORT_FORMAT_TITLE": "Erwartetes Dateiformat",
       "IMPORT_FORMAT_DESC": "Ihre Datei sollte die folgenden Spalten enthalten:",
       "IMPORT_BUTTON": "Disziplinen importieren",
-      "IMPORT_SUCCESS": "Disziplinen erfolgreich importiert"
+      "IMPORT_SUCCESS": "Disziplinen erfolgreich importiert",
+      "IMPORT_DISCIPLINE_NAME": "Disziplinname"
     },
     "MATCHES": {
       "TITLE": "Spiele",

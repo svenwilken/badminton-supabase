@@ -156,7 +156,8 @@
       "IMPORT_FORMAT_TITLE": "Expected File Format",
       "IMPORT_FORMAT_DESC": "Your file should contain the following columns:",
       "IMPORT_BUTTON": "Import Disciplines",
-      "IMPORT_SUCCESS": "Disciplines imported successfully"
+      "IMPORT_SUCCESS": "Disciplines imported successfully",
+      "IMPORT_DISCIPLINE_NAME": "Discipline Name"
     },
     "MATCHES": {
       "TITLE": "Matches",
