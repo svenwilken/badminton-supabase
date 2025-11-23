@@ -93,6 +93,13 @@
                 </div>
               }
               
+              @if (importError()) {
+                <div class="import-error">
+                  <mat-icon>error</mat-icon>
+                  <span>{{ 'TOURNAMENT_DETAIL.DISCIPLINES.IMPORT_ERRORS.' + importError() | translate }}</span>
+                </div>
+              }
+              
               <div class="participants-list">
                 @for (players of parsedImportData()![disciplineKey]; track $index; let i = $index) {
                   <div class="participant-entry">

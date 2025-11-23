@@ -157,7 +157,11 @@
       "IMPORT_FORMAT_DESC": "Your file should contain the following columns:",
       "IMPORT_BUTTON": "Import Disciplines",
       "IMPORT_SUCCESS": "Disciplines imported successfully",
-      "IMPORT_DISCIPLINE_NAME": "Discipline Name"
+      "IMPORT_DISCIPLINE_NAME": "Discipline Name",
+      "IMPORT_ERRORS": {
+        "MIXED_SINGLES_ERROR": "Mixed gender disciplines must be doubles. This discipline contains both male and female players but is marked as singles.",
+        "IMPORT_ERROR": "Failed to import discipline. Please try again."
+      }
     },
     "MATCHES": {
       "TITLE": "Matches",

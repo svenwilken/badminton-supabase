@@ -157,7 +157,11 @@
       "IMPORT_FORMAT_DESC": "Ihre Datei sollte die folgenden Spalten enthalten:",
       "IMPORT_BUTTON": "Disziplinen importieren",
       "IMPORT_SUCCESS": "Disziplinen erfolgreich importiert",
-      "IMPORT_DISCIPLINE_NAME": "Disziplinname"
+      "IMPORT_DISCIPLINE_NAME": "Disziplinname",
+      "IMPORT_ERRORS": {
+        "MIXED_SINGLES_ERROR": "Mixed-Disziplinen müssen Doppel sein. Diese Disziplin enthält sowohl männliche als auch weibliche Spieler, ist aber als Einzel markiert.",
+        "IMPORT_ERROR": "Disziplin konnte nicht importiert werden. Bitte versuchen Sie es erneut."
+      }
     },
     "MATCHES": {
       "TITLE": "Spiele",

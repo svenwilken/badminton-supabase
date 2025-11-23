@@ -179,6 +179,31 @@ mat-dialog-actions {
   }
 }
 
+.import-error {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  margin: 0 0 24px 0;
+  background: rgba(244, 67, 54, 0.08);
+  border-left: 4px solid #f44336;
+  border-radius: 4px;
+
+  mat-icon {
+    color: #f44336;
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+  }
+
+  span {
+    color: rgba(0, 0, 0, 0.87);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+}
+
 .validation-errors {
   margin-bottom: 24px;
 
@@ -317,6 +342,14 @@ mat-dialog-actions {
   .upload-progress {
     p {
       color: rgba(255, 255, 255, 0.6);
+    }
+  }
+
+  .import-error {
+    background: rgba(244, 67, 54, 0.12);
+
+    span {
+      color: rgba(255, 255, 255, 0.87);
     }
   }
 

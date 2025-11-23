@@ -53,6 +53,7 @@ export class ImportDisciplinesDialogComponent {
   disciplineKeys = signal<string[]>([]);
   processedDisciplineKeys = signal<string[]>([]);
   editedDisciplineNames = signal<Map<string, string>>(new Map());
+  importError = signal<string | null>(null);
 
   constructor(
     public dialogRef: MatDialogRef<ImportDisciplinesDialogComponent>,
@@ -166,10 +167,16 @@ export class ImportDisciplinesDialogComponent {
 
       try {
         this.uploading.set(true);
+        this.importError.set(null);
 
         // Determine discipline properties from participants
         const isDoubles = participants[0].length > 1;
         const gender = this.determineDisciplineGender(participants);
+
+        // Validate: Mixed disciplines must be doubles
+        if (gender === DisciplineGender.Mixed && !isDoubles) {
+          throw new Error('MIXED_SINGLES_ERROR');
+        }
 
         // Create the discipline
         const createdDiscipline = await this.supabaseService.createDiscipline({
@@ -189,7 +196,13 @@ export class ImportDisciplinesDialogComponent {
       } catch (error) {
         console.error('Error importing discipline:', error);
         this.uploading.set(false);
-        // TODO: Show error message to user
+
+        // Set error message
+        if (error instanceof Error) {
+          this.importError.set(error.message);
+        } else {
+          this.importError.set('IMPORT_ERROR');
+        }
       }
     }
   }
@@ -236,5 +249,7 @@ export class ImportDisciplinesDialogComponent {
     const updatedNames = new Map(this.editedDisciplineNames());
     updatedNames.set(originalKey, newName);
     this.editedDisciplineNames.set(updatedNames);
+    // Clear any import error when user starts editing
+    this.importError.set(null);
   }
 }
