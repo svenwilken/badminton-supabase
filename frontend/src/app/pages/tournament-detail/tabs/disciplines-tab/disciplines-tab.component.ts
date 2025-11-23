@@ -120,7 +120,9 @@ export class DisciplinesTabComponent implements OnInit {
     console.log('Edit discipline:', discipline);
   }
 
-  async onDeleteDiscipline(discipline: Discipline) {
+  async onDeleteDiscipline(event: Event, discipline: Discipline) {
+    event.stopPropagation();
+
     const confirmMessage = this.translate.instant('DELETE.CONFIRM', { name: discipline.name });
     if (!confirm(confirmMessage)) {
       return;

@@ -8,16 +8,17 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatStepperModule, MatStepper } from '@angular/material/stepper';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { SheetJsService } from '../../services/sheetjs.service';
 import { ImportData, ImportDataSchema } from './model/import.model';
 import z from 'zod';
 import { ImportService } from '../../services/data-import/data-import.service';
-import { ParsedImportData } from '../../../shared/import.type';
+import { ParsedImportData, PlayerMatchResult } from '../../../shared/import.type';
 import { SupabaseService } from '../../services/supabase.service';
 import { DisciplineGender } from '../../models/types';
-import { InsertPlayer } from '../../../shared/supabase.types';
+import { InsertPlayer, Player } from '../../../shared/supabase.types';
 
 export interface ImportDialogData {
   tournamentId: string;
@@ -36,6 +37,7 @@ export interface ImportDialogData {
     MatStepperModule,
     MatFormFieldModule,
     MatInputModule,
+    MatSelectModule,
     FormsModule,
     TranslateModule,
   ],
@@ -54,6 +56,8 @@ export class ImportDisciplinesDialogComponent {
   processedDisciplineKeys = signal<string[]>([]);
   editedDisciplineNames = signal<Map<string, string>>(new Map());
   importError = signal<string | null>(null);
+  matchedPlayers = signal<Map<string, PlayerMatchResult[][]>>(new Map());
+  loadingMatches = signal(false);
 
   constructor(
     public dialogRef: MatDialogRef<ImportDisciplinesDialogComponent>,
@@ -156,6 +160,7 @@ export class ImportDisciplinesDialogComponent {
     this.editedDisciplineNames.set(editedNames);
 
     this.uploading.set(false);
+    this.onStepChange(0);
   }
 
   async onImportDiscipline() {
@@ -251,5 +256,96 @@ export class ImportDisciplinesDialogComponent {
     this.editedDisciplineNames.set(updatedNames);
     // Clear any import error when user starts editing
     this.importError.set(null);
+  }
+
+  async onStepChange(selectedIndex: number) {
+    const disciplineKey = this.disciplineKeys()[selectedIndex];
+
+    // Check if we already matched players for this discipline
+    if (!this.matchedPlayers().has(disciplineKey)) {
+      await this.matchPlayersForDiscipline(disciplineKey);
+    }
+  }
+
+  async matchPlayersForDiscipline(disciplineKey: string) {
+    const participants = this.parsedImportData()![disciplineKey];
+    if (!participants) return;
+
+    try {
+      this.loadingMatches.set(true);
+
+      // Flatten all players from all entries
+      const allPlayers: InsertPlayer[] = participants.flat();
+
+      // Match players
+      const matchResults = await this.supabaseService.matchPlayers(allPlayers);
+
+      // Reconstruct the structure with match results
+      const matchedStructure: PlayerMatchResult[][] = [];
+      let playerIndex = 0;
+
+      for (const entry of participants) {
+        const entryMatches: PlayerMatchResult[] = [];
+        for (let i = 0; i < entry.length; i++) {
+          entryMatches.push(matchResults[playerIndex]);
+          playerIndex++;
+        }
+        matchedStructure.push(entryMatches);
+      }
+
+      // Store the matched results
+      const updatedMatches = new Map(this.matchedPlayers());
+      updatedMatches.set(disciplineKey, matchedStructure);
+      this.matchedPlayers.set(updatedMatches);
+
+      this.loadingMatches.set(false);
+    } catch (error) {
+      console.error('Error matching players:', error);
+      this.loadingMatches.set(false);
+    }
+  }
+
+  getPlayerMatch(
+    disciplineKey: string,
+    entryIndex: number,
+    playerIndex: number,
+  ): PlayerMatchResult | null {
+    const matches = this.matchedPlayers().get(disciplineKey);
+    if (!matches || !matches[entryIndex] || !matches[entryIndex][playerIndex]) {
+      return null;
+    }
+    return matches[entryIndex][playerIndex];
+  }
+
+  getMatchBorderClass(match: PlayerMatchResult | null): string {
+    if (!match) return 'match-pending';
+    if (match.matchingPlayer && match.isExactMatch) return 'match-exact';
+    if (match.matchingPlayer && !match.isExactMatch) return 'match-guessed';
+    return 'match-none';
+  }
+
+  onPlayerSelectionChange(
+    disciplineKey: string,
+    entryIndex: number,
+    playerIndex: number,
+    selectedPlayer: Player,
+  ) {
+    const matches = this.matchedPlayers().get(disciplineKey);
+    if (!matches || !matches[entryIndex]) return;
+
+    // Update the match result with the selected player
+    const updatedMatches = new Map(this.matchedPlayers());
+    const disciplineMatches = [...matches];
+    const entryMatches = [...disciplineMatches[entryIndex]];
+
+    entryMatches[playerIndex] = {
+      ...entryMatches[playerIndex],
+      matchingPlayer: selectedPlayer,
+      isExactMatch: false, // Manual selection is not exact match
+    };
+
+    disciplineMatches[entryIndex] = entryMatches;
+    updatedMatches.set(disciplineKey, disciplineMatches);
+    this.matchedPlayers.set(updatedMatches);
   }
 }

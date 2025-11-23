@@ -95,7 +95,7 @@
           <td mat-cell *matCellDef="let discipline">
             <div class="action-buttons">
               <button mat-icon-button color="warn"
-                      (click)="onDeleteDiscipline(discipline)"
+                      (click)="onDeleteDiscipline($event, discipline)"
                       [matTooltip]="'COMMON.DELETE' | translate">
                 <mat-icon>delete</mat-icon>
               </button>

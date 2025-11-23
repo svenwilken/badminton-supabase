@@ -4,7 +4,7 @@ import { match } from "name-match";
 import { Database } from "databaseTypes";
 import { InsertPlayer } from "./util/supabase.types.ts";
 import { PlayerMatchResult } from "./util/import.type.ts";
-import { getPlayerKey, getFullName } from "./util/import.util.ts";
+import { getFullName } from "./util/import.util.ts";
 
 // @deno-types="@types/lodash"
 import _ from "lodash";
@@ -30,9 +30,8 @@ Deno.serve(async (req: Request): Promise<Response> => {
     const importPlayers: InsertPlayer[] = await req.json();
     const allPlayers = (await supabaseClient.from("player").select("*")).data!;
 
-    const playerMatches = new Map<string, PlayerMatchResult>();
+    const playerMatches: PlayerMatchResult[] = [];
     for (const player of importPlayers) {
-      const playerKey = getPlayerKey(player);
       const currentPlayerFullName = getFullName(player);
 
       const playerMatching = allPlayers.map((p) => {
@@ -49,14 +48,14 @@ Deno.serve(async (req: Request): Promise<Response> => {
       );
 
       const bestMatch = sortedPlayerMatching[0];
-      playerMatches.set(playerKey, {
+      playerMatches.push({
         isExactMatch: bestMatch.score === 1,
         matchingPlayer: bestMatch.score > 0.75 ? bestMatch.player : null,
         mostSimilarPlayers: sortedPlayerMatching.slice(0, 5),
       });
     }
 
-    return new Response(JSON.stringify(Object.fromEntries(playerMatches)), {
+    return new Response(JSON.stringify(playerMatches), {
       headers: { "Content-Type": "application/json" },
     });
   } catch (error) {

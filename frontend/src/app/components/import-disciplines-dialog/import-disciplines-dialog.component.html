@@ -72,7 +72,7 @@
       }
     } @else {
       <!-- Stepper Section -->
-      <mat-stepper #stepper class="discipline-stepper">
+      <mat-stepper #stepper class="discipline-stepper" (selectionChange)="onStepChange($event.selectedIndex)">
         @for (disciplineKey of disciplineKeys(); track disciplineKey) {
           <mat-step [label]="getEditedDisciplineName(disciplineKey)" 
           [completed]="processedDisciplineKeys().includes(disciplineKey)"
@@ -86,10 +86,10 @@
                        [disabled]="processedDisciplineKeys().includes(disciplineKey) || uploading()">
               </mat-form-field>
               
-              @if (uploading()) {
+              @if (uploading() || loadingMatches()) {
                 <div class="upload-progress">
                   <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-                  <p>{{ 'TOURNAMENT_DETAIL.DISCIPLINES.IMPORT_PROCESSING' | translate }}</p>
+                  <p>{{ (loadingMatches() ? 'TOURNAMENT_DETAIL.DISCIPLINES.IMPORT_MATCHING' : 'TOURNAMENT_DETAIL.DISCIPLINES.IMPORT_PROCESSING') | translate }}</p>
                 </div>
               }
               
@@ -105,15 +105,68 @@
                   <div class="participant-entry">
                     <div class="entry-number">{{ i + 1 }}</div>
                     <div class="players">
-                      @for (player of players; track $index) {
-                        <div class="player-card">
-                          <div class="player-name">{{ player.firstname }} {{ player.lastname }}</div>
-                          <div class="player-details">
-                            <span class="gender-badge">{{ player.gender }}</span>
-                            @if (player.club) {
-                              <span class="club-name">{{ player.club }}</span>
-                            }
+                      @for (player of players; track $index; let j = $index) {
+                        @let match = getPlayerMatch(disciplineKey, i, j);
+                        <div class="player-card" [ngClass]="getMatchBorderClass(match)">
+                          <div class="player-info">
+                            <div class="player-name">{{ player.firstname }} {{ player.lastname }}</div>
+                            <div class="player-details">
+                              <span class="gender-badge">{{ player.gender }}</span>
+                              @if (player.club) {
+                                <span class="club-name">{{ player.club }}</span>
+                              }
+                            </div>
                           </div>
+                          
+                          @if (match) {
+                            <div class="match-info">
+                              @if (match.matchingPlayer && match.isExactMatch) {
+                                <div class="match-status match-exact-status">
+                                  <mat-icon>check_circle</mat-icon>
+                                  <span>{{ 'TOURNAMENT_DETAIL.DISCIPLINES.IMPORT_MATCH_EXACT' | translate }}</span>
+                                </div>
+                              } @else if (match.matchingPlayer && !match.isExactMatch) {
+                                <div class="match-status match-guessed-status">
+                                  <mat-icon>help_outline</mat-icon>
+                                  <span>{{ 'TOURNAMENT_DETAIL.DISCIPLINES.IMPORT_MATCH_GUESSED' | translate }}</span>
+                                </div>
+                              } @else {
+                                <div class="match-status match-none-status">
+                                  <mat-icon>add_circle_outline</mat-icon>
+                                  <span>{{ 'TOURNAMENT_DETAIL.DISCIPLINES.IMPORT_MATCH_NEW' | translate }}</span>
+                                </div>
+                              }
+                              
+                              @if (match.mostSimilarPlayers.length > 0 || match.matchingPlayer) {
+                                <mat-form-field appearance="outline" class="player-select">
+                                  <mat-label>{{ 'TOURNAMENT_DETAIL.DISCIPLINES.IMPORT_SELECT_MATCH' | translate }}</mat-label>
+                                  <mat-select 
+                                    [value]="match.matchingPlayer"
+                                    (selectionChange)="onPlayerSelectionChange(disciplineKey, i, j, $event.value)">
+                                    @if (match.matchingPlayer) {
+                                      <mat-option [value]="match.matchingPlayer">
+                                        {{ match.matchingPlayer.firstname }} {{ match.matchingPlayer.lastname }}
+                                        @if (match.matchingPlayer.club) {
+                                          ({{ match.matchingPlayer.club }})
+                                        }
+                                      </mat-option>
+                                    }
+                                    @for (similarPlayer of match.mostSimilarPlayers; track similarPlayer.player.id) {
+                                      @if (similarPlayer.player.id !== match.matchingPlayer?.id) {
+                                        <mat-option [value]="similarPlayer.player">
+                                          {{ similarPlayer.player.firstname }} {{ similarPlayer.player.lastname }}
+                                          @if (similarPlayer.player.club) {
+                                            ({{ similarPlayer.player.club }})
+                                          }
+                                          <span class="similarity-score"> ({{ (similarPlayer.score * 100).toFixed(0) }}%)</span>
+                                        </mat-option>
+                                      }
+                                    }
+                                  </mat-select>
+                                </mat-form-field>
+                              }
+                            </div>
+                          }
                         </div>
                       }
                     </div>

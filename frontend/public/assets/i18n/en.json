@@ -158,6 +158,11 @@
       "IMPORT_BUTTON": "Import Disciplines",
       "IMPORT_SUCCESS": "Disciplines imported successfully",
       "IMPORT_DISCIPLINE_NAME": "Discipline Name",
+      "IMPORT_MATCHING": "Matching players...",
+      "IMPORT_MATCH_EXACT": "Exact match",
+      "IMPORT_MATCH_GUESSED": "Suggested match",
+      "IMPORT_MATCH_NEW": "New player",
+      "IMPORT_SELECT_MATCH": "Select existing player",
       "IMPORT_ERRORS": {
         "MIXED_SINGLES_ERROR": "Mixed gender disciplines must be doubles. This discipline contains both male and female players but is marked as singles.",
         "IMPORT_ERROR": "Failed to import discipline. Please try again."

@@ -6,7 +6,7 @@ export interface ParsedImportData {
 export interface PlayerMatchResult {
   isExactMatch: boolean;
   matchingPlayer: Player | null;
-  mostSimilarPlayers: Player[];
+  mostSimilarPlayers: { player: Player; score: number }[];
 }
 export interface MatchedImportData {
   [discipline: string]: (InsertPlayer & { match: PlayerMatchResult })[][];
