@@ -2,16 +2,14 @@ import "@supabase/functions-js";
 import { createClient } from "@supabase/supabase-js";
 import { match } from "name-match";
 import { Database } from "databaseTypes";
-import { InsertPlayer } from "supabaseTypes";
-import { ParsedImportData, PlayerMatchResult } from "import.type";
+import { InsertPlayer } from "./util/supabase.types.ts";
+import { PlayerMatchResult } from "./util/import.type.ts";
+import { getPlayerKey, getFullName } from "./util/import.util.ts";
+
 // @deno-types="@types/lodash"
-import { chain, orderBy } from "lodash";
-import { getPlayerKey, getFullName } from "import.util";
+import _ from "lodash";
 
 Deno.serve(async (req: Request): Promise<Response> => {
-  return new Response("Test", {
-    headers: { "Content-Type": "application/json" },
-  });
   const supabaseClient = createClient<Database>(
     // Supabase  URL
     Deno.env.get("SUPABASE_URL") ?? "",
@@ -29,13 +27,8 @@ Deno.serve(async (req: Request): Promise<Response> => {
   );
 
   try {
-    const importData: ParsedImportData = await req.json();
+    const importPlayers: InsertPlayer[] = await req.json();
     const allPlayers = (await supabaseClient.from("player").select("*")).data!;
-
-    const importPlayers: InsertPlayer[] = chain(Object.values(importData))
-      .flattenDeep()
-      .uniqBy(getPlayerKey)
-      .value();
 
     const playerMatches = new Map<string, PlayerMatchResult>();
     for (const player of importPlayers) {
@@ -49,7 +42,7 @@ Deno.serve(async (req: Request): Promise<Response> => {
         };
       });
 
-      const sortedPlayerMatching = orderBy(
+      const sortedPlayerMatching = _.orderBy(
         playerMatching,
         (p) => p.score,
         "desc"
@@ -73,15 +66,3 @@ Deno.serve(async (req: Request): Promise<Response> => {
     });
   }
 });
-
-/* To invoke locally:
-
-  1. Run `supabase start` (see: https://supabase.com/docs/reference/cli/supabase-start)
-  2. Make an HTTP request:
-
-  curl -i --location --request POST 'http://127.0.0.1:54321/functions/v1/match-players' \
-    --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0' \
-    --header 'Content-Type: application/json' \
-    --data '{"name":"Functions"}'
-
-*/
