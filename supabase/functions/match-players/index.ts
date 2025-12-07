@@ -29,6 +29,19 @@ Deno.serve(async (req: Request): Promise<Response> => {
   try {
     const importPlayers: InsertPlayer[] = await req.json();
     const allPlayers = (await supabaseClient.from("player").select("*")).data!;
+    if (allPlayers.length === 0) {
+      const returnData: PlayerMatchResult[] = importPlayers.map(() => {
+        return {
+          isExactMatch: false,
+          matchingPlayer: null,
+          mostSimilarPlayers: [],
+        };
+      });
+      return new Response(JSON.stringify(returnData), {
+        status: 404,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
 
     const playerMatches: PlayerMatchResult[] = [];
     for (const player of importPlayers) {

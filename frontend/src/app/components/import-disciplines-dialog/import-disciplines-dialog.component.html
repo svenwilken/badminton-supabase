@@ -143,6 +143,9 @@
                                   <mat-select 
                                     [value]="match.matchingPlayer"
                                     (selectionChange)="onPlayerSelectionChange(disciplineKey, i, j, $event.value)">
+                                    <mat-option [value]="null">
+                                      <em>{{ 'TOURNAMENT_DETAIL.DISCIPLINES.IMPORT_CREATE_NEW_PLAYER' | translate }}</em>
+                                    </mat-option>
                                     @if (match.matchingPlayer) {
                                       <mat-option [value]="match.matchingPlayer">
                                         {{ match.matchingPlayer.firstname }} {{ match.matchingPlayer.lastname }}
@@ -153,7 +156,7 @@
                                     }
                                     @for (similarPlayer of match.mostSimilarPlayers; track similarPlayer.player.id) {
                                       @if (similarPlayer.player.id !== match.matchingPlayer?.id) {
-                                        <mat-option [value]="similarPlayer.player">
+                                        <mat-option [value]="similarPlayer">
                                           {{ similarPlayer.player.firstname }} {{ similarPlayer.player.lastname }}
                                           @if (similarPlayer.player.club) {
                                             ({{ similarPlayer.player.club }})

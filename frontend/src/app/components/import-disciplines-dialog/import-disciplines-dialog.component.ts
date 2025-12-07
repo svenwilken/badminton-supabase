@@ -389,7 +389,7 @@ export class ImportDisciplinesDialogComponent {
     disciplineKey: string,
     entryIndex: number,
     playerIndex: number,
-    selectedPlayer: Player,
+    selectedPlayer: PlayerMatchResult['mostSimilarPlayers'][number] | null,
   ) {
     const matches = this.matchedPlayers().get(disciplineKey);
     if (!matches || !matches[entryIndex]) return;
@@ -401,8 +401,8 @@ export class ImportDisciplinesDialogComponent {
 
     entryMatches[playerIndex] = {
       ...entryMatches[playerIndex],
-      matchingPlayer: selectedPlayer,
-      isExactMatch: false, // Manual selection is not exact match
+      matchingPlayer: selectedPlayer?.player ?? null,
+      isExactMatch: selectedPlayer?.score === 1,
     };
 
     disciplineMatches[entryIndex] = entryMatches;

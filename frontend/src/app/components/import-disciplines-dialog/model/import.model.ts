@@ -48,7 +48,52 @@ export type ImportRow = z.infer<typeof ImportRowSchema>;
 /**
  * Schema for array of import rows
  */
-export const ImportDataSchema = z.array(ImportRowSchema);
+export const ImportDataSchema = z.array(ImportRowSchema).superRefine((items, ctx) => {
+  const seen = new Set<string>();
+
+  items.forEach((item, index) => {
+    const discipline = item.Disziplin + ' ' + item.Spielklasse;
+
+    // Helper to generate key
+    const getKey = (firstName: string, lastName: string, disc: string, gender: string) =>
+      `${firstName.toLowerCase().trim()}|${lastName.toLowerCase().trim()}|${disc}|${gender}`;
+
+    // Check Main Player
+    const playerKey = getKey(item.Vorname, item.Name, discipline, item.Geschlecht);
+    if (seen.has(playerKey)) {
+      ctx.addIssue({
+        code: 'custom',
+        message: `Duplicate entry: ${item.Vorname} ${item.Name} is already entered in ${discipline}`,
+        path: [index, 'Name'],
+      });
+    } else {
+      seen.add(playerKey);
+    }
+
+    // Check Partner
+    if (
+      item['Partner Name']?.trim() &&
+      item['Partner Vorname']?.trim() &&
+      item['Partner Geschlecht']
+    ) {
+      const partnerKey = getKey(
+        item['Partner Vorname'],
+        item['Partner Name'],
+        discipline,
+        item['Partner Geschlecht'],
+      );
+      if (seen.has(partnerKey)) {
+        ctx.addIssue({
+          code: 'custom',
+          message: `Duplicate entry: Partner ${item['Partner Vorname']} ${item['Partner Name']} is already entered in ${discipline}`,
+          path: [index, 'Partner Name'],
+        });
+      } else {
+        seen.add(partnerKey);
+      }
+    }
+  });
+});
 
 /**
  * Type for array of import rows
