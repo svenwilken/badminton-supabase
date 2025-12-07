@@ -87,7 +87,9 @@
       "LOADING": "Spieler werden geladen...",
       "EMPTY_TITLE": "Noch keine Spieler",
       "EMPTY_MESSAGE": "Fügen Sie Ihren ersten Spieler hinzu, um loszulegen!",
-      "REGISTERED": "Registriert: {{date}}"
+      "REGISTERED": "Registriert: {{date}}",
+      "SEARCH": "Suche",
+      "SEARCH_PLACEHOLDER": "Nach Name, Verein suchen..."
     },
     "CREATE": {
       "TITLE": "Neuen Spieler hinzufügen",

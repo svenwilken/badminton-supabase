@@ -87,7 +87,9 @@
       "LOADING": "Loading players...",
       "EMPTY_TITLE": "No players yet",
       "EMPTY_MESSAGE": "Add your first player to get started!",
-      "REGISTERED": "Registered: {{date}}"
+      "REGISTERED": "Registered: {{date}}",
+      "SEARCH": "Search",
+      "SEARCH_PLACEHOLDER": "Search by name, club..."
     },
     "CREATE": {
       "TITLE": "Add New Player",

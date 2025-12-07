@@ -89,6 +89,20 @@ export class PlayersListComponent implements OnInit, AfterViewInit {
           return '';
       }
     };
+
+    // Custom filter predicate to search across multiple fields
+    this.dataSource.filterPredicate = (player: Player, filter: string) => {
+      const searchTerm = filter.toLowerCase();
+      const fullName = getPlayerFullName(player).toLowerCase();
+      const club = (player.club || '').toLowerCase();
+
+      return fullName.includes(searchTerm) || club.includes(searchTerm);
+    };
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
   async loadPlayers() {
