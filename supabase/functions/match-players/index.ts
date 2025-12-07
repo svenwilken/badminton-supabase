@@ -38,7 +38,6 @@ Deno.serve(async (req: Request): Promise<Response> => {
         };
       });
       return new Response(JSON.stringify(returnData), {
-        status: 404,
         headers: { "Content-Type": "application/json" },
       });
     }
@@ -63,8 +62,10 @@ Deno.serve(async (req: Request): Promise<Response> => {
       const bestMatch = sortedPlayerMatching[0];
       playerMatches.push({
         isExactMatch: bestMatch.score === 1,
-        matchingPlayer: bestMatch.score > 0.75 ? bestMatch.player : null,
-        mostSimilarPlayers: sortedPlayerMatching.slice(0, 5),
+        matchingPlayer: bestMatch.score > 0.8 ? bestMatch.player : null,
+        mostSimilarPlayers: sortedPlayerMatching
+          .filter((p) => p.score > 0.6)
+          .slice(0, 5),
       });
     }
 
