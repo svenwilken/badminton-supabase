@@ -3,6 +3,7 @@ import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { environment } from '../environment';
 import { Gender, DisciplineGender } from '../models/types';
 import {
+  Discipline,
   DoublesParticipant,
   InsertPlayer,
   Player,
@@ -178,6 +179,18 @@ export class SupabaseService {
         charge: discipline.charge,
         tournament: discipline.tournament,
       })
+      .select()
+      .single();
+
+    if (error) throw error;
+    return data;
+  }
+
+  async updateDiscipline(id: string, updates: Partial<Discipline>) {
+    const { data, error } = await this.supabase
+      .from('discipline')
+      .update(updates)
+      .eq('id', id)
       .select()
       .single();
 

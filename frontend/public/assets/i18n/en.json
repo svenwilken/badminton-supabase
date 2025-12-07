@@ -11,6 +11,8 @@
     "EDIT": "Edit",
     "SAVE": "Save",
     "CLOSE": "Close",
+    "UPDATE_SUCCESS": "Update successful",
+    "UPDATE_ERROR": "Update failed",
     "RETRY": "Retry",
     "BACK": "Back",
     "GO_BACK": "Go Back",
@@ -18,7 +20,9 @@
     "ERROR": "Error",
     "ACTIONS": "Actions",
     "SINGLES": "Singles",
-    "DOUBLES": "Doubles"
+    "DOUBLES": "Doubles",
+    "EDIT_MODE": "Edit Mode",
+    "VIEW_MODE": "View Mode"
   },
   "GENDER": {
     "LABEL": "Gender:",

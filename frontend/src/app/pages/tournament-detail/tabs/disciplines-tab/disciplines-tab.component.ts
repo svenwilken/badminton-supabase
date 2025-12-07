@@ -8,9 +8,12 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { FormsModule } from '@angular/forms';
 import { SupabaseService } from '../../../../services/supabase.service';
 import { Discipline } from '../../../../../shared/supabase.types';
 import { CreateDisciplineDialogComponent } from '../../../../components/create-discipline-dialog/create-discipline-dialog.component';
@@ -29,6 +32,9 @@ import { ImportDisciplinesDialogComponent } from '../../../../components/import-
     MatTooltipModule,
     MatSnackBarModule,
     TranslateModule,
+    MatInputModule,
+    MatFormFieldModule,
+    FormsModule,
   ],
   templateUrl: './disciplines-tab.component.html',
   styleUrl: './disciplines-tab.component.scss',
@@ -36,6 +42,7 @@ import { ImportDisciplinesDialogComponent } from '../../../../components/import-
 export class DisciplinesTabComponent implements OnInit {
   disciplines = signal<Discipline[]>([]);
   loading = signal(true);
+  isEditMode = signal(false);
   tournamentId: string | null = null;
   displayedColumns: string[] = ['name', 'type', 'gender', 'participants', 'actions'];
 
@@ -67,6 +74,10 @@ export class DisciplinesTabComponent implements OnInit {
     } finally {
       this.loading.set(false);
     }
+  }
+
+  toggleEditMode() {
+    this.isEditMode.update((v) => !v);
   }
 
   onAddDiscipline() {
@@ -148,6 +159,31 @@ export class DisciplinesTabComponent implements OnInit {
         this.translate.instant('COMMON.CLOSE'),
         { duration: 3000 },
       );
+    }
+  }
+
+  async onNameChange(event: Event, discipline: Discipline, newName: string) {
+    event.stopPropagation();
+    if (discipline.name === newName) return;
+
+    try {
+      await this.supabaseService.updateDiscipline(discipline.id, { name: newName });
+      discipline.name = newName; // Update local state
+       this.snackBar.open(
+        this.translate.instant('COMMON.UPDATE_SUCCESS'),
+        this.translate.instant('COMMON.CLOSE'),
+        { duration: 3000 },
+      );
+    } catch (err) {
+      console.error('Error updating discipline:', err);
+      this.snackBar.open(
+        this.translate.instant('COMMON.UPDATE_ERROR'),
+        this.translate.instant('COMMON.CLOSE'),
+        { duration: 3000 },
+      );
+      // Revert change in UI if needed, but since we are binding, we might need to reload or handle it.
+      // For now, let's assume we reload or just show error.
+       await this.loadDisciplines();
     }
   }
 

@@ -2,6 +2,10 @@
   <div class="header">
     <h2>{{ 'TOURNAMENT_DETAIL.DISCIPLINES.TITLE' | translate }}</h2>
     <div class="header-actions">
+      <button mat-raised-button (click)="toggleEditMode()">
+        <mat-icon>{{ isEditMode() ? 'edit_off' : 'edit' }}</mat-icon>
+        {{ (isEditMode() ? 'COMMON.VIEW_MODE' : 'COMMON.EDIT_MODE') | translate }}
+      </button>
       <button mat-raised-button color="accent" (click)="onImportDisciplines()">
         <mat-icon>upload_file</mat-icon>
         {{ 'TOURNAMENT_DETAIL.DISCIPLINES.IMPORT' | translate }}
@@ -37,10 +41,20 @@
         <!-- Name Column -->
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef>{{ 'TABLE.NAME' | translate }}</th>
-          <td mat-cell *matCellDef="let discipline">
+          <td mat-cell *matCellDef="let discipline" (click)="isEditMode() ? $event.stopPropagation() : null">
             <div class="name-cell">
               <mat-icon>category</mat-icon>
-              <span>{{ discipline.name }}</span>
+              @if (isEditMode()) {
+                <mat-form-field appearance="outline" subscriptSizing="dynamic" class="name-input">
+                  <input matInput 
+                         [ngModel]="discipline.name" 
+                         (blur)="onNameChange($event, discipline, $any($event.target).value)"
+                         (keydown.enter)="$any($event.target).blur()"
+                         (click)="$event.stopPropagation()">
+                </mat-form-field>
+              } @else {
+                <span>{{ discipline.name }}</span>
+              }
             </div>
           </td>
         </ng-container>

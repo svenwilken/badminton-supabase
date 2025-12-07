@@ -75,6 +75,7 @@ h2 {
   
   td, th {
     padding: 16px;
+    vertical-align: middle;
   }
   
   tr:hover {
@@ -91,8 +92,9 @@ h2 {
     color: rgba(0, 0, 0, 0.54);
   }
   
-  span {
-    font-weight: 500;
+  .name-input {
+    width: 100%;
+    min-width: 200px;
   }
 }
 

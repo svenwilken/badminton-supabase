@@ -11,6 +11,8 @@
     "EDIT": "Bearbeiten",
     "SAVE": "Speichern",
     "CLOSE": "Schließen",
+    "UPDATE_SUCCESS": "Aktualisierung erfolgreich",
+    "UPDATE_ERROR": "Aktualisierung fehlgeschlagen",
     "RETRY": "Wiederholen",
     "BACK": "Zurück",
     "GO_BACK": "Zurück",
@@ -18,7 +20,9 @@
     "ERROR": "Fehler",
     "ACTIONS": "Aktionen",
     "SINGLES": "Einzel",
-    "DOUBLES": "Doppel"
+    "DOUBLES": "Doppel",
+    "EDIT_MODE": "Bearbeitungsmodus",
+    "VIEW_MODE": "Ansichtsmodus"
   },
   "GENDER": {
     "LABEL": "Geschlecht:",
